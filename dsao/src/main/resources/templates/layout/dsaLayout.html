@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title layout:title-pattern="$LAYOUT_TITLE $CONTENT_TITLE">SAAS - DSA</title>
+
+	<link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
+	<link th:href="@{/scripts/design-system/dist/css/content-blocks.css}" type="text/css" rel="stylesheet">
+	<link th:href="@{/styles/dsaCustomStyle.css}" type="text/css" rel="stylesheet">
+
+	<link rel="shortcut icon" th:href="@{/images/favicons/favicon.ico}" type="image/x-icon">
+	<link rel="apple-touch-icon" sizes="180x180" th:href="@{/images/favicons/apple-touch-icon.png}">
+	<link rel="icon" type="image/png" sizes="32x32" th:href="@{/images/favicons/favicon-32x32.png}">
+	<link rel="icon" type="image/png" sizes="16x16" th:href="@{/images/favicons/favicon-16x16.png}">
+
+	<script th:nonce="${cspNonce}" type="text/javascript" th:src="@{/scripts/purify.min.js}"></script>
+	<script th:nonce="${cspNonce}" type="text/javascript" th:src="@{/scripts/dsa.js}"></script>
+
+</head>
+
+<body>
+<div class="ds_page">
+	<div class="ds_page__top">
+		<header class="ds_site-header ds_site-header--shadow banner" role="banner"
+				th:insert="~{fragments/header.html :: header}">
+		</header>
+		<div th:replace="~{fragments/beta.html}"></div>
+	</div>
+	<div class="ds_page__middle">
+		<section layout:fragment="content">
+			<p>This is filled by the content template.</p>
+		</section>
+	</div>
+	<div class="ds_page__bottom">
+		<footer class="ds_site-footer" th:insert="~{fragments/footer.html :: footer}"></footer>
+	</div>
+</div>
+
+
+</body>
+
+</html>

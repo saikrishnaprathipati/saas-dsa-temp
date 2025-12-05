@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layout/dsaLayout}" th:with="hideBeta=true">
+
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Check your email</title>
+	<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+	<meta http-equiv="Pragma" content="no-cache" />
+	<meta http-equiv="Expires" content="0" />
+</head>
+
+<body>
+<div layout:fragment="content">
+
+	<div class="ds_page__middle">
+		<div class="ds_wrapper">
+			<p><br></p>
+			<div class="ds_warning-text ds_warning-text-new ds_important-text-grey" th:if="${loginFormVO.resendLoginLink} == true">
+				<strong class="ds_warning-text__icon" aria-hidden="true"></strong>
+				<strong class="visually-hidden">Warning</strong>
+				<div class="ds_warning-text__text">
+					<p>A new sign-in link has been sent to your registered email address.</p>
+					<p>If you do not receive the email and are unable to continue, contact the <a
+							th:href="@{/help#tab3}" id="contact_us_notification">DSA Team</a>.
+					</p>
+				</div>
+				<button class="ds_notification__close  js-close-notification" type="button"
+						data-button="button-close-this-notification" data-banner="banner-1-close">
+					<span class="visually-hidden">Close this notification</span>
+					<img th:src="@{/images/icon-cross.svg}" class="icon_cross" alt="close">
+				</button>
+			</div>
+
+			<main id="main-content" class="ds_layout ds_layout--article">
+				<div class="ds_layout__content border border-secondary p-3 rounded">
+					<form id="resendForm" method="get">
+						<h1 class="ds_h1 dsa_h1">Check your email</h1>
+						<p>The secure sign-in link sent to your registered email will give you access to your DSA
+							Account.</p>
+						<p>This one-time link may take a few minutes to arrive and will expire after 15 minutes.</p>
+						<p>We will never ask you for any personal information in our emails. We will only send you a
+							link to access your DSA Account or for password resets.</p>
+						<h2>What to do if you do not receive the email</h2>
+						<ul class="dsa_list">
+							<li>check your email spam or junk folder</li>
+							<li>if the email is not in your spam or junk folder,
+								<a th:href="@{/resendLoginLink}">request a new sign-in link</a>
+							</li>
+							<li>if you still cannot activate your account, contact the <a th:href="@{/help#tab3}">DSA
+								Team</a>
+							</li>
+						</ul>
+					</form>
+					<p>You cannot request more than 3 activation emails. Once you have exceeded the limit, you will need
+						to start the <a th:href="@{/start}">Create Account</a> process again.</p>
+				</div>
+			</main>
+
+		</div>
+	</div>
+</div>
+</body>
+
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layout/dsaLayoutLoggedIn}" th:with="currentPosition='findStudent', currentTab='findStudent'">
+
+<head>
+	<title>Start Application</title>
+	<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
+	<meta http-equiv="Pragma" content="no-cache"/>
+	<meta http-equiv="Expires" content="0"/>
+</head>
+
+<body>
+
+<div layout:fragment="content">
+	<div class="ds_page__middle">
+		<div class="ds_wrapper">
+			<main class="ds_layout  ds_layout--article">
+				<div class="ds_layout__content ds_input--fixed-40">
+					<p><br></p>
+
+					<div class="ds_warning-text ds_warning-text-new ds_important-text-grey"
+						 data-module="ds-notification">
+						<strong class="ds_warning-text__icon" aria-hidden="true"></strong>
+						<strong class="visually-hidden">Warning</strong>
+						<div class="ds_warning-text__text">
+							Do not use your back button when using this service, or you may have to sign in again and
+							your data may not be saved
+						</div>
+						<button class="ds_notification__close  js-close-notification" type="button"
+								data-button="button-close-this-notification" data-banner="banner-1-close">
+							<span class="visually-hidden">Close this notification</span>
+							<img th:src="@{/images/icon-cross.svg}" class="icon_cross" alt="close">
+						</button>
+
+					</div>
+
+					<h1>Start an application</h1>
+					<h2>Before you start</h2>
+					<p>Make sure you have the information we need to complete this application. You can save your
+						progress and come back it at any time. We will ask you:</p>
+					<ul class="dsa_list">
+						<li>for information about the student’s disabilities</li>
+						<li>to confirm the student’s course details</li>
+						<li>for the student’s recommended allowances including consumable items, equipment, software and
+							training, Non-Medical Personal Help (NMPH) and travel expenses
+						</li>
+						<li>for the estimated time and cost to carry out and create a Needs Assessment Report</li>
+					</ul>
+					<br>
+					<div class="ds_callout no_border_left">
+						<div class="ds_callout__content">
+							<p>
+								<strong>SAAS Reference Number</strong>&nbsp;&nbsp;&nbsp; <span
+									th:text="${dashboardFormVO.studentReferenceNumber}"></span>
+							</p>
+							<h1 th:text="${dashboardFormVO.firstName} + ' ' + ${dashboardFormVO.lastName}"></h1>
+							<div class="ds_button-group">
+								<form th:action="@{/selectYear}" th:object="${dashboardFormVO}"
+									  method="POST">
+									<input type="hidden" th:value="${dashboardFormVO.studentReferenceNumber}"
+										   name="studentReferenceNumber"/>
+
+									<input type="hidden" th:value="${dashboardFormVO.firstName}" name="firstName"/>
+									<input type="hidden" th:value=" ${dashboardFormVO.lastName}" name="lastName"/>
+									<input type="hidden" th:value=" ${dashboardFormVO.dob}" name="dob"/>
+									<input type="hidden" th:value=" ${dashboardFormVO.academicYear}"
+										   name="academicYear"/>
+									<input type="hidden" th:value=" ${dashboardFormVO.sessionCode}"
+										   name="sessionCode"/>
+									<input type="hidden" th:value=" ${dashboardFormVO.fundingEligibilityStatus}"
+										   name="fundingEligibilityStatus"/>
+									<input type="submit" class="ds_button dsa_button" value="Start">
+								</form>
+								<p>
+									<strong>OR</strong>
+								</p>
+								<p>
+									<a th:href="@{/findStudents}" class="secondary_form">Search again</a>
+								</p>
+							</div>
+						</div>
+					</div>
+					<h2>Get help with your application</h2>
+					<p th:if="${LOGGEDIN_USER_TYPE ne 'STUDENT'}">Contact the <a th:href="@{/help#tab3}">DSA Team</a> if
+						you need help with your student's DSA application.
+						We can only discuss personal
+						details about a student if you have the relevant permissions.</p>
+					<p th:if="${LOGGEDIN_USER_TYPE eq 'STUDENT'}">Contact your Disability Advisor if you need help with
+						your DSA application.</p>
+
+				</div>
+			</main>
+		</div>
+	</div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layout/dsaLayoutLoggedIn}" th:with="currentPosition='findStudent', currentTab='findStudent'">
+
+<head>
+	<title>Permission Denied</title>
+	<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+	<meta http-equiv="Pragma" content="no-cache" />
+	<meta http-equiv="Expires" content="0" />
+</head>
+
+<body>
+
+<div layout:fragment="content">
+	<div class="ds_page__middle">
+		<div class="ds_wrapper">
+			<main class="ds_layout  ds_layout--article">
+				<div class="ds_layout__content">
+					<p><br></p>
+					<h1>Permission denied</h1>
+					<p>Unfortunately, you cannot apply for DSA on behalf of this student.</p>
+					<p><a th:href="@{/findStudents}">Search again</a> or contact your HEI Learning Support Team Manager,
+						who can advise you further on your Disabled Students’ Allowance service permissions.
+					</p>
+				</div>
+			</main>
+		</div>
+	</div>
+</div>
+
+</body>
+</html>

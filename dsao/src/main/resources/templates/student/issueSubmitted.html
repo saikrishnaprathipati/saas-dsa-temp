@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layout/dsaLayoutLoggedIn}" th:with="currentPosition='specificStudent'">
+
+<head>
+	<title>Report Issue with Application</title>
+</head>
+
+<body>
+
+<div layout:fragment="content">
+
+	<div class="ds_page__middle">
+		<div class="ds_wrapper">
+			<main class="ds_layout  ds_layout--article">
+				<div class="ds_layout__content">
+					<p><br></p>
+					<div class="ds_notification-panel ds_notification-panel--success">
+						<h1 class="ds_notification-panel__title">We have contacted your<br>Disability Advisor</h1>
+					</div>
+					<div class="ds_input--fixed-40">
+						<p>We have contacted your Disability Advisor to let them know that you cannot complete your DSA
+							application.</p>
+
+						<form id="student_personal_details" th:action="@{/reportIssue}" method="POST">
+							<h1>What happens next</h1>
+							<p>Your Disability Advisor will contact you to discuss the reason you have reported a
+								problem
+								and will help you to complete or withdraw your application. In the meantime, you may
+								wish to
+								get in touch with them to avoid any delays.</p>
+							<div class="ds_button-group">
+								<div class="ds_button-group">
+									<button class="ds_button" name="action" value="DASHBOARD">Finish
+									</button>
+								</div>
+							</div>
+							<input type="hidden" th:value="${studentReferenceNumber}" name="studentReferenceNumber"/>
+							<input type="hidden" th:value="${dsaApplicationNumber}" name="dsaApplicationNumber"/>
+						</form>
+					</div>
+				</div>
+			</main>
+		</div>
+	</div>
+
+</div>
+
+</body>
+
+</html>

@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layout/dsaLayoutLoggedIn}" th:with="currentTab='help', currentPosition='findStudent'">
+
+<head>
+	<title>Help</title>
+	<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
+	<meta http-equiv="Pragma" content="no-cache"/>
+	<meta http-equiv="Expires" content="0"/>
+</head>
+
+<body>
+<div layout:fragment="content">
+	<div class="ds_page__middle">
+		<div class="ds_wrapper">
+			<main class="ds_layout  ds_layout--article">
+				<div class="ds_layout__content">
+					<div class="ds_question">
+						<p><br></p>
+						<h1>Get help with Disabled Students’ Allowance</h1>
+						<p>These guides and forms will help you complete an application that your Disability Advisor has
+							started for you.</p>
+						<br>
+						<div class="ds_tabs" data-module="ds-tabs">
+							<nav class="ds_tabs__navigation" aria-labelledby="ds_tabs__title">
+								<h2 id="ds_tabs__title" class="ds_tabs__title">Contents</h2>
+								<ul class="ds_tabs__list" id="tablist">
+									<li class="ds_tabs__tab">
+										<a class="ds_tabs__tab-link ds_link" href="#tab1">User guides</a>
+									</li>
+									<li class="ds_tabs__tab">
+										<a class="ds_tabs__tab-link ds_link" href="#tab2">DSA forms</a>
+									</li>
+								</ul>
+							</nav>
+
+							<div class="ds_tabs__content  ds_tabs__content--bordered" id="tab1">
+								<p>These guides will give you general information on DSA and will guide you through the
+									online application process. If you still need help, contact your Disability
+									Advisor.</p>
+								<div class="ds_file-download">
+									<div class="ds_file-download__thumbnail">
+										<span class="ds_file-download__thumbnail-link" aria-hidden="true" tabindex="-1">
+											<span class="visually-hidden">Document cover image</span>
+											<img class="ds_file-download__thumbnail-image"
+												 th:src="@{/images/pdf.svg}" alt="Document"/>
+										</span>
+									</div>
+									<div class="ds_file-download__content">
+										<a href="https://www.saas.gov.uk/files/402/saas-dsa-notes.pdf"
+										   class="ds_file-download__title" aria-describedby="file-download-1">DSA
+											Guidance Notes</a>
+										<p>This guide gives you information on who is eligible for DSA and what the fund
+											can be used to pay for.</p>
+
+										<div id="file-download-1" class="ds_file-download__details">
+											<dl class="ds_metadata  ds_metadata--inline">
+												<div class="ds_metadata__item">
+													<dt class="ds_metadata__key  visually-hidden">File type</dt>
+													<dd class="ds_metadata__value">21 pages<span
+															class="visually-hidden">,</span>
+													</dd>
+												</div>
+
+												<div class="ds_metadata__item">
+													<dt class="ds_metadata__key  visually-hidden">File size</dt>
+													<dd class="ds_metadata__value">440Kb</dd>
+												</div>
+											</dl>
+										</div>
+									</div>
+								</div>
+								<hr>
+								<div class="ds_file-download">
+									<div class="ds_file-download__thumbnail">
+										<span class="ds_file-download__thumbnail-link" aria-hidden="true" tabindex="-1">
+											<span class="visually-hidden">Document cover image</span>
+											<img class="ds_file-download__thumbnail-image"
+												 th:src="@{/images/pdf.svg}" alt="Document"/>
+										</span>
+									</div>
+									<div class="ds_file-download__content">
+										<a href="https://www.saas.gov.uk/files/879/dsa-online-application-guide.pdf"
+										   class="ds_file-download__title" aria-describedby="file-download-2">DSA
+											Online Application Guide</a>
+										<p>This guide gives you information on the online application process and what
+											you need to do to submit a DSA application.</p>
+
+										<div id="file-download-2" class="ds_file-download__details">
+											<dl class="ds_metadata  ds_metadata--inline">
+												<div class="ds_metadata__item">
+													<dt class="ds_metadata__key  visually-hidden">File type</dt>
+													<dd class="ds_metadata__value">9 pages<span
+															class="visually-hidden">,</span>
+													</dd>
+												</div>
+
+												<div class="ds_metadata__item">
+													<dt class="ds_metadata__key  visually-hidden">File size</dt>
+													<dd class="ds_metadata__value">695Kb</dd>
+												</div>
+											</dl>
+										</div>
+									</div>
+								</div>
+								<hr>
+								<div class="ds_file-download">
+									<div class="ds_file-download__thumbnail">
+										<span class="ds_file-download__thumbnail-link" aria-hidden="true" tabindex="-1">
+											<span class="visually-hidden">Document cover image</span>
+											<img class="ds_file-download__thumbnail-image"
+												 th:src="@{/images/pdf.svg}" alt="Document"/>
+										</span>
+									</div>
+									<div class="ds_file-download__content">
+										<a th:href="@{/file/download/NMPH%20Guidance%20Notes.pdf}"
+										   class="ds_file-download__title" aria-describedby="file-download-2">NMPH
+											Guidance Notes</a>
+										<p>A guide to using the Non-Medical Personal Help (NMPH) allowance.</p>
+
+										<div id="file-download-3" class="ds_file-download__details">
+											<dl class="ds_metadata  ds_metadata--inline">
+												<div class="ds_metadata__item">
+													<dt class="ds_metadata__key  visually-hidden">File type</dt>
+													<dd class="ds_metadata__value">25 pages<span
+															class="visually-hidden">,</span>
+													</dd>
+												</div>
+
+												<div class="ds_metadata__item">
+													<dt class="ds_metadata__key  visually-hidden">File size</dt>
+													<dd class="ds_metadata__value">330Kb</dd>
+												</div>
+											</dl>
+										</div>
+									</div>
+								</div>
+
+							</div>
+
+							<div class="ds_tabs__content  ds_tabs__content--bordered" id="tab2">
+								<p>Only fill out the forms on this page if you have been asked to do so by SAAS or your
+									Disability Advisor. If you do not see the form you need, please <a
+											href="https://www.saas.gov.uk/contact-us">contact us</a>.</p>
+								<p>Before you complete a form:</p>
+								<ol>
+									<li>Download and install <a href="https://get.adobe.com/uk/reader/" target="_blank">Adobe
+										Acrobat</a> on your device. The reader version is free of charge. Do not use
+										third party PDF software as it may not work correctly.
+									</li>
+									<li>Choose the form you need and save a copy. Do not complete the form in your
+										browser window.
+									</li>
+									<li>Save a copy on your device and fill in the form. Make sure you sign and date the
+										form, you can type your name in the signature box.
+									</li>
+									<li>Upload the form to your SAAS Account using the Document Uploader.
+									</li>
+								</ol>
+								<p><br></p>
+								<hr>
+
+								<div class="ds_file-download">
+									<div class="ds_file-download__thumbnail">
+										<span class="ds_file-download__thumbnail-link" aria-hidden="true" tabindex="-1">
+											<span class="visually-hidden">Document cover image</span>
+											<img class="ds_file-download__thumbnail-image"
+												 th:src="@{/images/pdf.svg}" alt="Document"/>
+										</span>
+									</div>
+									<div class="ds_file-download__content">
+										<a th:href="@{/file/download/Third%20Party%20Consent%20Form.pdf}"
+										   class="ds_file-download__title" aria-describedby="file-download-4">Third
+											Party Consent Form</a>
+										<p>If you would like a carer or guardian to have permission to talk to SAAS
+											about your DSA application, you must complete a third party consent form.
+											Once completed and submitted to SAAS they can speak to us on your
+											behalf.</p>
+
+										<div id="file-download-4" class="ds_file-download__details">
+											<dl class="ds_metadata  ds_metadata--inline">
+												<div class="ds_metadata__item">
+													<dt class="ds_metadata__key  visually-hidden">File type</dt>
+													<dd class="ds_metadata__value">3 pages<span
+															class="visually-hidden">,</span>
+													</dd>
+												</div>
+
+												<div class="ds_metadata__item">
+													<dt class="ds_metadata__key  visually-hidden">File size</dt>
+													<dd class="ds_metadata__value">231Kb</dd>
+												</div>
+											</dl>
+										</div>
+									</div>
+								</div>
+
+								<hr>
+
+								<div class="ds_file-download">
+									<div class="ds_file-download__thumbnail">
+										<span class="ds_file-download__thumbnail-link" aria-hidden="true" tabindex="-1">
+											<span class="visually-hidden">Document cover image</span>
+											<img class="ds_file-download__thumbnail-image"
+												 th:src="@{/images/pdf.svg}" alt="Document"/>
+										</span>
+									</div>
+									<div class="ds_file-download__content">
+										<a th:href="@{/file/download/NMPH%20Personal%20Helper%20Registration%20Form.pdf}"
+										   class="ds_file-download__title" aria-describedby="file-download-5">DSA Helper
+											Registration Form</a>
+										<p>Provide details of the student’s NMPH helper. The helper will also need to
+											fill in Section B of this form.</p>
+
+										<div id="file-download-5" class="ds_file-download__details">
+											<dl class="ds_metadata  ds_metadata--inline">
+												<div class="ds_metadata__item">
+													<dt class="ds_metadata__key  visually-hidden">File type</dt>
+													<dd class="ds_metadata__value">2 pages<span
+															class="visually-hidden">,</span>
+													</dd>
+												</div>
+
+												<div class="ds_metadata__item">
+													<dt class="ds_metadata__key  visually-hidden">File size</dt>
+													<dd class="ds_metadata__value">133Kb</dd>
+												</div>
+											</dl>
+										</div>
+									</div>
+								</div>
+
+								<hr>
+
+								<div class="ds_file-download">
+									<div class="ds_file-download__thumbnail">
+										<span class="ds_file-download__thumbnail-link" aria-hidden="true" tabindex="-1">
+											<span class="visually-hidden">Document cover image</span>
+											<img class="ds_file-download__thumbnail-image"
+												 th:src="@{/images/pdf.svg}" alt="Document"/>
+										</span>
+									</div>
+									<div class="ds_file-download__content">
+										<a th:href="@{/file/download/DSA%20Helper%20Claim%20Form.pdf}"
+										   class="ds_file-download__title" aria-describedby="file-download-6">DSA Helper
+											Claim Form</a>
+										<p>Use this form if you need to claim back the cost of employing your own NMPH
+											helper.</p>
+
+										<div id="file-download-6" class="ds_file-download__details">
+											<dl class="ds_metadata  ds_metadata--inline">
+												<div class="ds_metadata__item">
+													<dt class="ds_metadata__key  visually-hidden">File type</dt>
+													<dd class="ds_metadata__value">2 pages<span
+															class="visually-hidden">,</span>
+													</dd>
+												</div>
+
+												<div class="ds_metadata__item">
+													<dt class="ds_metadata__key  visually-hidden">File size</dt>
+													<dd class="ds_metadata__value">264Kb</dd>
+												</div>
+											</dl>
+										</div>
+									</div>
+								</div>
+
+								<hr>
+
+								<div class="ds_file-download">
+									<div class="ds_file-download__thumbnail">
+										<span class="ds_file-download__thumbnail-link" aria-hidden="true" tabindex="-1">
+											<span class="visually-hidden">Document cover image</span>
+											<img class="ds_file-download__thumbnail-image"
+												 th:src="@{/images/pdf.svg}" alt="Document"/>
+										</span>
+									</div>
+									<div class="ds_file-download__content">
+										<a th:href="@{/file/download/DSA%20Third%20Party%20Agreement%20Form.pdf}"
+										   class="ds_file-download__title" aria-describedby="file-download-7">DSA Third
+											Party Agreement Form</a>
+										<p>Complete this form to authorise SAAS to pay a third party.</p>
+
+										<div id="file-download-7" class="ds_file-download__details">
+											<dl class="ds_metadata  ds_metadata--inline">
+												<div class="ds_metadata__item">
+													<dt class="ds_metadata__key  visually-hidden">File type</dt>
+													<dd class="ds_metadata__value">1 page<span
+															class="visually-hidden">,</span>
+													</dd>
+												</div>
+
+												<div class="ds_metadata__item">
+													<dt class="ds_metadata__key  visually-hidden">File size</dt>
+													<dd class="ds_metadata__value">144Kb</dd>
+												</div>
+											</dl>
+										</div>
+									</div>
+								</div>
+
+							</div>
+
+						</div>
+
+					</div>
+				</div>
+			</main>
+		</div>
+	</div>
+</div>
+</body>
+
+</html>

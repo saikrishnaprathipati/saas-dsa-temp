@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<meta content="width=device-width" name="viewport">
+<title>SAAS - DSA application awarded email</title>
+<style>
+@media only screen and (min-device-width: 581px) {
+	.content {
+		width: 580px !important;
+	}
+}
+
+.container {
+	display: flex;
+}
+
+.fixed {
+	width: 200px;
+}
+
+.flex-item {
+	flex-grow: 1;
+}
+</style>
+</head>
+
+<body
+	style="font-family: Helvetica, Arial, sans-serif; font-size: 16px; margin: 0; color: #0b0c0c;">
+
+	<!--[if (gte mso 9)|(IE)]>
+<table width="580" align="center" cellpadding="0" cellspacing="0" border="0">
+	<tr>
+		<td>
+<![endif]-->
+
+	<table width="580" cellpadding="0" cellspacing="0" border="0"
+		align="center">
+		<tr>
+			<td height="50">&nbsp;</td>
+		</tr>
+		<tr>
+			<td width="138" height="47" valign="middle"><a
+				href="https://www.saas.gov.uk"><img src="cid:SAAS_Logo.png"
+					alt="SAAS Logo" height="47" border="0"></a></td>
+		</tr>
+	</table>
+	<table class="content" align="center" cellpadding="0" cellspacing="0"
+		border="0" style="width: 100%; max-width: 580px;">
+		<tr>
+			<td>
+				<h1
+					style="font-family: Helvetica, Arial, sans-serif; font-size: 36px; line-height: 1.315789474; font-weight: 700; margin: 19px 0 38px 0;">
+					DSA Award Decision</h1>
+				<p
+					style="font-family: Helvetica, Arial, sans-serif; font-size: 19px; line-height: 1.315789474; margin: 30px 0 30px 0;">
+					Dear <span th:text="${STUDENT_FULL_NAME}"></span>
+				</p>
+				<p
+					style="font-family: Helvetica, Arial, sans-serif; font-size: 19px; line-height: 1.315789474; margin: 30px 0 30px 0;">
+					Following your online application, DSA has <strong>not
+						been awarded:</strong>
+				</p> <br>
+
+				<div class="container">
+					<div class="fixed">
+						<strong>SAAS Reference Number</strong>
+					</div>
+					<div class="flex-item" th:text="${SAAS_REFERNECE_NUMBER}"></div>
+				</div> <br>
+				<div class="container">
+					<div class="fixed">
+						<strong>Name</strong>
+					</div>
+					<div class="flex-item" th:text="${STUDENT_FULL_NAME}"></div>
+				</div>
+
+				<p
+					style="font-family: Helvetica, Arial, sans-serif; font-size: 19px; line-height: 1.315789474; margin: 30px 0 30px 0;">
+					You may wish to contact your Disability Advisor for support and to
+					talk to them about the DSA appeals process.</p>
+				<h3
+					style="font-family: Helvetica, Arial, sans-serif; font-size: 22px; line-height: 1.315789474; font-weight: 700; margin: 38px 0 19px 0;">
+					Sign in to your SAAS Account</h3>
+				<p
+					style="font-family: Helvetica, Arial, sans-serif; border-left: 5px #000000 solid; padding: 14px 0 14px 14px; font-size: 19px; line-height: 1.315789474; margin: 0 0 19px 0;">
+					<a th:href="${STUDENT_SIGN_IN_URL}">https://www.saas.gov.uk/sign-in</a>
+				</p>
+				<p
+					style="font-family: Helvetica, Arial, sans-serif; font-size: 16px; color: #8F9395; line-height: 1.315789474; margin: 0 0 30px 0;">
+					This is an automatically generated email. Please do not reply. If
+					you need help, contact your Disability Advisor at your college or
+					university. You can disregard this email if you have received it in
+					error.</p>
+			</td>
+		</tr>
+	</table>
+	<!--[if (gte mso 9)|(IE)]>
+</td>
+</tr>
+</table>
+<![endif]-->
+</body>
+
+</html>

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/dsaLayoutLoggedIn}" th:with="currentPosition='specificStudent'">
+
+<head>
+	<title>Bank account summary</title>
+	<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+	<meta http-equiv="Pragma" content="no-cache" />
+	<meta http-equiv="Expires" content="0" />
+</head>
+
+<body>
+
+	<div layout:fragment="content">
+		<span>&nbsp;</span>
+		<div class="ds_wrapper">
+			<main class="ds_layout  ds_layout--article">
+				<div class="ds_layout__content">
+
+					<div th:if="${bankAccountAdded}" data-module="ds-notification">
+						<div class="ds_warning-text ds_warning-text-new ds_important-text-grey">
+							<strong class="ds_warning-text__icon" aria-hidden="true"></strong>
+							<strong class="visually-hidden">Warning</strong>
+							<div class="ds_warning-text__text">Your DSA payments will be paid into the same account as your main funding.
+							</div>
+							<button class="ds_notification__close  js-close-notification" type="button"
+								data-button="button-close-this-notification" data-banner="banner-1-close">
+								<span class="visually-hidden">Close this notification</span>
+								<img th:src="@{/images/icon-cross.svg}" class="icon_cross" alt="close">
+							</button>
+
+						</div>
+					</div>
+
+
+					<div class="ds_question">
+						<h1>Bank account for DSA payments confirmed</h1>
+						<p>Payments will be made from SAAS with a reference ‘Disabled Students’ Allowance’ to help you
+							identify that this is your DSA payment.</p>
+						<p>Remember, we will need to see receipts for any equipment you purchase with this allowance.
+						</p>
+
+						<h2>We will pay your DSA into the following bank account</h2>
+						<table class="ds_table dsa_allowance_table" data-smallscreen="scrolling">
+							<thead>
+								<tr>
+									<th scope="col">Name on account</th>
+									<th scope="col">Sort code</th>
+									<th scope="col">Account number</th>
+									<th scope="col">Payment for<p></p>
+									</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td th:text="${bankAccountData.accountName}"></td>
+									<td th:text="${bankAccountData.sortCodeForUI}"></td>
+									<td th:text="${bankAccountData.accountNumberForUI}"></td>
+									<td th:text="${bankAccountData.paymentFor.descriptionForPortal}"></td> 
+									<td
+										th:if="${bankAccountData.paymentFor eq T(uk.gov.saas.dsa.model.PaymentFor).DSA_PAYMENT}">
+										<form id="change_bank" action="#" th:action="@{/changeBankAccount}"
+											th:object="${changeBankAccountFormVO}" method="POST">
+											<button class="ds_link  ds_no-margin" name="action" value="INT_CHANGEN_BANK"
+												data-button="about-student">Change
+											</button>
+											<input type="hidden" th:value="${bankAccountData.accountNumber}"
+												name="accountNumber" />
+
+											<input type="hidden" th:value="${bankAccountData.sortCode}"
+												name="sortCode" />
+											<input type="hidden" th:value="${bankAccountData.accountName}"
+												name="nameOnAccount" />
+
+											<input type="hidden" th:value="${dsaApplicationNumber}"
+												name="dsaApplicationNumber" />
+											<input type="hidden" th:value="${studentReferenceNumber}"
+												name="studentReferenceNumber" />
+										</form>
+									</td>
+									<td th:if="${bankAccountData.paymentFor eq T(uk.gov.saas.dsa.model.PaymentFor).DSA_PAYMENT}">
+										<form id="remove_nmph" action="#" th:action="@{/removeBankAccount}"
+											th:object="${removeItemFormVO}" method="POST">
+											<button class="ds_link  ds_no-margin" name="action"
+												value="INIT_REMOVE_BANK_ACCOUNT" data-button="about-student">Remove
+											</button>
+											<input type="hidden" th:value="${bankAccountData.accountNumberForUI}"
+												name="itemName" />
+											<input type="hidden" th:value="${dsaApplicationNumber}"
+												name="dsaApplicationNumber" />
+											<input type="hidden" th:value="${studentReferenceNumber}"
+												name="studentReferenceNumber" />
+										</form>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+
+					<form id="bank-summary" action="#" th:action="@{/bankAccountSummary}"
+						th:object="${changeBankAccountFormVO}" method="POST">
+
+						<div class="ds_button-group">
+							<button class="ds_button ds_button--cancel" name="action"
+								th:value="BACK_TO_CHOOSE_BANK_ACCOUNT" data-button="back">Back
+							</button>
+							&nbsp;&nbsp;&nbsp;&nbsp;
+							<button class="ds_button " name="action" th:value="BANK_ACCOUNT_DETAILS_COMPLETED"
+								data-button="continue">Save and continue
+							</button>
+						</div>
+						<input type="hidden" th:value="${dsaApplicationNumber}" name="dsaApplicationNumber" />
+						<input type="hidden" th:value="${studentReferenceNumber}" name="studentReferenceNumber" />
+					</form>
+				</div>
+			</main>
+		</div>
+
+
+
+	</div>
+
+</body>
+
+</html>

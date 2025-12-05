@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layout/dsaLayoutLoggedIn}" th:with="currentPosition='findStudent', currentTab='findStudent'">
+
+<head>
+	<title>Find Student</title>
+	<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+	<meta http-equiv="Pragma" content="no-cache" />
+	<meta http-equiv="Expires" content="0" />
+</head>
+
+<body>
+
+<div layout:fragment="content">
+	<div class="ds_page__middle">
+		<div class="ds_wrapper">
+			<main class="ds_layout  ds_layout--article">
+				<div class="ds_layout__content eligibility-header">
+					<p><br></p>
+					<!--/* No Student Results */-->
+					<div id="empty_student_results" class="ds_input--fixed-40" th:if="${studentResults.size eq 0}">
+						<h1>Student not found</h1>
+						<br>
+						<p>We cannot find a student with the details you have entered. Check the information you have
+							provided and <a th:href="@{/findStudents}">search again</a>.
+						</p>
+						<p>You can only use this service to apply for DSA on behalf of a student who has already applied
+							to SAAS for their main funding for this academic year.
+						</p>
+						<p></p>
+						<h2>Get help</h2>
+						<p>If your details are correct but the student is not on our system, contact the <a
+								th:href="@{/help#tab3}">DSA Team</a>.
+						</p>
+						<p>We cannot discuss personal details about a student unless they have given their consent to
+							share.</p>
+					</div>
+
+					<!--/* Singe Student Result */-->
+					<div id="one_student_results" th:if="${studentResults.size eq 1}">
+						<h1>Student details</h1>
+						<p>You have found <strong>1</strong> student:</p>
+
+						<ol class="ds_summary-list search-result">
+							<li class="ds_summary-list__item">
+								<div class="ds_summary-list__key">
+									<strong>SAAS Reference Number</strong>
+								</div>
+								<div class="ds_summary-list__value"
+									 th:text="${studentResults[0].studentReferenceNumber}"></div>
+							</li>
+							<li class="ds_summary-list__item">
+								<div class="ds_summary-list__key">
+									<strong>Name</strong>
+								</div>
+								<div class="ds_summary-list__value"
+									 th:text="${studentResults[0].firstName} + ' ' + ${studentResults[0].lastName}">
+								</div>
+							</li>
+							<li class="ds_summary-list__item">
+								<div class="ds_summary-list__key">
+									<strong>Date of birth</strong>
+								</div>
+								<div class="ds_summary-list__value" th:text="${studentResults[0].dob}"></div>
+							</li>
+							<li class="ds_summary-list__item">
+								<div class="ds_summary-list__key">
+									<strong>Last known institution</strong>
+								</div>
+								<div class="ds_summary-list__value"
+									 th:text="${studentResults[0].studentCourseYear.institutionName}"></div>
+							</li>
+						</ol>
+
+						<div class="ds_button-group">
+							<form th:action="@{/startResumeApplication}" th:object="${dashboardFormVO}"
+								  method="POST">
+								<input type="hidden" th:value="${studentResults[0].studentReferenceNumber}"
+									   name="studentReferenceNumber"/>
+
+								<input type="hidden" th:value="${studentResults[0].firstName}" name="firstName"/>
+								<input type="hidden" th:value=" ${studentResults[0].lastName}" name="lastName"/>
+								<input type="hidden" th:value=" ${studentResults[0].dob}" name="dob"/>
+								<input type="hidden" th:value=" ${studentResults[0].studentCourseYear.academicYearFull}"
+									   name="academicYear"/>
+								<input type="hidden" th:value=" ${studentResults[0].studentCourseYear.sessionCode}"
+									   name="sessionCode"/>
+								<input type="hidden"
+									   th:value="${studentResults[0].studentCourseYear.institutionName}"
+									   name="institutionName"/>
+								<input type="hidden" th:value="${studentResults[0].applicationUpdated}"
+									   name="applicationUpdated"/>
+								<input type="hidden" th:value="${studentResults[0].applicationStatus}"
+									   name="applicationStatus"/>
+								<input type="hidden" th:value=" ${studentResults[0].fundingEligibilityStatus}"
+									   name="fundingEligibilityStatus"/>
+								<input type="submit" class="ds_button dsa_button" value="Continue">
+							</form>
+							<p><strong>OR</strong></p>
+							<p>
+								<a th:href="@{/findStudents}" class="secondary_form">Clear results and search again</a>
+							</p>
+						</div>
+					</div>
+
+					<!--/* Multiple Student Results */-->
+					<div th:if="${studentResults.size gt 1}">
+						<h1>Student details</h1>
+						<p>You have found <strong th:text="${studentResults.size}"></strong> students:</p>
+						<table class="ds_table dsa_allowance_table" id="student_results"
+							   data-smallscreen="scrolling">
+							<caption class="hidden">Student details</caption>
+							<thead>
+							<tr>
+								<th scope="col">SAAS Reference Number</th>
+								<th scope="col">Name</th>
+								<th scope="col">Date of birth</th>
+								<th scope="col">Last known institution</th>
+							</tr>
+							</thead>
+							<tbody>
+							<tr th:each="student : ${studentResults}">
+								<td th:text="${student.studentReferenceNumber}"></td>
+								<td th:text="${student.firstName} + ' ' + ${student.lastName}"></td>
+								<td th:text="${student.dob}"></td>
+								<td th:text="${student.studentCourseYear.institutionName}"></td>
+								<td>
+									<form th:action="@{/startResumeApplication}" th:object="${dashboardFormVO}"
+										  method="POST">
+										<input type="hidden" th:value="${student.studentReferenceNumber}"
+											   name="studentReferenceNumber"/>
+										<input type="hidden" th:value="${student.firstName}" name="firstName"/>
+										<input type="hidden" th:value=" ${student.lastName}" name="lastName"/>
+										<input type="hidden" th:value=" ${student.dob}" name="dob"/>
+										<input type="hidden"
+											   th:value=" ${student.studentCourseYear.academicYearFull}"
+											   name="academicYear"/>
+										<input type="hidden"
+											   th:value=" ${student.studentCourseYear.sessionCode}"
+											   name="sessionCode"/>
+										<input type="hidden" th:value="${student.applicationUpdated}"
+											   name="applicationUpdated"/>
+										<input type="hidden"
+											   th:value="${student.studentCourseYear.institutionName}"
+											   name="institutionName"/>
+										<input type="hidden" th:value="${student.applicationStatus}"
+											   name="applicationStatus"/>
+										<input type="hidden" th:value=" ${student.fundingEligibilityStatus}"
+											   name="fundingEligibilityStatus"/>
+										<button class="ds_link ds_no-margin secondary_form" name="action"
+												value="Continue">Continue
+										</button>
+									</form>
+								</td>
+							</tr>
+							</tbody>
+						</table>
+						<p>
+							<a th:href="@{/findStudents}" class="secondary_form">Clear results and search again</a>
+						</p>
+					</div>
+				</div>
+			</main>
+		</div>
+	</div>
+</div>
+</body>
+
+</html>

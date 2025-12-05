@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layout/dsaLayoutLoggedIn}" th:with="currentPosition='specificStudent', currentTab='dashboard'">
+
+<head>
+	<title>Add Consumables</title>
+	<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+	<meta http-equiv="Pragma" content="no-cache" />
+	<meta http-equiv="Expires" content="0" />
+</head>
+
+<body>
+
+<div layout:fragment="content">
+
+	<div class="ds_page__middle">
+		<div class="ds_wrapper">
+			<main class="ds_layout  ds_layout--article">
+				<div class="ds_layout__content">
+					<p><br></p>
+					<form id="add_consumable" action="#" th:action="@{/addConsumables}"
+						  th:object="${addConsumableFormVO}" method="POST">
+
+						<div tabindex="-1" th:if="${#fields.hasAnyErrors()}" class="ds_error-summary"
+							 id="error-summary" aria-labelledby="error-summary-title" role="alert">
+							<h2 class="ds_error-summary__title" id="error-summary-title">There is a problem</h2>
+
+							<ul class="ds_error-summary__list">
+								<li th:each="errorIdMap: ${addConsumableFormVO.errorIdMapp}">
+										<span th:if="${#fields.hasErrors(errorIdMap.value.errorField)}">
+											<span th:each="fieldError: ${#fields.errors(errorIdMap.value.errorField)}">
+												<a th:href="${'#' + errorIdMap.key}" th:text="${fieldError}"
+												   class="field-error">
+												</a>
+											</span>
+										</span>
+
+								</li>
+							</ul>
+						</div>
+
+						<p class="ds_hint-text">Part 2 of 3</p>
+						<h1>Enter cost for consumable items</h1>
+						<div class="ds_question">
+							<div th:each="row, rowStat : *{consumableItems}">
+								<div class="ds_question"
+									 th:classappend="${#fields.hasErrors('consumableItems[__${rowStat.index}__].cost')} ? 'ds_question--error'">
+									<label class="ds_label" th:for="${row.consumableItem.name}"><strong
+											th:text="${row.consumableItem.itemName}">
+									</strong> </label>
+									<p class="ds_hint-text"
+									   th:if="${T(uk.gov.saas.dsa.model.ConsumableItem).OTHER} eq ${row.consumableItem}"
+									   th:text="${row.description}"></p>
+									<p class="ds_hint-text">Including VAT.</p>
+
+									<div class="ds_question__error-message"
+										 th:if="${#fields.hasErrors('consumableItems[__${rowStat.index}__].cost')}">
+
+										<div th:each="err: ${#fields.errors('consumableItems[__${rowStat.index}__].cost')}">
+											<!--/* Removing for from the error message */-->
+											<p th:if="${#strings.contains(err, (' for ' +  row.consumableItem.itemName))}"
+											   th:text="${#strings.replace(err, (' for ' +  row.consumableItem.itemName), '')}">
+											</p>
+											<!--/* Removing the item name from the error message */-->
+											<p th:if="${#strings.contains(err, (row.consumableItem.itemName + ' f'))}"
+											   th:text="${#strings.replace(err, (row.consumableItem.itemName+ ' f'), 'This f')}">
+											</p>
+
+										</div>
+									</div>
+
+									<div class="ds_currency-wrapper" data-symbol="£">
+										<input class="ds_input  ds_input--fixed-10" maxlength="8" type="text"
+											   th:id="${row.consumableItem.name}"
+											   th:field="*{consumableItems[__${rowStat.index}__].cost}"/>
+									</div>
+									<input type="hidden" th:value="${row.consumableItem}"
+										   th:field="*{consumableItems[__${rowStat.index}__].consumableItem}"/>
+
+									<input type="hidden" th:value="${row.description}"
+										   th:field="*{consumableItems[__${rowStat.index}__].description}"/>
+
+									<input type="hidden" th:value="${studentReferenceNumber}"
+										   name="studentReferenceNumber"/>
+									<input type="hidden" th:value="${dsaApplicationNumber}"
+										   name="dsaApplicationNumber"/>
+									<input type="hidden" th:value="${studentFirstName}" name="studentFirstName"/>
+								</div>
+								<br>
+							</div>
+						</div>
+
+						<div class="ds_button-group">
+							<div class="ds_button-group">
+								<input type="submit" class="ds_button ds_button--cancel" name="action"
+									   value="Add">&nbsp;&nbsp;&nbsp;&nbsp;
+								<button class="ds_link  ds_no-margin secondary_form" name="action" value="Cancel"
+										data-button="about-student">Cancel
+								</button>
+							</div>
+						</div>
+					</form>
+				</div>
+			</main>
+		</div>
+	</div>
+
+
+</div>
+
+</body>
+
+</html>

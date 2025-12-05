@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layout/dsaLayoutLoggedIn}" th:with="currentPosition='specificStudent'">
+
+<head>
+	<title>Report Issue with Application</title>
+</head>
+
+<body>
+
+<div layout:fragment="content">
+
+	<div class="ds_page__middle">
+		<div class="ds_wrapper">
+			<main class="ds_layout  ds_layout--article">
+				<div class="ds_layout__content ds_input--fixed-40">
+					<form id="advisor_declaration" action="#" th:action="@{/reportIssue}"
+						  th:object="${reportIssueFormVO}" method="POST">
+						<p><br></p>
+						<div tabindex="-1" th:if="${#fields.hasAnyErrors()}" class="ds_error-summary"
+							 id="error-summary" aria-labelledby="error-summary-title" role="alert">
+							<h2 class="ds_error-summary__title" id="error-summary-title">There is a problem</h2>
+
+							<ul class="ds_error-summary__list">
+								<li th:each="fieldName: ${reportIssueFormVO.orderedFields}">
+
+									<span th:if="${#fields.hasErrors(fieldName)}">
+										<span th:each="fieldError: ${#fields.errors(fieldName)}">
+											<span>
+												<a th:href="${'#' + fieldName}" th:text="${fieldError}"
+												   class="field-error">
+												</a>
+											</span>
+										</span>
+									</span>
+
+								</li>
+							</ul>
+						</div>
+
+						<div class="ds_question">
+							<h1>Tell your Disability Advisor about a problem with your application</h1>
+							<p class="ds_input--fixed-40">Tell us why you cannot complete your application. Once you
+								have selected a reason, we will ask your Disability Advisor to contact you to make
+								changes or withdraw your application.</p>
+							<br>
+							<div class="ds_question ds_input--fixed-40"
+								 th:classappend="${#fields.hasErrors('issueType')} ? 'ds_question--error'">
+								<fieldset id="issueType">
+									<h2>Choose from the following</h2>
+
+									<div class="ds_radio">
+										<input class="ds_radio__input" id="incorrect-info" type="radio" name="radios"
+											   th:field="*{issueType}"
+											   th:value="${T(uk.gov.saas.dsa.model.IssueType).INCORRECT_INFO.code}">
+
+										<label class="ds_radio__label" for="incorrect-info">
+											<strong th:text="${T(uk.gov.saas.dsa.model.IssueType).INCORRECT_INFO.name}"></strong></label>
+										<p class="ds_hint-text dsa_hint-text"
+										   th:text="${T(uk.gov.saas.dsa.model.IssueType).INCORRECT_INFO.description}"></p>
+									</div>
+									<div class="ds_radio">
+										<input class="ds_radio__input" id="student-declaration" type="radio"
+											   name="radios"
+											   th:field="*{issueType}"
+											   th:value="${T(uk.gov.saas.dsa.model.IssueType).DECLARATION_ISSUE.code}">
+
+										<label class="ds_radio__label" for="student-declaration">
+											<strong th:text="${T(uk.gov.saas.dsa.model.IssueType).DECLARATION_ISSUE.name}"></strong></label>
+										<p class="ds_hint-text dsa_hint-text"
+										   th:text="${T(uk.gov.saas.dsa.model.IssueType).DECLARATION_ISSUE.description}"></p>
+									</div>
+									<div class="ds_radio">
+										<input class="ds_radio__input" id="request-withdraw" type="radio"
+											   name="radios"
+											   th:field="*{issueType}"
+											   th:value="${T(uk.gov.saas.dsa.model.IssueType).REQUEST_WITHDRAW.code}">
+
+										<label class="ds_radio__label" for="request-withdraw">
+											<strong th:text="${T(uk.gov.saas.dsa.model.IssueType).REQUEST_WITHDRAW.name}"></strong></label>
+										<p class="ds_hint-text dsa_hint-text"
+										   th:text="${T(uk.gov.saas.dsa.model.IssueType).REQUEST_WITHDRAW.description}"></p>
+									</div>
+
+									<div class="ds_radio">
+										<input class="ds_radio__input notListedCheckBox" id="other" type="radio"
+											   name="radios"
+											   th:field="*{issueType}"
+											   th:value="${T(uk.gov.saas.dsa.model.IssueType).OTHER.code}">
+
+										<label class="ds_radio__label" for="other">
+											<strong th:text="${T(uk.gov.saas.dsa.model.IssueType).OTHER.name}"></strong></label>
+										<p class="ds_hint-text dsa_hint-text"
+										   th:text="${T(uk.gov.saas.dsa.model.IssueType).OTHER.description}"></p>
+
+										<div class="ds_reveal-content">
+											<div class="ds_question" data-module="ds-character-count"
+												 th:classappend="${#fields.hasErrors('notListedText')}  ? 'ds_question--error'">
+												<label class="ds_label hidden"
+													   for="notListedText">Description</label>
+												<p class="ds_hint-text">Please describe the issue.</p>
+
+												<p class="notListedTextError"
+												   th:if="${#fields.hasErrors('notListedText')} "
+												   th:errors="*{notListedText}"></p>
+												<textarea maxlength="300" class="ds_input ds_input--fixed-20"
+														  th:classappend="${#fields.hasErrors('notListedText')} ? 'ds_input--error' : ''"
+														  rows="5"
+														  id="notListedText"
+														  th:field="*{notListedText}"></textarea>
+											</div>
+										</div>
+
+									</div>
+
+								</fieldset>
+								<input type="hidden" th:value="${dsaApplicationNumber}" name="dsaApplicationNumber"/>
+								<input type="hidden" th:value="${studentReferenceNumber}"
+									   name="studentReferenceNumber"/>
+							</div>
+
+						</div>
+
+						<div class="ds_button-group">
+							<button class="ds_button ds_button--cancel" name="action" th:value="DASHBOARD"
+									data-button="about-student">Back
+							</button>
+							&nbsp;&nbsp;&nbsp;&nbsp;
+							<input type="submit" class="ds_button" name="action" value="Save and continue">
+						</div>
+					</form>
+				</div>
+			</main>
+		</div>
+	</div>
+
+
+</div>
+
+</body>
+
+</html>

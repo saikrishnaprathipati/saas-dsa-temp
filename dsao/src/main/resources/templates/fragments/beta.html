@@ -1,0 +1,13 @@
+<div class="ds_wrapper ds_wrapper_new" th:if="${hideBeta == false || hideBeta == null}">
+	<p class="ds_phase-banner__content">
+		<strong class="ds_tag  ds_phase-banner__tag">
+			Beta
+		</strong>
+		<span class="ds_phase-banner__text">This is a new service. Your
+			<a href="https://docs.google.com/forms/d/e/1FAIpQLScOeHJQbz1WMkyu2FEgHOPTJnUJb2Lidh21-1kx_AfZS0E2pw/viewform?usp=sf_link"
+			   th:if="${LOGGEDIN_USER_TYPE ne 'STUDENT'}">feedback</a>
+			<a href="https://docs.google.com/forms/d/e/1FAIpQLSeQZeQ1ghXb6tES8qhaYQ0-Sj5V28W-BwARWQStOwWzVnuVPg/viewform?usp=sf_link"
+			   th:if="${LOGGEDIN_USER_TYPE eq 'STUDENT'}">feedback</a>
+			will help us to improve it.</span>
+	</p>
+</div>

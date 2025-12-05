@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layout/dsaLayoutLoggedIn}" th:with="currentPosition='specificStudent', currentTab='dashboard'">
+
+<head>
+	<title>NMPH Summary</title>
+	<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+	<meta http-equiv="Pragma" content="no-cache" />
+	<meta http-equiv="Expires" content="0" />
+</head>
+
+<body>
+
+<div layout:fragment="content">
+	<p><br></p>
+	<div class="ds_wrapper">
+		<main class="ds_layout  ds_layout--article">
+			<div class="ds_layout__content">
+				<p><br></p>
+				<div th:if="${nmphTotalExceeded}" data-module="ds-notification">
+					<div class="ds_warning-text ds_warning-text-new  ds_important-text-grey">
+						<strong class="ds_warning-text__icon" aria-hidden="true"></strong>
+						<strong class="visually-hidden">Warning</strong>
+						<div class="ds_warning-text__text">
+							You have exceed your allowance limit of <strong th:text="${nmphCap}"></strong> for the
+							academic year. You can still continue with the application and we will review inline with
+							your other allowances. You may be asked to provide further information.
+						</div>
+						<button class="ds_notification__close  js-close-notification" type="button"
+								data-button="button-close-this-notification" data-banner="banner-1-close">
+							<span class="visually-hidden">Close this notification</span>
+							<img th:src="@{/images/icon-cross.svg}" class="icon_cross" alt="close">
+						</button>
+					</div>
+				</div>
+
+				<div class="ds_question">
+					<span class="ds_hint-text">Part 2 of 2</span>
+					<h1><span th:text="${studentFirstName}"></span>'s Non-Medical Personal Help (NMPH)
+					</h1>
+					<h2>Total:&nbsp;<span th:text="${nmphTotal}"></span></h2>
+					<p>You have added <strong><span th:text="${nmphCount}"></span></strong> support types.</p>
+					<table class="ds_table dsa_allowance_table" data-smallscreen="scrolling">
+						<caption class="visually-hidden">NMPH items list</caption>
+						<thead>
+						<tr>
+							<th scope="col">Type of support</th>
+
+							<th scope="col">Recommended provider</th>
+							<th scope="col">Hourly rate
+							</th>
+							<th scope="col">Hours<br>
+								<p class="ds_hint-text dsa_vat">Per week.</p>
+							</th>
+							<th scope="col">Weeks<br>
+								<p class="ds_hint-text dsa_vat">Per year.</p>
+							</th>
+							<th scope="col">Cost<br>
+								<p class="ds_hint-text dsa_vat">Including VAT.</p>
+							</th>
+						</tr>
+						</thead>
+						<tbody>
+						<tr th:each="item: ${nmphItems}">
+							<td><span th:text="${item.typeOfSupport}"></span>
+							</td>
+							<td><span th:text="${item.recommendedProvider}"></span></td>
+							<td><span th:text="${item.hourlyRateStr}"></span></td>
+							<td><span th:text="${item.hours}"></span></td>
+							<td><span th:text="${item.weeks}"></span></td>
+							<td><span th:text="${item.costStr}"></span></td>
+							<td>
+								<form id="change_nmph" action="#" th:action="@{/changeNMPH}"
+									  th:object="${changeNMPHFormVO}" method="POST">
+									<button class="ds_link  ds_no-margin secondary_form" name="action"
+											value="INT_CHANGEN_MPH"
+											data-button="about-student">Change
+									</button>
+									<input type="hidden" th:value="${item.id}" name="id"/>
+									<input type="hidden" th:value="${dsaApplicationNumber}"
+										   name="dsaApplicationNumber"/>
+									<input type="hidden" th:value="${studentReferenceNumber}"
+										   name="studentReferenceNumber"/>
+								</form>
+							</td>
+							<td>
+								<form id="remove_nmph" action="#" th:action="@{/removeNMPH}"
+									  th:object="${addNMPHFormVO}" method="POST">
+									<button class="ds_link  ds_no-margin secondary_form" name="action" value="remove"
+											data-button="about-student">Remove
+									</button>
+									<input type="hidden" th:value="${item.id}" name="itemId"/>
+									<input type="hidden" th:value="${item.typeOfSupport}" name="itemName"/>
+									<input type="hidden" th:value="${dsaApplicationNumber}"
+										   name="dsaApplicationNumber"/>
+									<input type="hidden" th:value="${studentReferenceNumber}"
+										   name="studentReferenceNumber"/>
+								</form>
+							</td>
+						</tr>
+						</tbody>
+					</table>
+
+					<form id="add_nmph_summary" action="#" th:action="@{/addNMPHAllowance}"
+						  th:object="${addNMPHFormVO}" method="POST">
+						<button class="ds_link  ds_no-margin secondary_form" name="action" value="ADD_NMPH_FROM_SUMMARY"
+								data-button="about-student">Add another
+						</button>
+						<input type="hidden" th:value="${dsaApplicationNumber}" name="dsaApplicationNumber"/>
+						<input type="hidden" th:value="${studentReferenceNumber}" name="studentReferenceNumber"/>
+					</form>
+				</div>
+				<div class="ds_button-group">
+					<form id="nmph_summary_button" class="buttonInline" action="#"
+						  th:action="@{/equipmentSummary}" th:object="${applicationKeyDataFormVO}" method="POST">
+						<input type="hidden" th:value="${dsaApplicationNumber}" name="dsaApplicationNumber"/>
+						<input type="hidden" th:value="${studentReferenceNumber}" name="studentReferenceNumber"/>
+						<input type="hidden" name="action" value="CHANGE_FROM_SUMMARY"/>
+						<input type="submit" class="ds_button ds_button--cancel"
+							   value="Back">&nbsp;&nbsp;&nbsp;&nbsp;
+					</form>
+					<form id="travel_exp_save" class="buttonInline" action="#" th:action="@{/selectTravelExpense}"
+						  th:object="${travelExpSelectionFormVO}" method="POST">
+						<input type="hidden" th:value="${dsaApplicationNumber}" name="dsaApplicationNumber"/>
+						<input type="hidden" th:value="${studentReferenceNumber}" name="studentReferenceNumber"/>
+
+						<button class="ds_button  ds_no-margin" name="action"
+								value="SELECT_TRAVEL_EXP_FROM_NMPH_SUMMARY" data-button="about-student">Save and
+							continue
+						</button>
+					</form>
+				</div>
+			</div>
+		</main>
+	</div>
+
+
+</div>
+
+</body>
+
+</html>

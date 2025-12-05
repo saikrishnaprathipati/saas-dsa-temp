@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layout/dsaLayoutLoggedIn}" th:with="currentPosition='specificStudent', currentTab='dashboard'">
+<head>
+	<title>Student Disabilities</title>
+	<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
+	<meta http-equiv="Pragma" content="no-cache"/>
+	<meta http-equiv="Expires" content="0"/>
+</head>
+<body>
+
+<div layout:fragment="content">
+
+	<div class="ds_page__middle">
+		<div class="ds_wrapper">
+			<main class="ds_layout  ds_layout--article">
+				<div class="ds_layout__content">
+					<form id="student_personal_details" th:action="@{/continueNext}" method="POST">
+						<input type="hidden" th:value="${studentReferenceNumber}" name="studentReferenceNumber"/>
+						<input type="hidden" th:value="${dsaApplicationNumber}" name="dsaApplicationNumber"/>
+						<h1>What happens next</h1>
+						<p>You have successfully submitted the DSA application. We we will let <span
+								th:text="${studentFirstName}"></span>
+							know that their Disability Advisor has completed an application on their behalf.</p>
+						<p>The student will need to:</p>
+						<ul>
+							<li>check that the details on the DSA application are correct</li>
+							<li>sign the student declaration</li>
+							<li>confirm the bank account details of where they would like their award to be paid</li>
+							<li>submit the application</li>
+						</ul>
+						<p>If they believe that any of the information is incorrect, or they are unable to accept the
+							declaration and submit the application for any reason, they will need to select ‘I do not
+							agree’ on the student declaration and get in touch with their Disability Advisor to discuss
+							the next steps.</p>
+						<p>Once we have received and processed the application, we will notify the Disability Advisor
+							and the Learning Support Team via email that an award decision has been made. You can also
+							sign in to your DSA Account at any time to see the progress of this application.</p>
+						<strong>If you need to make changes</strong>
+						<p>You can only change the application once the student has reviewed the application and clicked
+							on ‘I do not agree’. If the student does nothing, the application will remain locked and
+							cannot be edited or processed by SAAS.</p>
+
+						<div class="ds_button-group">
+							<input type="submit" class="ds_button" name="action" value="Finish">
+						</div>
+					</form>
+				</div>
+			</main>
+		</div>
+	</div>
+
+</div>
+
+</body>
+</html>

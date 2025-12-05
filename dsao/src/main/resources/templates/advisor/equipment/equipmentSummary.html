@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layout/dsaLayoutLoggedIn}" th:with="currentPosition='specificStudent', currentTab='dashboard'">
+
+<head>
+	<title>Equipment Summary</title>
+	<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
+	<meta http-equiv="Pragma" content="no-cache"/>
+	<meta http-equiv="Expires" content="0"/>
+</head>
+
+<body>
+
+<div layout:fragment="content">
+	<div class="ds_wrapper">
+		<main class="ds_layout  ds_layout--article">
+			<div class="ds_layout__content">
+
+				<div th:if="${equipmentTotalExceeded}" data-module="ds-notification">
+					<p><br></p>
+					<div class="ds_warning-text ds_warning-text-new ds_important-text-grey">
+						<strong class="ds_warning-text__icon" aria-hidden="true"></strong>
+						<strong class="visually-hidden">Warning</strong>
+						<div class="ds_warning-text__text">
+							You have exceed your equipment, software and accessories allowance limit of <strong><span
+								th:text="${equipmentCap}"></span></strong> per course. You can still continue with the
+							application and we will review this along with your other allowance recommendations.
+						</div>
+						<button class="ds_notification__close  js-close-notification" type="button"
+								data-button="button-close-this-notification" data-banner="banner-1-close">
+							<span class="visually-hidden">Close this notification</span>
+							<img th:src="@{/images/icon-cross.svg}" class="icon_cross" alt="close">
+						</button>
+					</div>
+				</div>
+
+				<div class="ds_question">
+					<span class="ds_hint-text">Part 2 of 2</span>
+					<h1><span th:text="${studentFirstName}"></span>'s equipment, software and accessories
+					</h1>
+					<div>Total:&nbsp;&nbsp;&nbsp;<strong th:text="${grandTotal}"></strong></div>
+					<br>
+
+					<p th:if="${quotes.size > 0}">
+						<span>You have added <strong><span th:text="${quotes.size}"></span></strong> quote(s).
+						</span>
+					</p>
+
+					<table class="ds_table dsa_allowance_table" data-smallscreen="scrolling"
+						   th:if="${quotes.size > 0}">
+						<caption class="hidden">Quotes</caption>
+
+						<thead>
+						<tr>
+							<th scope="col">Supplier name</th>
+							<th scope="col">Quote Reference</th>
+							<th scope="col">Cost<br>
+								<p class="ds_hint-text dsa_vat">Including VAT.</p>
+							</th>
+						</tr>
+						</thead>
+
+						<tbody>
+						<tr th:each="quote : ${quotes}">
+							<td th:text="${quote.supplier}"></td>
+							<td th:text="${quote.quoteReference}"></td>
+							<td th:text="${quote.costStr}"></td>
+							<td>
+								<form id="change_quote" action="#" th:action="@{/changeQuote}"
+									  th:if="${ADVISOR_DECLARTION_NOT_COMPLETED && LOGGEDIN_USER_TYPE  eq 'ADVISOR'}"
+									  th:object="${changeQuoteFormVO}" method="POST">
+									<button class="ds_link  ds_no-margin secondary_form" name="action"
+											value="change from summary" data-button="about-quote">Change
+									</button>
+									<input type="hidden" th:value="${quote.quoteId}" name="quoteId"/>
+									<input type="hidden" th:value="${quote.dsaApplicationNumber}"
+										   name="dsaApplicationNumber"/>
+									<input type="hidden" th:value="${quote.studentReferenceNumber}"
+										   name="studentReferenceNumber"/>
+									<input type="hidden" th:value="${quote.advisorId}" name="advisorId"/>
+									<input type="hidden" th:value="${quoteDetailsFormVO.firstName}" name="firstName"/>
+									<input type="hidden" th:value="${quoteDetailsFormVO.lastName}" name="lastName"/>
+									<input type="hidden" th:value="${quote.quoteReference}" name="quoteReference"/>
+									<input type="hidden" th:value="${quote.cost}" name="totalCost"/>
+									<input type="hidden" th:value="${quote.supplier}" name="supplier"/>
+									<input type="hidden" th:value="${quote.academicYear}" name="academicYear"/>
+									<input type="hidden" th:value="${quote.sessionCode}" name="sessionCode"/>
+								</form>
+							</td>
+							<td>
+								<form id="remove-quote" action="#" th:action="@{/removeQuote}"
+									  th:if="${ADVISOR_DECLARTION_NOT_COMPLETED && LOGGEDIN_USER_TYPE  eq 'ADVISOR'}"
+									  th:object="${removeQuoteFormVO}" method="POST">
+									<button class="ds_link  ds_no-margin secondary_form" name="action" value="remove"
+											data-button="about-quote">Remove
+									</button>
+									<input type="hidden" th:value="${quote.quoteId}" name="quoteId"/>
+									<input type="hidden" th:value="${quote.dsaApplicationNumber}"
+										   name="dsaApplicationNumber"/>
+									<input type="hidden" th:value="${quote.studentReferenceNumber}"
+										   name="studentReferenceNumber"/>
+									<input type="hidden" th:value="${quote.advisorId}" name="advisorId"/>
+									<input type="hidden" th:value="${quoteDetailsFormVO.firstName}" name="firstName"/>
+									<input type="hidden" th:value="${quoteDetailsFormVO.lastName}" name="lastName"/>
+									<input type="hidden" th:value="${quote.quoteReference}" name="quoteReference"/>
+									<input type="hidden" th:value="${quote.cost}" name="totalCost"/>
+									<input type="hidden" th:value="${quote.supplier}" name="supplier"/>
+									<input type="hidden" th:value="${quote.academicYear}" name="academicYear"/>
+									<input type="hidden" th:value="${quote.sessionCode}" name="sessionCode"/>
+								</form>
+							</td>
+						</tr>
+						</tbody>
+					</table>
+
+					<div class="bottom_pagination ds_pagination_equipment">
+						<form id="add_quote_summary" action="#" th:action="@{/addQuote}"
+							  th:if="${ADVISOR_DECLARTION_NOT_COMPLETED && LOGGEDIN_USER_TYPE  eq 'ADVISOR'}"
+							  th:object="${quoteDetailsFormVO}" method="POST">
+							<button class="ds_link  ds_no-margin secondary_form" name="action" value="ADD_ANOTHER_QUOTE"
+									th:if="${showAddQuoteLink == 'Y' and quotes.size > 0}">Add another quote
+							</button>
+
+							<input type="hidden" th:value="${quoteDetailsFormVO.dsaApplicationNumber}"
+								   name="dsaApplicationNumber"/>
+							<input type="hidden" th:value="${quoteDetailsFormVO.studentReferenceNumber}"
+								   name="studentReferenceNumber"/>
+							<input type="hidden" th:value="${quoteDetailsFormVO.advisorId}" name="advisorId"/>
+							<input type="hidden" th:value="${quoteDetailsFormVO.firstName}" name="firstName"/>
+							<input type="hidden" th:value="${quoteDetailsFormVO.lastName}" name="lastName"/>
+							<input type="hidden" th:value="${quoteDetailsFormVO.academicYear}" name="academicYear"/>
+							<input type="hidden" th:value="${quoteDetailsFormVO.sessionCode}" name="sessionCode"/>
+
+							<br/>
+
+							<div class="ds_no-margin" th:if="${showAddQuoteLink == 'N'}">
+								You have reached your max limit of <strong th:text="${quoteCount}"></strong> quotes
+							</div>
+						</form>
+						<nav th:replace="~{fragments/pagination/pagination.html}"></nav>
+					</div>
+
+					<p th:if="${equipmentCount > 0}">
+						<span>You have added <strong><span th:text="${equipmentCount}"></span></strong> products.
+						</span>
+					</p>
+
+					<table class="ds_table dsa_allowance_table" data-smallscreen="scrolling"
+						   th:if="${equipmentCount > 0}">
+						<caption class="visually-hidden">Equipment Table</caption>
+						<thead>
+						<tr>
+							<th scope="col">Product name and description</th>
+							<th scope="col">Cost<br>
+								<p class="ds_hint-text dsa_vat">Including VAT.</p></th>
+						</tr>
+						</thead>
+						<tbody>
+						<tr th:each="item: ${equipmentPage.content}">
+							<td>
+								<span th:text="${item.productName}"></span>
+								<br>
+								<div class="ds_hint-text ds_input--fixed-20" th:text="${item.description}"></div>
+							</td>
+							<td><span th:text="${item.costStr}"></span></td>
+							<td>
+								<form id="change_equipment" action="#" th:action="@{/changeEquipment}"
+									  th:if="${ADVISOR_DECLARTION_NOT_COMPLETED && LOGGEDIN_USER_TYPE  eq 'ADVISOR'}"
+									  th:object="${changeEquipmentFormVO}" method="POST">
+									<button class="ds_link  ds_no-margin secondary_form" name="action"
+											value="INIT_CHANGE_EQUIPMENT"
+											data-button="about-student">Change
+									</button>
+									<input type="hidden" th:value="${item.id}" name="id"/>
+									<input type="hidden" th:value="${quoteDetailsFormVO.dsaApplicationNumber}"
+										   name="dsaApplicationNumber"/>
+									<input type="hidden" th:value="${quoteDetailsFormVO.studentReferenceNumber}"
+										   name="studentReferenceNumber"/>
+									<input type="hidden" th:value="${quoteDetailsFormVO.firstName}" name="firstName"/>
+								</form>
+							</td>
+							<td>
+								<form id="remove_equipment" action="#" th:action="@{/removeEquipment}"
+									  th:if="${ADVISOR_DECLARTION_NOT_COMPLETED && LOGGEDIN_USER_TYPE  eq 'ADVISOR'}"
+									  th:object="${addEquipmentFormVO}" method="POST">
+									<button class="ds_link  ds_no-margin secondary_form" name="action" value="remove"
+											data-button="about-student">Remove
+									</button>
+									<input type="hidden" th:value="${item.id}" name="itemId"/>
+									<input type="hidden" th:value="${item.productName}" name="itemName"/>
+									<input type="hidden" th:value="${quoteDetailsFormVO.dsaApplicationNumber}"
+										   name="dsaApplicationNumber"/>
+									<input type="hidden" th:value="${quoteDetailsFormVO.studentReferenceNumber}"
+										   name="studentReferenceNumber"/>
+									<input type="hidden" th:value="${quoteDetailsFormVO.firstName}" name="firstName"/>
+								</form>
+							</td>
+						</tr>
+						</tbody>
+					</table>
+
+					<div class="bottom_pagination ds_pagination_equipment">
+						<form id="add_equipment_summary" action="#" th:action="@{/addEquipment}"
+							  th:if="${ADVISOR_DECLARTION_NOT_COMPLETED && LOGGEDIN_USER_TYPE  eq 'ADVISOR'}"
+							  th:object="${addEquipmentFormVO}" method="POST">
+							<button class="ds_link  ds_no-margin secondary_form" name="action"
+									value="ADD_EQUIPMENT_FROM_SUMMARY"
+									th:if="${showAddEquipmentLink == 'Y' and equipmentCount > 0}">Add another item
+							</button>
+
+							<div class="ds_no-margin" th:unless="${showAddEquipmentLink == 'Y'}">
+								You have reached your max limit of <strong th:text="${equipmentCount}"></strong> items
+							</div>
+							<input type="hidden" th:value="${quoteDetailsFormVO.dsaApplicationNumber}"
+								   name="dsaApplicationNumber"/>
+							<input type="hidden" th:value="${quoteDetailsFormVO.studentReferenceNumber}"
+								   name="studentReferenceNumber"/>
+						</form>
+						<nav th:replace="~{fragments/pagination/pagination.html}"></nav>
+					</div>
+				</div>
+
+				<div th:if="${SHOW_PAYMENT_FOR_SECTION eq true && ADVISOR_DECLARTION_NOT_COMPLETED && LOGGEDIN_USER_TYPE  eq 'ADVISOR'}">
+
+					<form id="student_personal_details" action="#"
+						  th:action="addPayment" th:object="${addEquipmentPaymentFormVO}"
+						  method="POST">
+
+						<div class="ds_question"><br/> <br/>
+							<fieldset>
+
+								<legend>
+									<h2>Who should we pay this allowance to?</h2>
+								</legend>
+								<div class="ds_field-group">
+									<div class="ds_radio">
+										<input class="ds_radio__input" id="student" type="radio"
+											   name="radios" th:field="*{paymentForItem}" value="STUDENT"
+											   data-form="radio-radios-student"> <label
+											class="ds_radio__label" for="student">Student</label>
+										<span class="small_text_grey">The student is responsible for paying the supplier.<br>
+												SAAS will pay the equipment, software, and accessories allowance into the student’s nominated bank account.</span>
+									</div>
+									<div class="ds_radio">
+
+										<input class="ds_radio__input" id="institution" type="radio"
+											   name="radios" th:field="*{paymentForItem}"
+											   value="INSTITUTION" data-form="radio-radios-institution">
+										<label class="ds_radio__label" for="institution">Institution</label>
+										<span class="small_text_grey">The<span th:text="${institutionName}"></span>DSA Team is responsible for paying the supplier.<br>
+											SAAS will pay the equipment, software, and accessories allowance to the institution.</span>
+									</div>
+								</div>
+							</fieldset>
+
+							<input type="hidden"
+								   th:value="${addEquipmentPaymentFormVO.dsaApplicationNumber}"
+								   name="dsaApplicationNumber"/> <input type="hidden"
+																		th:value="${addEquipmentPaymentFormVO.studentReferenceNumber}"
+																		name="studentReferenceNumber"/>
+
+						</div>
+						<br/>
+
+
+						<div class="ds_callout no_border_left">
+							<div class="ds_callout__content">
+								<p><strong> Do you want to add something else?</strong></p>
+								<button class="ds_link  ds_no-margin secondary_form" name="action"
+										value="BACK_TO_CHOOSE_QUOTE">
+									Return to Part 1
+								</button>
+								<span> of equipment, software and accessories to select another option.</span>
+								<input type="hidden" th:value="${quoteDetailsFormVO.dsaApplicationNumber}"
+									   name="dsaApplicationNumber"/>
+								<input type="hidden" th:value="${quoteDetailsFormVO.studentReferenceNumber}"
+									   name="studentReferenceNumber"/>
+
+							</div>
+						</div>
+						<br/>
+						<div class="ds_button-group">
+
+							<button class="ds_button ds_button--cancel" name="action"
+									value="Back" data-button="about-student">Back
+							</button>
+
+							&nbsp;&nbsp;&nbsp;&nbsp;
+
+							<button
+									th:if="${actionName ne null && actionName eq 'change_from_allowances_summary'}"
+									class="ds_button ds_no-margin" name="action"
+									value="change_from_allowances_summary">Save and
+								continue
+							</button>
+
+							<button th:if="${actionName eq null }"
+									class="ds_button ds_no-margin" name="action"
+									value="ADD_NMPH_FROM_EQUIPMENT">Save and continue
+							</button>
+
+						</div>
+					</form>
+				</div>
+
+
+				<div th:if="${SHOW_PAYMENT_FOR_SECTION eq false && ADVISOR_DECLARTION_NOT_COMPLETED && LOGGEDIN_USER_TYPE  eq 'ADVISOR'}" class="ds_button-group">
+					<form id="equipment_summary_button" class="buttonInline" action="#"
+						  th:action="@{/chooseQuoteOption}" th:object="${applicationKeyDataFormVO}" method="POST">
+						<input type="hidden" th:value="${quoteDetailsFormVO.dsaApplicationNumber}"
+							   name="dsaApplicationNumber"/>
+						<input type="hidden" th:value="${quoteDetailsFormVO.studentReferenceNumber}"
+							   name="studentReferenceNumber"/>
+						<input type="hidden" name="action" value="ADD_EQUIPMENT_FROM_CONSUMABLES"/>
+						<input type="submit" class="ds_button ds_button--cancel"
+							   value="Back">&nbsp;&nbsp;&nbsp;&nbsp;
+					</form>
+					<form class="buttonInline" th:action="@{/addNMPHAllowance}"
+						  th:object="${addNMPHFormVO}" method="POST">
+						<input type="hidden" th:value="${quoteDetailsFormVO.dsaApplicationNumber}"
+							   name="dsaApplicationNumber"/>
+						<input type="hidden" th:value="${quoteDetailsFormVO.studentReferenceNumber}"
+							   name="studentReferenceNumber"/>
+						<button class="ds_button ds_no-margin" name="action" value="ADD_NMPH_FROM_EQUIPMENT">
+							Save and continue
+						</button>
+					</form>
+				</div>
+
+				<div class="ds_button-group" th:if="${ADVISOR_DECLARTION_NOT_COMPLETED eq false}">
+					<form th:action="@{/applicationDashboard}" method="POST">
+						<input type="submit" class="secondary_form"
+							   value="&lt; Back to DSA application summary">
+						<input type="hidden" th:value="${quoteDetailsFormVO.studentReferenceNumber}"
+							   name="studentReferenceNumber"/>
+						<input type="hidden" th:value="${quoteDetailsFormVO.dsaApplicationNumber}"
+							   name="dsaApplicationNumber"/>
+					</form>
+				</div>
+			</div>
+		</main>
+	</div>
+</div>
+
+</body>
+
+</html>

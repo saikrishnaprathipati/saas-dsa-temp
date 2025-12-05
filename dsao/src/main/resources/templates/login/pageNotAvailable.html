@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layout/dsaLayout}" th:with="hideBeta=true">
+
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Page not available</title>
+	<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+	<meta http-equiv="Pragma" content="no-cache" />
+	<meta http-equiv="Expires" content="0" />
+</head>
+
+<body>
+<div layout:fragment="content">
+	<div class="ds_wrapper">
+		<main id="main-content" class="ds_layout ds_layout--article">
+			<div class="ds_layout__content border border-secondary p-3 rounded">
+				<p><br></p>
+				<form id="exceededForm" method="get">
+					<h1 class="ds_h1 dsa_h1">Page not available</h1>
+					<p>The secure sign-in link sent to your registered email address is invalid.</p>
+					<h2>What you can do next</h2>
+					<ul>
+						<li> <a th:href="@{/login}" id="homePage">sign in </a> again.
+						</li>
+						<li>if you still cannot sign in to your account, contact the <a th:href="@{/help#tab3}">DSA
+							Team</a>
+						</li>
+					</ul>
+				</form>
+			</div>
+		</main>
+	</div>
+</div>
+</body>
+
+</html>

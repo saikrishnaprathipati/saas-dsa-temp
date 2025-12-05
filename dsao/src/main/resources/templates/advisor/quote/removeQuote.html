@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layout/dsaLayoutLoggedIn}" th:with="currentPosition='specificStudent', currentTab='dashboard'">
+
+<head>
+	<title>Remove Quote </title>
+	<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
+	<meta http-equiv="Pragma" content="no-cache"/>
+	<meta http-equiv="Expires" content="0"/>
+</head>
+
+<body>
+
+<div layout:fragment="content">
+
+	<div class="ds_page__middle">
+		<div class="ds_wrapper">
+			<main class="ds_layout  ds_layout--article">
+				<div class="ds_layout__content">
+					<p><br></p>
+					<form id="remove_quote" th:action="@{/removeQuote}" th:object="${removeQuoteFormVO}"
+						  method="POST">
+						<div tabindex="-1" th:if="${#fields.hasAnyErrors()}" class="ds_error-summary"
+							 id="error-summary" aria-labelledby="error-summary-title" role="alert">
+							<h2 class="ds_error-summary__title" id="error-summary-title">There is a problem</h2>
+							<ul class="ds_error-summary__list">
+								<li th:each="fieldName: ${removeQuoteFormVO.orderedFields}">
+
+										<span th:if="${#fields.hasErrors(fieldName)}">
+											<span th:each="fieldError: ${#fields.errors(fieldName)}">
+
+												<a th:href="${'#' + fieldName}" th:text="${fieldError}"
+												   class="field-error">
+												</a>
+											</span>
+										</span>
+								</li>
+							</ul>
+						</div>
+						<div class="ds_question"
+							 th:classappend="${#fields.hasErrors('removeQuote')} ? 'ds_question--error'">
+
+							<fieldset>
+								<legend><h1> Are you sure you want to remove <br><span
+										th:text="${removeQuoteFormVO.quoteReference}"></span>?</h1>
+								</legend>
+								<div class="ds_field-group">
+									<div class="ds_radio">
+										<input class="ds_radio__input" id="yes" type="radio" name="radios"
+											   th:field="*{removeQuote}" value="YES" data-form="radio-radios-yes">
+										<label class="ds_radio__label" for="yes">Yes</label>
+									</div>
+									<div class="ds_radio">
+										<input class="ds_radio__input" id="removeQuote" type="radio" name="radios"
+											   th:field="*{removeQuote}" value="NO" data-form="radio-radios-no">
+										<label class="ds_radio__label" for="removeQuote">No</label>
+									</div>
+								</div>
+							</fieldset>
+
+							<input type="hidden" th:value="${removeQuoteFormVO.dsaApplicationNumber}"
+								   name="dsaApplicationNumber"/>
+							<input type="hidden" th:value="${removeQuoteFormVO.studentReferenceNumber}"
+								   name="studentReferenceNumber"/>
+							<input type="hidden" th:value="${removeQuoteFormVO.quoteId}" name="quoteId"/>
+							<input type="hidden" th:value="${removeQuoteFormVO.quoteReference}" name="quoteReference"/>
+							<input type="hidden" th:value="${removeQuoteFormVO.firstName}" name="firstName"/>
+							<input type="hidden" th:value="${removeQuoteFormVO.sessionCode}" name="sessionCode"/>
+						</div>
+						<div class="ds_button-group">
+							<div class="ds_button-group">
+
+								<button class="ds_button ds_button--cancel" name="action" value="Back"
+										data-button="about-student">Back
+								</button> &nbsp;&nbsp;&nbsp;&nbsp;
+								<input type="submit" class="ds_button" name="action" value="Save and continue">
+							</div>
+						</div>
+					</form>
+				</div>
+			</main>
+		</div>
+	</div>
+
+
+</div>
+
+</body>
+
+</html>

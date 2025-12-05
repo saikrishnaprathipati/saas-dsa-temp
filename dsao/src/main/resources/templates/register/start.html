@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layout/dsaLayout}" th:with="hideBeta=true">
+
+<head>
+	<title>Start</title>
+	<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+	<meta http-equiv="Pragma" content="no-cache" />
+	<meta http-equiv="Expires" content="0" />
+</head>
+
+<body>
+<div class="ds_wrapper" layout:fragment="content">
+	<main id="main-content" class="ds_layout ds_layout--article">
+		<div class="ds_layout__content">
+			<form id="startForm" th:action="@{/privacyPolicy}" method="post">
+				<div class="border border-secondary p-3 rounded">
+					<br>
+					<h1 class="ds_h1 dsa_h1">Create your Disabled Students' Allowance (DSA) Account</h1>
+					<p>The DSA online application service lets you populate a DSA application on behalf of a
+						student without the need to upload a Needs Assessment Report or medical evidence. Once
+						you have submitted a completed application, the student will receive an email asking
+						them to sign in to their SAAS Account to check the details you have provided and submit
+						it to SAAS for processing.
+					</p>
+					<p>
+						To use this service you will need to create a DSA Account. This lets you sign in at any
+						time, and save an application so that you can come back to the service when needed. It
+						also helps us to keep the information you give us secure.
+					</p>
+					<p>
+						To create a DSA Account you will need an active email address associated with your
+						college or university.
+					</p>
+					<h3> You can use your DSA Account to: </h3>
+					<ul class="dsa_list">
+						<li>search for a student record</li>
+						<li> view a student’s DSA application history</li>
+						<li> populate a DSA application for a student to review</li>
+						<li> make changes to an existing application</li>
+						<li> check the status of an existing DSA application</li>
+					</ul>
+					<p>It takes around 5 minutes to create your account.</p>
+					<div class="ds_button-group">
+						<input type="submit" class="ds_button dsa_button" value="Start now">
+					</div>
+				</div>
+			</form>
+		</div>
+	</main>
+</div>
+</body>
+
+</html>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/dsaLayoutLoggedIn}"
+	th:with="currentPosition='specificStudent', currentTab='dashboard'">
+
+<head>
+<title>Additional information</title>
+<meta http-equiv="Cache-Control"
+	content="no-cache, no-store, must-revalidate" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="0" />
+</head>
+
+<body>
+
+	<div layout:fragment="content">
+
+		<div class="ds_page__middle">
+			<div class="ds_wrapper">
+				<main class="ds_layout  ds_layout--article">
+					<div class="ds_layout__content">
+						<p>
+							<br>
+						</p>
+
+						<form id="student_personal_details" action="#"
+							th:action="@{/addAdditionalInfo}"
+							th:object="${additionalInfoFormVO}" method="POST">
+
+							<div tabindex="-1" th:if="${#fields.hasAnyErrors()}"
+								class="ds_error-summary" id="error-summary"
+								aria-labelledby="error-summary-title" role="alert">
+								<h2 class="ds_error-summary__title" id="error-summary-title">There
+									is a problem</h2>
+
+								<ul class="ds_error-summary__list">
+									<li th:each="fieldName: ${additionalInfoFormVO.orderedFields}">
+
+										<span th:if="${#fields.hasErrors(fieldName)}"> <span
+											th:each="fieldError: ${#fields.errors(fieldName)}"> <span>
+
+													<a th:href="${'#' + fieldName}" th:text="${fieldError}"
+													class="field-error"> </a>
+
+											</span>
+										</span>
+									</span>
+									</li>
+								</ul>
+							</div>
+
+							<div class="ds_question">
+								<h1 id="ds_hint">Additional information</h1>
+								<p>​ Please use the space below to include any additional
+									details you would like us to consider as part of the
+									application. For example, if the allowances you are applying
+									for exceed the upper limits.
+								<p>​ This information will be shared with the student so
+									they can review the application then submit it to SAAS.</p>
+								<br>
+								<div class="ds_field-group"
+									th:classappend="${#fields.hasErrors('infoText')} ? 'ds_question--error'">
+									<label class="ds_label" for="infoText">Additional
+										information</label>
+									<p class="ds_hint-text">Enter additional information text.</p>
+									<div class="ds_question__error-message"
+										th:if="${#fields.hasErrors('infoText')}"
+										th:errors="*{infoText}"></div>
+
+									<div th:if="${ADVISOR_DECLARTION_NOT_COMPLETED eq true}">
+									
+									<textarea maxlength="500" class="ds_input ds_input--fixed-40"
+									 	
+										th:classappend="${#fields.hasErrors('infoText')} ? 'ds_input--error'"
+										rows="5" id="infoText" th:field="*{infoText}"></textarea>
+										</div>
+										
+								</div>
+								<div th:if="${ADVISOR_DECLARTION_NOT_COMPLETED eq false}">
+									
+									<textarea maxlength="500" class="ds_input ds_input--fixed-40" disabled
+									 	
+										rows="5" id="infoText" th:field="*{infoText}"></textarea>
+										</div>
+										
+								
+
+
+							</div>
+							<br>
+
+							<div class="ds_button-group">
+								<input type="hidden" th:value="${studentReferenceNumber}"
+									name="studentReferenceNumber" /> <input type="hidden"
+									th:value="${dsaApplicationNumber}" name="dsaApplicationNumber" />
+								<input type="hidden" th:value="${additionalInfoFormVO.id}"
+									name="id" /> <input type="submit"
+									class="ds_button ds_button--cancel" name="action" value="Back">&nbsp;&nbsp;&nbsp;&nbsp;
+
+								<button th:if="${ADVISOR_DECLARTION_NOT_COMPLETED}"
+									class="ds_button  ds_no-margin" name="action"
+									value="COMPLETE_ADDITIONAL_INFO" data-button="about-student">Save
+									and continue</button>
+							</div>
+
+							<button th:if="${LOGGEDIN_USER_TYPE eq 'ADVISOR' && SHOW_SKIP_ADDITIONAL}"
+								class="ds_link ds_no-margin secondary_form" name="action"
+								value="SKIP" data-button="about-student">Skip
+								additional information</button>
+						</form>
+
+					</div>
+				</main>
+			</div>
+		</div>
+
+
+	</div>
+
+</body>
+
+</html>

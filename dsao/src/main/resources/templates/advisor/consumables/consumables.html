@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layout/dsaLayoutLoggedIn}" th:with="currentPosition='specificStudent', currentTab='dashboard'">
+
+<head>
+	<title>Student Consumables</title>
+	<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+	<meta http-equiv="Pragma" content="no-cache" />
+	<meta http-equiv="Expires" content="0" />
+</head>
+
+<body>
+
+<div layout:fragment="content">
+
+	<div class="ds_page__middle">
+		<div class="ds_wrapper">
+			<main class="ds_layout  ds_layout--article">
+				<div class="ds_layout__content">
+					<p><br></p>
+					<form id="student_personal_details" action="#" th:action="@{/selectConsumables}"
+						  th:object="${consumableTypeFormVO}" method="POST">
+
+						<div tabindex="-1" th:if="${#fields.hasAnyErrors()}" class="ds_error-summary"
+							 id="error-summary" aria-labelledby="error-summary-title" role="alert">
+							<h2 class="ds_error-summary__title" id="error-summary-title">There is a problem</h2>
+
+							<ul class="ds_error-summary__list">
+								<li th:each="fieldName: ${consumableTypeFormVO.orderedFields}">
+
+										<span th:if="${#fields.hasErrors(fieldName)}">
+											<span th:each="fieldError: ${#fields.errors(fieldName)}">
+												<span>
+													<span th:if="${fieldName eq 'otherAndDescription'}">
+														<a th:href="${'#' + 'otherAndDescription'}"
+														   th:text="${fieldError}" class="field-error">
+														</a>
+													</span>
+													<span th:if="${fieldName ne 'otherAndDescription'}">
+														<a th:href="${'#' + fieldName}" th:text="${fieldError}"
+														   class="field-error">
+														</a>
+													</span>
+												</span>
+											</span>
+										</span>
+								</li>
+							</ul>
+						</div>
+
+						<p class="ds_hint-text">Part 1 of 3</p>
+						<div class="ds_question">
+							<fieldset>
+								<legend>
+									<h1><span th:text="${studentFirstName}"></span>'s consumable items</h1>
+								</legend>
+								<p>General costs related to a student's course and incurred as a
+									result of their disability.<br>For example, printing, ink and Braille paper.</p>
+								<p>
+									Claimed yearly. Allowance limit per academic year: <strong><span
+										th:text="${consumablesCap}"></span></strong></p>
+								<h3>Select all that apply</h3>
+								<div class="ds_field-group" id="consumableItemCodes"
+									 th:classappend="${#fields.hasErrors('consumableItemCodes')} ? 'ds_question--error'">
+									<div class="ds_question__error-message"
+										 th:if="${#fields.hasErrors('consumableItemCodes')}"
+										 th:errors="*{consumableItemCodes}">
+									</div>
+									<div class="ds_checkbox">
+										<input class="ds_checkbox__input" type="checkbox" id="PAPER"
+											   th:field="*{consumableItemCodes}" th:value="PAPER">
+
+										<label class="ds_checkbox__label" th:for="PAPER">
+											<strong>Paper
+											</strong></label>
+									</div>
+
+									<div class="ds_checkbox">
+										<input class="ds_checkbox__input" type="checkbox" id="INK_CARTRIDGE"
+											   th:field="*{consumableItemCodes}" th:value="INK_CARTRIDGE">
+
+										<label class="ds_checkbox__label" th:for="INK_CARTRIDGE">
+											<strong>Ink cartridges</strong></label>
+									</div>
+
+									<div class="ds_checkbox">
+										<input class="ds_checkbox__input" type="checkbox" id="PRINTING"
+											   th:field="*{consumableItemCodes}" th:value="PRINTING">
+
+										<label class="ds_checkbox__label" th:for="PRINTING">
+											<strong>Printing</strong></label>
+									</div>
+									<div class="ds_checkbox">
+										<input class="ds_checkbox__input" type="checkbox" id="PHOTO_COPYING"
+											   th:field="*{consumableItemCodes}" th:value="PHOTO_COPYING">
+
+										<label class="ds_checkbox__label" th:for="PHOTO_COPYING">
+											<strong>Photocopying</strong></label>
+									</div>
+									<div id="otherAndDescription" class="ds_checkbox">
+										<input class="ds_checkbox__input" type="checkbox" id="OTHER"
+											   th:field="*{consumableItemCodes}" th:value="OTHER">
+
+										<label class="ds_checkbox__label" th:for="OTHER">
+											<strong>Other</strong></label>
+
+										<div class="ds_reveal-content">
+											<div class="ds_question" data-module="ds-character-count"
+												 th:classappend="${#fields.hasErrors('otherDescription')}
+												  ? 'ds_question--error'">
+												<label class="ds_label" for="otherDescription">Description</label>
+
+												<div class="notListedTextError"
+													 th:if="  ${#fields.hasErrors('otherDescription')} "
+													 th:errors="*{otherDescription}">
+												</div>
+												<input class="ds_input  ds_input--fixed-20" maxlength="25"
+													   type="text" id="otherDescription"
+													   th:field="*{otherDescription}"/>
+
+											</div>
+										</div>
+									</div>
+
+									<input type="hidden" th:value="${studentReferenceNumber}"
+										   name="studentReferenceNumber"/>
+									<input type="hidden" th:value="${dsaApplicationNumber}"
+										   name="dsaApplicationNumber"/>
+									<input type="hidden" th:value="${studentFirstName}" name="studentFirstName"/>
+								</div>
+							</fieldset>
+						</div>
+						<div class="ds_button-group">
+							<div class="ds_button-group">
+								<button class="ds_button ds_button--cancel" name="action" th:value="${BACK_ACTION}"
+										data-button="about-student">Back
+								</button>&nbsp;&nbsp;&nbsp;&nbsp;
+								<input type="hidden" th:value="${BACK_ACTION}"
+									   name="backAction"/>
+								<input type="submit" class="ds_button" name="action" value="Save and continue">
+							</div>
+							<button class="ds_link ds_no-margin secondary_form" name="action" value="Skip"
+									th:if="${showSkipConsumables}" data-button="about-student">Skip consumable
+								items
+							</button>
+						</div>
+					</form>
+				</div>
+			</main>
+		</div>
+	</div>
+
+
+</div>
+
+</body>
+
+</html>

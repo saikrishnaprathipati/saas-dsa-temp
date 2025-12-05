@@ -1,0 +1,33 @@
+<div th:fragment="footer">
+	<div class="ds_wrapper ds_wrapper_new">
+		<div class="ds_site-footer__content">
+			<ul class="ds_site-footer__site-items">
+				<li class="ds_site-items__item">
+					<div class="ds_site-branding__logo  ds_site-branding__link" data-header="header-logo">
+						<img class="ds_site-branding__logo-image" th:src="@{/images/SAAS_logo.svg}" alt="SAAS">
+					</div>
+				</li>
+				<li class="ds_site-items__item">
+					<a href="https://www.saas.gov.uk/about-saas" id="about-us">About SAAS</a>
+				</li>
+				<li class="ds_site-items__item">
+					<a href="https://www.saas.gov.uk/data-protection" id="privacy">Privacy</a>
+				</li>
+				<li class="ds_site-items__item">
+					<a href="https://www.saas.gov.uk/data-protection/cookies" id="cookies">Cookies</a>
+				</li>
+				<li class="ds_site-items__item">
+					<a href="https://www.saas.gov.uk/tools/accessibility" id="accessibility">Accessibility</a>
+				</li>
+				<li class="ds_site-items__item">
+					<a th:href="@{/help#tab3}" id="contact_us">Contact Us</a>
+				</li>
+			</ul>
+			<div class="ds_site-footer__org">
+				<img class="ds_site-footer__org-logo" th:src="@{/images/logos/scottish-government--min-white.svg}"
+					 alt="gov.scot">
+			</div>
+		</div>
+	</div>
+
+</div>

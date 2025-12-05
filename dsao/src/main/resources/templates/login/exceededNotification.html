@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layout/dsaLayout}" th:with="hideBeta=true">
+
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Too many account activation attempts</title>
+	<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+	<meta http-equiv="Pragma" content="no-cache" />
+	<meta http-equiv="Expires" content="0" />
+</head>
+
+<body>
+<div layout:fragment="content">
+	<div class="ds_wrapper">
+		<main id="main-content" class="ds_layout ds_layout--article">
+			<div class="ds_layout__content border border-secondary p-3 rounded">
+				<p><br></p>
+				<form id="exceededVerificationForm" method="get">
+					<h1 class="ds_h1 dsa_h1">Too many account activation attempts</h1>
+					<p>You have exceeded the limit of 3 activation links for your DSA Account. Do not submit another
+						email request.</p>
+					<h2>What you can do next</h2>
+					<ul class="dsa_list">
+						<li>check your email spam or junk mail folder</li>
+						<li>if you have requested several activation emails, use the last activation link received</li>
+						<li>if this does not work, wait 30 minutes and start the <a th:href="@{/start}" id="homePage">create
+							account</a> process again
+						</li>
+					</ul>
+				</form>
+			</div>
+		</main>
+	</div>
+</div>
+</body>
+
+</html>

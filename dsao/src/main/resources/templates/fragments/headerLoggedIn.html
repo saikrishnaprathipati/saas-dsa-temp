@@ -1,0 +1,116 @@
+<div th:replace="~{fragments/cookie.html}"></div>
+<div class="ds_wrapper ds_wrapper_new">
+	<div class="ds_site-header__content">
+		<div class="ds_site-branding">
+			<div class="ds_site-branding__logo ds_site-branding__link" data-header="header-logo">
+				<img class="ds_site-branding__logo-image" th:src="@{/images/SAAS_logo.svg}" alt="SAAS">
+			</div>
+		</div>
+
+		<!--/* ADVISOR HEADER STUFF */-->
+		<nav class="ds_site-navigation ds_no-margin" th:if="${LOGGEDIN_USER_TYPE eq 'ADVISOR'}">
+			<div class="ds_site-new-header">
+				<a th:href="@{/findStudents}" id="find-student" class="ds_site-items__item"
+				   th:if="${currentPosition == 'findStudent'}"
+				   th:classappend="${currentTab == 'findStudent'} ? 'current'">Find student</a>
+				<a th:href="@{/help}" id="help" class="ds_site-items__item"
+				   th:classappend="${currentTab == 'help'} ? 'current'">Help</a>
+				<a th:href="@{/advisorDashboard}" id="dashboard" class="ds_site-items__item"
+				   th:if="${currentPosition == 'specificStudent'}"
+				   th:classappend="${currentTab == 'dashboard'} ? 'current'">Dashboard</a>
+				<a th:href="@{/account}" id="account" class="ds_site-items__item"
+				   th:classappend="${currentTab == 'account'} ? 'current'">Account</a>
+				<a th:href="@{/logout}" id="logout" class="ds_site-items__item">Sign Out</a>
+			</div>
+		</nav>
+
+		<!--/* STUDENT HEADER STUFF */-->
+		<nav class="ds_site-navigation ds_no-margin" th:if="${LOGGEDIN_USER_TYPE eq 'STUDENT'}">
+			<div class="ds_site-new-header">
+				<a th:href="@{/studentDsaDashboard}" id="studDashboard" class="ds_site-items__item"
+				   th:classappend="${currentTab == 'dashboard'} ? 'current'">Dashboard</a>
+				<a th:href="@{/help}" id="student-help" class="ds_site-items__item"
+				   th:classappend="${currentTab == 'help'} ? 'current'">Help</a>
+				<a th:href="@{/studentLogout}" id="signout" class="ds_site-items__item">Sign Out</a>
+			</div>
+		</nav>
+	</div>
+</div>
+<div class="ds_phase-banner main_banner">
+	<div class="ds_wrapper ds_wrapper_new">
+		<h3 class="ds_phase-banner__content">Apply for Disabled Students' Allowance</h3>
+	</div>
+</div>
+<div class="apply_dsa">
+	<div class="ds_wrapper ds_wrapper_new ds_!_padding-right--0">
+		<div class="apply_dsa__title">Apply for Disabled Students' Allowance</div>
+
+		<!--/* MOBILE HEADER */-->
+		<div class="mobile-header">
+			<div class="ds_site-header__controls">
+				<label aria-controls="mobile-navigation" class="ds_site-header__control  js-toggle-menu" for="menu">
+					<span class="ds_site-header__control-text">Menu</span>
+					<svg class="ds_icon  ds_site-header__control-icon" aria-hidden="true" role="img">
+						<use th:href="@{/scripts/design-system/dist/images/icons/icons.stack.svg#menu}"></use>
+					</svg>
+					<svg class="ds_icon  ds_site-header__control-icon  ds_site-header__control-icon--active-icon"
+						 aria-hidden="true" role="img">
+						<use th:href="@{/scripts/design-system/dist/images/icons/icons.stack.svg#close}"></use>
+					</svg>
+				</label>
+			</div>
+			<input class="ds_site-navigation__toggle" id="menu" type="checkbox">
+		</div>
+		<!--/* MOBILE HEADER */-->
+
+	</div>
+
+	<!--/* MOBILE HEADER */-->
+	<div class="mobile-header">
+		<nav id="mobile-navigation" class="ds_site-navigation ds_site-navigation--mobile"
+			 data-module="ds-mobile-navigation-menu">
+			<ul class="ds_site-navigation__list">
+				<li class="ds_site-navigation__item"
+					th:if="${currentPosition == 'findStudent' && LOGGEDIN_USER_TYPE eq 'ADVISOR'}">
+					<a th:href="@{/findStudents}" class="ds_site-navigation__link"
+					   th:classappend="${currentTab == 'findStudent'} ? 'current'">
+						Find student
+					</a>
+				</li>
+				<li class="ds_site-navigation__item">
+					<a th:href="@{/help}" class="ds_site-navigation__link"
+					   th:classappend="${currentTab == 'help'} ? 'current'">
+						Help
+					</a>
+				</li>
+				<li class="ds_site-navigation__item"
+					th:if="${currentPosition == 'specificStudent' || LOGGEDIN_USER_TYPE eq 'STUDENT'}">
+					<a th:href="@{/advisorDashboard}" class="ds_site-navigation__link"
+					   th:classappend="${currentTab == 'dashboard'} ? 'current'">
+						Dashboard
+					</a>
+				</li>
+				<li class="ds_site-navigation__item" th:if="${LOGGEDIN_USER_TYPE eq 'ADVISOR'}">
+					<a th:href="@{/account}" class="ds_site-navigation__link"
+					   th:classappend="${currentTab == 'account'} ? 'current'">
+						Account
+					</a>
+				</li>
+
+				<li class="ds_site-navigation__item"
+					th:if="${LOGGEDIN_USER_TYPE eq 'STUDENT'}">
+					<a th:href="@{/studentLogout}" class="ds_site-navigation__link">
+						Sign Out
+					</a>
+				</li>
+				<li class="ds_site-navigation__item" th:if="${LOGGEDIN_USER_TYPE eq 'ADVISOR'}">
+					<a th:href="@{/logout}" class="ds_site-navigation__link">
+						Sign Out
+					</a>
+				</li>
+			</ul>
+		</nav>
+	</div>
+	<!--/* MOBILE HEADER */-->
+
+</div>

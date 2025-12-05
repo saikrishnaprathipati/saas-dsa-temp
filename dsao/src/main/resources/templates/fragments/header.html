@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+	  xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<body>
+
+<div th:fragment="header">
+	<div th:replace="~{fragments/cookie.html}"></div>
+	<div class="ds_wrapper ds_wrapper_new">
+		<div class="ds_site-header__content">
+			<div class="ds_site-branding">
+				<div class="ds_site-branding__logo  ds_site-branding__link" data-header="header-logo">
+					<img class="ds_site-branding__logo-image" th:src="@{/images/SAAS_logo.svg}" alt="SAAS">
+				</div>
+			</div>
+			<nav>
+				<div class="ds_site-new-header">
+					<a th:href="@{/help}" id="help"
+					   th:classappend="${currentTab == 'help'} ? 'current'"
+					   class="ds_site-items__item">Help</a>
+				</div>
+			</nav>
+		</div>
+	</div>
+	<div class="ds_phase-banner">
+		<div class="ds_wrapper ds_wrapper_new">
+			<h3 class="ds_phase-banner__content">Apply for Disabled Students' Allowance</h3>
+		</div>
+	</div>
+</div>
+
+</body>
+
+</html>

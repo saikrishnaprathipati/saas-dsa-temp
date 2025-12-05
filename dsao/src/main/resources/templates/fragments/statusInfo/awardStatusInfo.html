@@ -1,0 +1,40 @@
+<!--/* AWARD STATUS MESSAGES SECTION */-->
+<div id="awardstatusMessageSection">
+	<hr>
+	<div class="ds_warning-text ds_warning-text-new ds_withdraw-text">
+		<strong class="ds_warning-text__icon" aria-hidden="true"></strong> <strong>What
+			does this DSA award status mean?</strong>
+		<p></p>
+		<div th:if="${AWARD_DETAILS != null}">
+			<p th:if="${AWARD_DETAILS.fundStatus.name == 'FULLY_AWARDED'}"
+				class="ds_warning-text__text">Fully awarded means that we have approved everything on this DSA application. View award notice for more details.</p>
+			<p th:if="${AWARD_DETAILS.fundStatus.name == 'PARTIALLY_AWARDED'}"
+				class="ds_warning-text__text">Partially awarded means that we
+				have approved only part of this DSA application.</p>
+<!-- 			<p th:if="${dashboardFormVO.roleName ne 'Disability Administrator'}"
+				class="ds_warning-text__text">
+				<a th:href="@{/downloadAward}" target="_blank"
+				   class="ds_file-download__title">View <span th:text="${AWARD_DETAILS.academicYear}"></span> award notice</a> for more details.
+
+			</p> -->
+		</div>
+
+		<div th:if="${PREVIOUS_AWARD_DETAILS != null}">
+			<p th:if="${PREVIOUS_AWARD_DETAILS.fundStatus.name == 'FULLY_AWARDED'}"
+			   class="ds_warning-text__text">Fully awarded means that we have approved everything on this DSA application. View award notice for more details.</p>
+			<p th:if="${PREVIOUS_AWARD_DETAILS.fundStatus.name == 'PARTIALLY_AWARDED'}"
+			   class="ds_warning-text__text">Partially awarded means that we
+				have approved only part of this DSA application.</p>
+			<!-- <p th:if="${dashboardFormVO.roleName ne 'Disability Administrator'}"
+			   class="ds_warning-text__text">
+				<a th:href="@{/downloadPreviousAward}" target="_blank"
+				   class="ds_file-download__title">View <span th:text="${PREVIOUS_AWARD_DETAILS.academicYear}"></span> award notice</a> for more details.
+			</p> -->
+		</div>
+
+
+	</div>
+
+</div>
+
+

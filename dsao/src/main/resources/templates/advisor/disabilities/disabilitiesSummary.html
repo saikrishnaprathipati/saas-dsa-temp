@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layout/dsaLayoutLoggedIn}" th:with="currentPosition='specificStudent', currentTab='dashboard'">
+
+<head>
+	<title>Student Disabilities sumamry</title>
+	<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+	<meta http-equiv="Pragma" content="no-cache" />
+	<meta http-equiv="Expires" content="0" />
+</head>
+
+<body>
+
+<div layout:fragment="content">
+
+	<div class="ds_page__middle">
+		<div class="ds_wrapper">
+			<main class="ds_layout  ds_layout--article">
+				<div class="ds_layout__content">
+					<p><br></p>
+					<form id="student_personal_details" action="#" th:action="@{/disabilitiesSummary}"
+						  th:object="${keyDataFormVO}" method="POST">
+						<div class="ds_question">
+							<h1>Disabilities</h1>
+							<div class="ds_field-group">
+							<span th:each="disability : ${disabilitiesMap}">
+								<strong th:text="${disability.key}"></strong>
+								<p class="ds_hint-text" th:text="${disability.value}"></p>
+							</span>
+								<hr>
+								<p>
+									<button class="secondary_form" name="action" th:value="${BACK_ACTION}" th:if="${ADVISOR_DECLARTION_NOT_COMPLETED && LOGGEDIN_USER_TYPE  eq 'ADVISOR'}">Change</button>
+								</p>
+							</div>
+						</div>
+						<p><br></p>
+						<div class="ds_button-group">
+							<div class="ds_button-group">
+								<button class="ds_button ds_button--cancel" name="action"
+										th:value="${BACK_ACTION}" data-button="about-student">Back
+								</button>
+								&nbsp;&nbsp;&nbsp;&nbsp;
+								<input type="submit" class="ds_button" name="action" value="Continue">
+								<input type="hidden" th:value="${studentReferenceNumber}"
+									   name="studentReferenceNumber"/>
+								<input type="hidden" th:value="${dsaApplicationNumber}" name="dsaApplicationNumber"/>
+								<input type="hidden" th:value="${studentFirstName}" name="studentFirstName"/>
+							</div>
+						</div>
+					</form>
+				</div>
+			</main>
+		</div>
+	</div>
+
+
+</div>
+
+</body>
+
+</html>

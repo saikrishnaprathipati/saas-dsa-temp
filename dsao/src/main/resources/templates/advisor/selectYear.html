@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layout/dsaLayoutLoggedIn}" th:with="currentPosition='specificStudent', currentTab='dashboard'">
+
+<head>
+	<title>Select Year</title>
+	<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
+	<meta http-equiv="Pragma" content="no-cache"/>
+	<meta http-equiv="Expires" content="0"/>
+</head>
+
+<body>
+
+<div layout:fragment="content">
+	<div class="ds_page__middle">
+		<div class="ds_wrapper">
+			<main class="ds_layout  ds_layout--article">
+				<div class="ds_layout__content ds_input--fixed-40">
+					<p><br></p>
+
+					<form th:action="@{/initApplicationDashboard}" th:object="${dashboardFormVO}"
+						  method="POST">
+
+						<div tabindex="-1" th:if="${#fields.hasErrors('academicYear')}" class="ds_error-summary"
+							 id="error-summary" aria-labelledby="error-summary-title" role="alert">
+							<h2 class="ds_error-summary__title" id="error-summary-title">There is a problem</h2>
+
+							<ul class="ds_error-summary__list">
+								<li>
+									<span>
+										<a href="#academicYear" th:text="${#fields.errors('academicYear')[0]}"
+										   class="field-error">
+										</a>
+									</span>
+								</li>
+							</ul>
+						</div>
+
+						<h1>Choose the academic year you are applying for</h1>
+						<p>Select the academic year you are applying for DSA on behalf of the student. </p>
+						<br>
+						<div class="ds_question ds_input--fixed-40">
+							<h3>Choose an option</h3>
+							<p>Apply for DSA funding for a student for the first time, or as continuing student.
+								The funding application can be for the current academic year or the previous academic year.
+								It can also be for an additional request for funding as part of an existing award.</p>
+							<br>
+							<div id="academicYear"
+								 th:classappend="${#fields.hasErrors('academicYear')} ? 'ds_question--error'">
+								<div class="ds_question__error-message"
+									 th:if="${#fields.hasErrors('academicYear')}"
+									 th:errors="*{academicYear}"></div>
+								<div class="ds_radio" th:if="${currentYear ne null}">
+									<input class="ds_radio__input" id="current-year" type="radio" name="radios"
+										   data-form="radio-radios-currentYear" checked
+										   th:field="*{academicYear}" th:value="${currentYear}">
+
+									<label class="ds_radio__label" for="current-year">
+										<strong>I want to apply for the current academic year of <span
+												th:text="${currentYear}"></span></strong></label>
+								</div>
+								<br th:if="${previousYear ne null}">
+								<div class="ds_radio" th:if="${previousYear ne null}">
+									<input class="ds_radio__input" id="previous-year" type="radio" name="radios"
+										   data-form="radio-radios-previousYear"
+										   th:field="*{academicYear}" th:value="${previousYear}">
+
+									<label class="ds_radio__label" for="previous-year">
+										<strong>I want to apply for the previous academic year of <span
+												th:text="${previousYear}"></span></strong></label>
+								</div>
+							</div>
+						</div>
+						<br>
+						<div class="ds_button-group">
+							<a th:href="@{/advisorDashboard}"
+							   class="ds_button ds_button--cancel">Back
+							</a>
+							&nbsp;&nbsp;&nbsp;&nbsp;
+							<input type="submit" class="ds_button" name="action" value="Save and continue">
+						</div>
+
+						<input type="hidden" th:value="${dashboardFormVO.studentReferenceNumber}"
+							   name="studentReferenceNumber"/>
+						<input type="hidden" th:value="${dashboardFormVO.firstName}" name="firstName"/>
+						<input type="hidden" th:value=" ${dashboardFormVO.lastName}" name="lastName"/>
+						<input type="hidden" th:value=" ${dashboardFormVO.dob}" name="dob"/>
+						<input type="hidden" th:value=" ${dashboardFormVO.sessionCode}"
+							   name="sessionCode"/>
+						<input type="hidden" th:value=" ${dashboardFormVO.fundingEligibilityStatus}"
+							   name="fundingEligibilityStatus"/>
+						<!--/* HACK FOR SELECTING YEAR */-->
+						<input type="hidden" value="notanemailaddress"
+							   name="emailAddress"/>
+					</form>
+
+				</div>
+			</main>
+		</div>
+	</div>
+</div>
+
+</body>
+
+</html>

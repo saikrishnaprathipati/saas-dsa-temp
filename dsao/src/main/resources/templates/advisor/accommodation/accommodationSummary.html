@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/dsaLayoutLoggedIn}"
+	th:with="currentPosition='specificStudent', currentTab='dashboard'">
+
+<head>
+<title>NMPH Summary</title>
+<meta http-equiv="Cache-Control"
+	content="no-cache, no-store, must-revalidate" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="0" />
+</head>
+
+<body>
+
+	<div layout:fragment="content">
+		<p>
+			<br>
+		</p>
+		<div class="ds_wrapper">
+			<main class="ds_layout  ds_layout--article">
+				<div class="ds_layout__content">
+					<p>
+						<br>
+					</p>
+
+
+					<div class="ds_question">
+						<span class="ds_hint-text">Part 3 of 3</span>
+						<h1>
+							<span th:text="${studentFirstName}"></span>'s accommodation
+							allowance
+						</h1>
+						<p>We calculate the allowance based on standard cost, enhanced
+							cost and number of weeks.</p>
+						<h2>
+							Total:&nbsp;<strong th:text="${accommodationsTotal}"></strong>
+						</h2>
+						<p>
+							You have added <strong><span
+								th:text="${accommodationCount}"></span></strong> support types.
+						</p>
+						<table class="ds_table dsa_allowance_table"
+							data-smallscreen="scrolling">
+							<caption class="visually-hidden">Accommodation items
+								list</caption>
+							<thead>
+								<tr>
+									<th scope="col">Accommodation type</th>
+
+
+									<th scope="col">Standard cost<br>
+										<p class="ds_hint-text dsa_vat">Per week.</p>
+									</th>
+									<th scope="col">Enhanced cost<br>
+										<p class="ds_hint-text dsa_vat">Per week.</p>
+									</th>
+									<th scope="col">Weeks<br>
+										<p class="ds_hint-text dsa_vat">Per academic year.</p>
+									</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="item: ${accommodations}">
+									<td><span th:text="${item.accommodationType.description}"></span>
+
+									</td>
+									<td><span th:text="${item.standardCostStr}"></span></td>
+									<td><span th:text="${item.enhancedCostStr}"></span></td>
+
+									<td><span th:text="${item.weeks}"></span></td>
+									<td>
+										<form id="change_accommodation" action="#"
+											th:action="@{/changeAccommodation}"
+											th:object="${changeNMPHFormVO}" method="POST">
+											<button class="ds_link  ds_no-margin" name="action"
+												value="CHANGE_FROM_ACCOMMO_SUMMARY"
+												data-button="about-student">Change</button>
+											<input type="hidden" th:value="${item.id}" name="id" /> <input
+												type="hidden" th:value="${dsaApplicationNumber}"
+												name="dsaApplicationNumber" /> <input type="hidden"
+												th:value="${studentReferenceNumber}"
+												name="studentReferenceNumber" />
+										</form>
+									</td>
+									<td>
+										<form id="remove_accommodation" action="#"
+											th:action="@{/removeAccommodation}"
+											th:object="${removeItemFormVO}" method="POST">
+											<button class="ds_link  ds_no-margin" name="action"
+												value="REMOVE_FROM_ACCOMMO_SUMMARY"
+												data-button="about-student">Remove</button>
+											<input type="hidden" th:value="${item.id}" name="itemId" />
+											<input type="hidden"
+												th:value="${item.accommodationType.description}"
+												name="itemName" /> <input type="hidden"
+												th:value="${dsaApplicationNumber}"
+												name="dsaApplicationNumber" /> <input type="hidden"
+												th:value="${studentReferenceNumber}"
+												name="studentReferenceNumber" />
+										</form>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+
+						<form id="add_accommo_summary" action="#"
+							th:action="@{/selectAccommodation}" th:object="${addNMPHFormVO}"
+							method="POST">
+							<button class="ds_link  ds_no-margin secondary_form"
+								name="action" value="ADD_FROM_ACCOMMO_SUMMARY"
+								data-button="about-student">Add another</button>
+							<input type="hidden" th:value="${dsaApplicationNumber}"
+								name="dsaApplicationNumber" /> <input type="hidden"
+								th:value="${studentReferenceNumber}"
+								name="studentReferenceNumber" /> <input type="hidden"
+								th:value="ACCOMMODATION_SUMMARY" name="backAction" />
+						</form>
+					</div>
+					<div class="ds_button-group">
+
+						<form id="nmph_summary_button" class="buttonInline" action="#"
+							th:action="@{/selectAccommodation}"
+							th:object="${applicationKeyDataFormVO}" method="POST">
+							<input type="hidden" th:value="${dsaApplicationNumber}"
+								name="dsaApplicationNumber" /> <input type="hidden"
+								th:value="${studentReferenceNumber}"
+								name="studentReferenceNumber" /> <input type="hidden"
+								name="action" value="CHANGE_FROM_SUMMARY" /> <input
+								type="submit" class="ds_button ds_button--cancel" value="Back">&nbsp;&nbsp;&nbsp;&nbsp;
+						</form>
+
+						<form id="travel_exp_button" class="buttonInline" action="#"
+							th:action="@{/allowancesSummary}"
+							th:object="${applicationKeyDataFormVO}" method="POST">
+							<input type="hidden" th:value="${dsaApplicationNumber}"
+								name="dsaApplicationNumber" /> <input type="hidden"
+								th:value="${studentReferenceNumber}"
+								name="studentReferenceNumber" /> <input type="submit"
+								class="ds_button" name="action" value="Save and continue">
+						</form>
+					</div>
+				</div>
+			</main>
+		</div>
+
+
+	</div>
+
+</body>
+
+</html>

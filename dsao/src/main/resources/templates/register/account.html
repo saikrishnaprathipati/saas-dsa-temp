@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layout/dsaLayoutLoggedIn}"
+	  th:with="currentPosition='findStudent', currentTab='account', hideBeta=true">
+
+<head>
+	<title>Check your details</title>
+</head>
+
+<body>
+<div layout:fragment="content">
+	<div class="ds_page__middle">
+		<div class="ds_wrapper">
+			<main class="ds_layout  ds_layout--article">
+				<div class="ds_layout__content">
+					<form id="profile" action="#" method="post"
+						  th:object="${advisor}">
+						<input type="hidden" th:value="${advisor.email}" name="email"/>
+						<input type="hidden" th:value="${advisor.userId}" name="userId"/>
+						<input type="hidden" th:value="${advisor.firstName}" name="firstName"/>
+						<input type="hidden" th:value="${advisor.lastName}" name="lastName"/>
+
+						<div th:if="${advisor.firstName == 'NOT AVAILABLE'}" class="ds_error-summary"
+							 id="error-summary" aria-labelledby="error-summary-title" role="alert">
+							<h2 class="ds_error-summary__title" id="error-summary-title">There is a problem</h2>
+
+							<ul class="ds_error-summary__list">
+								<li>
+									<a th:if="${advisor.response eq 'NOT AVAILABLE'}" href="#">Information
+										unavailable</a>
+									<a th:if="${advisor.response != 'NOT AVAILABLE'}" href="#"
+									   th:text="${advisor.response}"></a>
+								</li>
+							</ul>
+
+							<div>
+								<p>If you are unable to confirm your details because of unavailable information,
+									please
+									<a href="https://www.saas.gov.uk/contact-us" id="contact_us_page">contact
+										us.</a>
+								</p>
+							</div>
+						</div>
+
+						<div class="ds_question">
+							<p><br></p>
+
+							<h1 class="ds_h1 dsa_h1">Your account</h1>
+							<h2>About you</h2>
+							<ol class="ds_summary-list ds_input--fixed-40">
+								<li class="ds_summary-list__item"><span class="ds_summary-list__key">First name</span>
+									<span class="ds_summary-list__value" id="q1"><q class="ds_summary-list__answer"
+																					th:text="${advisor.firstName}"></q></span>
+								</li>
+								<li class="ds_summary-list__item"><span class="ds_summary-list__key">Last name</span>
+									<span class="ds_summary-list__value" id="q2"><q class="ds_summary-list__answer"
+																					th:text="${advisor.lastName}"></q></span>
+								</li>
+
+								<li class="ds_summary-list__item">
+									<span class="ds_summary-list__key">Role</span>
+									<div class="ds_summary-list__value" id="q3">
+										<q class="ds_summary-list__answer" th:text="${advisor.roleName}"></q>
+										<br>
+										<p class="small_text_grey"
+										   th:if="${advisor.roleName ne 'NOT AVAILABLE' and advisor.roleName eq 'Disability Advisor'}">
+											As a Disability Advisor you will be able to find a student, view their DSA
+											history and populate a DSA application on their behalf.
+										</p>
+
+										<p class="small_text_grey"
+										   th:if="${advisor.roleName ne 'NOT AVAILABLE' and advisor.roleName eq 'Disability Administrator'}">
+											As a Disability Administrator you will be able to find a student, view their
+											DSA history and see the status of a current DSA application.
+										</p>
+
+										<p class="small_text_grey"
+										   th:if="${advisor.roleName ne 'NOT AVAILABLE' and advisor.roleName eq 'HEI Learning Support Team Manager'}">
+											As a Learning Support Manager you can manage users of the DSA online service
+											at your HEI. You can also find a student, view their DSA history and
+											populate a DSA application on their behalf.
+										</p>
+									</div>
+								</li>
+
+								<li class="ds_summary-list__item">
+									<span class="ds_summary-list__key">Email</span>
+									<div class="ds_summary-list__value">
+										<q class="ds_summary-list__answer" th:text="${advisor.email}"></q>
+										<br>
+										<p class="small_text_grey">You will use this to sign into your account and
+											receive notifications from this service.</p>
+									</div>
+
+								</li>
+							</ol>
+
+							<h2>About your team</h2>
+							<ol class="ds_summary-list ds_input--fixed-40">
+								<li class="ds_summary-list__item"><span
+										class="ds_summary-list__key">Institution</span>
+									<span class="ds_summary-list__value">
+											<q class="ds_summary-list__answer"
+											   th:text="${advisor.institution}">
+											</q>
+										</span>
+								</li>
+
+								<li class="ds_summary-list__item"><span class="ds_summary-list__key">Team
+											email</span>
+									<div class="ds_summary-list__value">
+										<q class="ds_summary-list__answer" th:text="${advisor.teamEmail}"> </q>
+										<br>
+										<p class="small_text_grey">Your team will receive award
+											notifications.
+										</p>
+									</div>
+								</li>
+							</ol>
+
+							<p>Contact the <a th:href="@{/help#tab3}">DSA Team</a> if any of this information is
+								incorrect.</p>
+						</div>
+					</form>
+				</div>
+			</main>
+		</div>
+	</div>
+</div>
+</body>
+
+</html>

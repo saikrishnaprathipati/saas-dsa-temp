@@ -1,0 +1,108 @@
+<div class="bottom_pagination">
+	<p>
+		<br>
+	</p>
+
+	<h2>Equipment, software and accessories</h2>
+
+
+	<div class="ds_pagination consumable">
+		<p></p>
+		<h2>
+			<span class="total_award_text">Total awarded<br></span> <strong
+				th:text="${awardDetails.equipmentsTotal}"></strong>
+		</h2>
+	</div>
+
+</div>
+<p th:text="${PAYMENT_FOR_TEXT}"></p>
+<p th:if="${PAYMENT_FOR_TEXT eq null}">
+	If your course has started, we will pay this into your bank account within the next 3 to 5 working days. Otherwise, we will make the payment within 2 weeks of your course start date.
+</p>
+
+
+<div class="ds_accordion-item"
+	 th:if="${(awardDetails.lineItemEquipments != null && awardDetails.lineItemEquipments.size > 0) || (awardDetails.quoteEquipments != null && awardDetails.quoteEquipments.size > 0) }">
+	<input type="checkbox"
+		   class="visually-hidden  ds_accordion-item__control" id="panel-3"
+		   aria-labelledby="panel-1-heading">
+	<p></p>
+	<div class="ds_accordion-item__header">
+		<h3 id="panel-1-heading"
+			class="ds_accordion-item__title dsa_accordion-item__title">Show
+			breakdown</h3>
+		<span class="ds_accordion-item__indicator"></span> <label
+			class="ds_accordion-item__label" for="panel-3"><span
+			class="visually-hidden">Show this section</span></label>
+	</div>
+	<div class="ds_accordion-item__body">
+		<!--/* QUOTES */-->
+		<div class="ds_file-download"
+			 th:if="${awardDetails.quoteEquipments != null && awardDetails.quoteEquipments.size > 0}">
+			<p></p>
+			<br/>
+			<div class="ds_file-download__thumbnail">
+				<a class="ds_file-download__thumbnail-link" aria-hidden="true"
+				   tabindex="-1" href="#"> <span class="visually-hidden">Document
+						cover image</span> <img class="ds_file-download__thumbnail-image"
+												th:src="@{/images/pdf.svg}" alt="PDF Document"/>
+				</a>
+			</div>
+
+			<div class="ds_file-download__content">
+				<h3>Your Disability Advisor has recommended the following
+					supplier for you to purchase your equipment, software and
+					accessories, and consumable items.</h3>
+
+
+				<div th:each="item, iterStat: ${awardDetails.quoteEquipments}">
+					<p>
+						<span th:text="${item.productName}"></span> quote for <strong
+							th:text="${item.costStr}"></strong>
+					</p>
+
+					<a
+							th:href="@{/downloadQuote/{dsaQuoteId}(dsaQuoteId=${item.dsaQuoteId})}"
+							target="_blank" class="ds_file-download__title">Download quote
+					</a> (opens in new window)
+
+					<hr
+							th:if="${iterStat.index ne awardDetails.quoteEquipments.size - 1}">
+
+				</div>
+
+				<p>&nbsp;</p>
+				<p>Do not buy items that are different to those recommended by
+					your Disability Advisor. If you do, we will not cover this cost and
+					you will have to pay back the funding. If you purchase the same
+					item cheaper from a different supplier, you will need to pay back
+					the amount you do not spend. If you want to upgrade any items, you
+					must speak to your Disability Advisor first.</p>
+
+			</div>
+		</div>
+
+		<p></p>
+		<!--/* EQUIPMENTS */-->
+		<table class=" ds_table dsa_allowance_table"
+			   th:if="${awardDetails.lineItemEquipments != null && awardDetails.lineItemEquipments.size > 0}"
+			   data-smallscreen="scrolling">
+			<caption class="visually-hidden">Equipment items list</caption>
+			<thead>
+			<tr>
+				<th scope="col">Product name and description</th>
+				<th scope="col">Amount awarded<br>
+				</th>
+			</tr>
+			</thead>
+			<tbody>
+			<tr th:each="item: ${awardDetails.lineItemEquipments}">
+
+				<td><span th:text="${item.productName}"></span>
+					<p class="ds_hint-text dsa_vat" th:text="${item.description}"></p></td>
+				<td><span th:text="${item.costStr}"></span></td>
+			</tr>
+			</tbody>
+		</table>
+	</div>
+</div>

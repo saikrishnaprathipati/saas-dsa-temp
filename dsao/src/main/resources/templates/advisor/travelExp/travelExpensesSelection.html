@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layout/dsaLayoutLoggedIn}" th:with="currentPosition='specificStudent', currentTab='dashboard'">
+
+<head>
+	<title>Student Travel expenses</title>
+	<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
+	<meta http-equiv="Pragma" content="no-cache"/>
+	<meta http-equiv="Expires" content="0"/>
+</head>
+
+<body>
+
+<div layout:fragment="content">
+
+	<div class="ds_page__middle">
+		<div class="ds_wrapper">
+			<main class="ds_layout  ds_layout--article">
+				<div class="ds_layout__content">
+					<p><br></p>
+					<form id="student_personal_details" action="#" th:action="@{/selectTravelExpense}"
+						  th:object="${travelExpSelectionFormVO}" method="POST">
+
+						<div tabindex="-1" th:if="${#fields.hasAnyErrors()}" class="ds_error-summary"
+							 id="error-summary" aria-labelledby="error-summary-title" role="alert">
+							<h2 class="ds_error-summary__title" id="error-summary-title">There is a problem</h2>
+
+							<ul class="ds_error-summary__list">
+								<li th:each="fieldName: ${travelExpSelectionFormVO.orderedFields}">
+
+										<span th:if="${#fields.hasErrors(fieldName)}">
+											<span th:each="fieldError: ${#fields.errors(fieldName)}">
+												<span>
+													<a th:href="${'#' + fieldName}" th:text="${fieldError}"
+													   class="field-error">
+													</a>
+
+												</span>
+											</span>
+										</span>
+								</li>
+							</ul>
+						</div>
+
+						<p>Part 1 of 3</p>
+						<div class="ds_question">
+							<h1><span th:text="${studentFirstName}"></span>'s travel expenses</h1>
+							<p>Additional travel costs incurred as a result of a student's disability or
+								impairment.</p>
+							<p>Claimed per year.</p>
+							<h2>Select all that apply</h2>
+							<div class="ds_field-group" id="travelExpTypes"
+								 th:classappend="${#fields.hasErrors('travelExpTypes')} ? 'ds_question--error'">
+								<div class="ds_question__error-message" th:if="${#fields.hasErrors('travelExpTypes')}"
+									 th:errors="*{travelExpTypes}"></div>
+								<br>
+								<div class="ds_checkbox">
+									<input class="ds_checkbox__input" type="checkbox" id="OWN_VEHICLE"
+										   th:field="*{travelExpTypes}" th:value="OWN_VEHICLE">
+
+									<label class="ds_checkbox__label" th:for="OWN_VEHICLE">
+										<strong>Own vehicle
+										</strong></label>
+									<p class="ds_hint-text">We will reimburse the student for 1 return journey
+										per
+										day when using their own vehicle.</p>
+								</div>
+
+								<div class="ds_checkbox">
+									<input class="ds_checkbox__input" type="checkbox" id="TAXI"
+										   th:field="*{travelExpTypes}" th:value="TAXI">
+
+									<label class="ds_checkbox__label" th:for="TAXI">
+										<strong>Taxi</strong></label>
+									<p class="ds_hint-text">Taxi costs will need to be evidenced with either 1
+										quote
+										from the university approved provider or 2 estimates from local
+										providers.</p>
+								</div>
+
+								<div class="ds_checkbox">
+									<input class="ds_checkbox__input" type="checkbox" id="LIFT"
+										   th:field="*{travelExpTypes}" th:value="LIFT">
+
+									<label class="ds_checkbox__label" th:for="LIFT">
+										<strong>Lift</strong></label>
+									<p class="ds_hint-text">We will reimburse the student for 2 return journeys
+										per
+										day to allow for drop off and collection.</p>
+								</div>
+
+								<input type="hidden" th:value="${studentReferenceNumber}"
+									   name="studentReferenceNumber"/>
+								<input type="hidden" th:value="${dsaApplicationNumber}"
+									   name="dsaApplicationNumber"/>
+								<input type="hidden" th:value="${studentFirstName}" name="studentFirstName"/>
+							</div>
+						</div>
+						<div class="ds_button-group">
+							<div class="ds_button-group">
+								<input type="submit" class="ds_button ds_button--cancel" name="action"
+									   value="Back">&nbsp;&nbsp;&nbsp;&nbsp;
+
+								<button class="ds_button  ds_no-margin" name="action"
+										value="INIT_TRAVEL_EXP_FROM_TE_SELECTION" data-button="about-student">Save and
+									continue
+								</button>
+							</div>
+							<button class="ds_link  ds_no-margin secondary_form" name="action" value="Skip"
+									th:if="${showSkipTravelExp}" data-button="about-student">Skip travel expenses
+							</button>
+						</div>
+					</form>
+				</div>
+			</main>
+		</div>
+	</div>
+
+
+</div>
+
+</body>
+
+</html>

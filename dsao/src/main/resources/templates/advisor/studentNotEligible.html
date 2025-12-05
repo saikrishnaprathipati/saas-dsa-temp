@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/dsaLayoutLoggedIn}"
+	th:with="currentPosition='findStudent', currentTab='findStudent'">
+
+<head>
+<title>Permission Denied</title>
+	<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+	<meta http-equiv="Pragma" content="no-cache" />
+	<meta http-equiv="Expires" content="0" />
+</head>
+
+<body>
+
+	<div layout:fragment="content">
+		<div class="ds_page__middle">
+			<div class="ds_wrapper">
+				<main class="ds_layout  ds_layout--article">
+					<div class="ds_layout__content">
+						<p>
+							<br>
+						</p>
+						<h1>Student is not eligible</h1>
+						<p>This student is not eligible to apply for DSA using this
+							service. This could be because they do not have SAAS main funding
+							in place for this academic year, or they do not meet our other
+							DSA eligibility criteria.</p>
+						<h2>Get help</h2>
+						<p>
+							Contact the <a th:href="@{/help#tab3}">DSA Team</a> if you
+							need further help or <a th:href="@{/findStudents}">search
+								again.</a> We can only discuss personal details about a
+							student if you have the relevant permissions.
+						</p>
+					</div>
+				</main>
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>

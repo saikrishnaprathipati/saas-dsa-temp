@@ -1,0 +1,61 @@
+<div class="bottom_pagination">
+	<p>
+		<br>
+	</p>
+	<h2>Accommodation allowance</h2>
+
+	<div class="ds_pagination consumable"
+		th:if="${awardDetails.accommodations.size > 0}">
+		<p></p>
+		<h2>
+			<span class="total_award_text">Total awarded<br></span> <strong
+				th:text="${ACCOMM_TOTAL}"></strong>
+		</h2>
+		
+	</div>
+
+</div>
+<p>If your course has started, we will pay this into your bank account within the next 3 to 5 working days. Otherwise, we will make the payment within 2 weeks of your course start date.</p>
+<p></p>
+<div class="ds_accordion-item">
+	<input type="checkbox"
+		class="visually-hidden  ds_accordion-item__control" id="panel-2"
+		aria-labelledby="panel-1-heading">
+	<div class="ds_accordion-item__header">
+		<h3 id="panel-1-heading"
+			class="ds_accordion-item__title dsa_accordion-item__title">Show
+			breakdown</h3>
+		<span class="ds_accordion-item__indicator"></span> <label
+			class="ds_accordion-item__label" for="panel-2"><span
+			class="visually-hidden">Show this section</span></label>
+	</div>
+	<div class="ds_accordion-item__body">
+		<table class=" ds_table dsa_allowance_table"
+			data-smallscreen="scrolling">
+			<caption class="visually-hidden">accommodations</caption>
+			<thead>
+				<tr>
+					<th scope="col">Accommodation type</th>
+					<th scope="col">Standard cost
+						<p class="ds_hint-text dsa_vat">Per week.</p>
+						<br>
+					<th scope="col">Enhanced cost
+						<p class="ds_hint-text dsa_vat">Per week.</p>
+						<br>
+					</th>
+					<th scope="col">Weeks<br>
+						<p class="ds_hint-text dsa_vat">Per academic year.</p>
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="item: ${awardDetails.accommodations}">
+					<td><span th:text="${item.accommodationType.description}"></span></td>
+					<td><span th:text="${item.standardCostStr}"></span></td>
+					<td><span th:text="${item.enhancedCostStr}"></span></td>
+					<td><span th:text="${item.weeks}"></span></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>

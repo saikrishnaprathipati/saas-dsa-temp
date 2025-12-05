@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layout/dsaLayout}" th:with="hideBeta=true">
+
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Confirm your email</title>
+</head>
+
+<body>
+<div layout:fragment="content">
+
+	<div class="ds_page__middle">
+		<span><br></span>
+		<div class="ds_wrapper">
+			<div class="ds_warning-text ds_warning-text-new ds_important-text-grey" th:if="${createAccountFormVO.resendEmailLink} == true">
+				<strong class="ds_warning-text__icon" aria-hidden="true"></strong>
+				<strong class="visually-hidden">Warning</strong>
+				<div class="ds_warning-text__text">
+					<p>A new account activation link has been sent to <strong> <span
+							th:text="${createAccountFormVO.emailAddress}"></span> </strong>.
+					</p>
+					<p>If you do not receive the email and are unable to continue contact the
+						<a th:href="@{/help#tab3}" id="contact_us_notification">DSA Team</a>.
+					</p>
+				</div>
+
+				<button class="ds_notification__close  js-close-notification" type="button"
+						data-button="button-close-this-notification" data-banner="banner-1-close">
+					<span class="visually-hidden">Close this notification</span>
+					<img th:src="@{/images/icon-cross.svg}" class="icon_cross" alt="close">
+				</button>
+			</div>
+
+			<main id="main-content" class="ds_layout ds_layout--article">
+				<div class="ds_layout__content border border-secondary p-3 rounded">
+					<p><br></p>
+					<form id="resendForm" method="get">
+						<h1 th:if="${createAccountFormVO.resendEmailLink} == null" class="ds_h1 dsa_h1">Confirm your
+							email</h1>
+						<h1 th:if="${createAccountFormVO.resendEmailLink} == true" class="ds_h1 dsa_h1">Check your
+							email</h1>
+						<p>An activation link to confirm your email address has been sent to
+							<strong>
+								<span th:text="${createAccountFormVO.emailAddress}"></span>
+							</strong>. It might take a few minutes to
+							arrive.
+						</p>
+						<p>We will never ask you for any personal information in our emails.</p>
+						<p>To confirm your email address, click on the activation link in the email or copy and paste it
+							into your web browser’s address bar.</p>
+
+						<h3>What to do if you do not receive the email</h3>
+						<ul class="dsa_list">
+							<li>check your email spam or junk folder</li>
+							<li>if the email is not in your spam or junk folder,
+								<a th:href="@{/resendEmail}">request a new activation link</a>
+							</li>
+							<li>if you still cannot activate your account, you can contact the
+								<a th:href="@{/help#tab3}" id="contact_us">DSA Team</a>
+							</li>
+						</ul>
+
+						<div th:if="${createAccountFormVO.resendEmailLink} == true">
+							<p>You cannot request more than 3 activation emails. Once you have exceeded the limit,
+								you will need to start the <a id="create_account" th:href="@{/start}">Create Account</a>
+								process again.
+							</p>
+						</div>
+					</form>
+
+				</div>
+			</main>
+
+		</div>
+	</div>
+</div>
+</body>
+
+</html>

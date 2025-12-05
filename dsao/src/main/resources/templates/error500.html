@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layout/dsaLayout}">
+
+<head>
+	<title>Service Error</title>
+	<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
+	<meta http-equiv="Pragma" content="no-cache"/>
+	<meta http-equiv="Expires" content="0"/>
+</head>
+
+<body>
+<div layout:fragment="content">
+
+	<div class="ds_wrapper">
+		<main id="main-content" class="ds_layout ds_layout--article">
+			<div class="ds_layout__content">
+				<p><br></p>
+				<h1>Service Unavailable</h1>
+				<p>Sorry, there is a problem processing your request. Try again later.</p>
+				<p class="ds_input--fixed-40">We saved your answers. They will be available next time you use this
+					service.</p>
+
+				<p class="ds_input--fixed-40">You can reach out to DSA service desk or retry after you
+					<a th:href="@{/login}" id="login">Sign in</a> to your DSA Account.
+
+				<div class="ds_button-group">
+					<button id="pageNotFoundBack" class="ds_button ds_button--secondary">Back</button>
+				</div>
+			</div>
+		</main>
+	</div>
+</div>
+</body>
+
+</html>

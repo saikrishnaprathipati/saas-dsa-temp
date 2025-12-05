@@ -1,0 +1,53 @@
+<div class="bottom_pagination">
+	<p>
+		<br>
+	</p>
+	<h2>Consumable items</h2>
+
+	<div class="ds_pagination consumable"
+		 th:if="${awardDetails.consumableItems.size > 0}">
+		<p></p>
+		<h2>
+			<span class="total_award_text">Total awarded<br></span> <strong
+				th:text="${awardDetails.consumableItemsTotal}"></strong>
+		</h2>
+	</div>
+
+</div>
+<p>If your course has started, we will pay this into your bank account within the next 3 to 5 working days. Otherwise, we will make the payment within 2 weeks of your course start date.</p>
+<p></p>
+<div class="ds_accordion-item">
+	<input type="checkbox"
+		   class="visually-hidden  ds_accordion-item__control" id="panel-1"
+		   aria-labelledby="panel-1-heading">
+	<div class="ds_accordion-item__header">
+		<h3 id="panel-1-heading"
+			class="ds_accordion-item__title dsa_accordion-item__title">Show
+			breakdown</h3>
+		<span class="ds_accordion-item__indicator"></span> <label
+			class="ds_accordion-item__label" for="panel-1"><span
+			class="visually-hidden">Show this section</span></label>
+	</div>
+	<div class="ds_accordion-item__body">
+		<table class=" ds_table dsa_allowance_table"
+			   data-smallscreen="scrolling">
+			<caption class="visually-hidden">Consumable items list</caption>
+			<thead>
+			<tr>
+				<th scope="col">Product</th>
+				<th scope="col">Amount awarded<br>
+				</th>
+			</tr>
+			</thead>
+			<tbody>
+			<tr th:each="item: ${awardDetails.consumableItems}">
+				<td><span th:text="${item.consumableItem.itemName}"></span>
+					<p class="ds_hint-text dsa_vat"
+					   th:if="${!#strings.isEmpty(item.otehrItemText)}"
+					   th:text="${item.otehrItemText}"></p></td>
+				<td>£<span th:text="${item.cost}"></span></td>
+			</tr>
+			</tbody>
+		</table>
+	</div>
+</div>

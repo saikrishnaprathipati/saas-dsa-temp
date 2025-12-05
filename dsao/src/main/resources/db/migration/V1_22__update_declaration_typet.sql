@@ -1,0 +1,3 @@
+UPDATE DSA_DECLARATION_TYPE SET DECLARATION_TYPE_DESC = 'Any support that is set out in the DSA claim is essential for this student to complete their course and to my knowledge, the details on this application are correct.' WHERE DECLARATION_TYPE_CODE = 'DETAILS_IN_THE_APP_ARE_CORRECT';
+UPDATE DSA_DECLARATION_TYPE SET DECLARATION_TYPE_DESC = 'I have seen and verified medical evidence of this student’s disability or learning difficulty.' WHERE DECLARATION_TYPE_CODE = 'DISABILITIES_ARE_CORRECT';
+UPDATE DSA_DECLARATION_TYPE SET DECLARATION_TYPE_DESC = 'I confirm this student has undertaken a DSA needs assessment and they agree with the recommendations.' WHERE DECLARATION_TYPE_CODE = 'STUD_MEETS_REQUIREMENTS';

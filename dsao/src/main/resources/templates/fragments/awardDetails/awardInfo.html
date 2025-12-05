@@ -1,0 +1,78 @@
+<br/>
+<br/>
+<div class="ds_file-download">
+
+	<div class="ds_file-download__thumbnail">
+		<a class="ds_file-download__thumbnail-link" aria-hidden="true"
+		   tabindex="-1" href="#"> <span class="visually-hidden">Document
+				cover image</span> <img class="ds_file-download__thumbnail-image"
+										th:src="@{/images/pdf.svg}" alt="PDF Document"/>
+		</a>
+	</div>
+
+	<div class="ds_file-download__content">
+		<h3>Other formats</h3>
+		<a th:href="@{/downloadAward/{currentSession}(currentSession=${awardDetails.currentSession})}" target="_blank"
+		   class="ds_file-download__title">Download award notice</a> (opens in
+		new window)
+		<p>We can also help you by providing information in a different
+			format:</p>
+		<div>
+			<h4>large print &nbsp;&nbsp;&nbsp;
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;audio recording</h4>
+			<h4>easy read &nbsp;&nbsp;&nbsp;&nbsp;
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;braille</h4>
+			<span>Call us on <span class="phone-no ">0300 555 0505</span>.
+			</span>
+		</div>
+	</div>
+</div>
+<div>
+	<hr/>
+
+	<div id="payments_info">
+		<h2>Payments</h2>
+		<p>Your DSA funding will be paid into the bank account you gave us
+			when you submitted your application. If your course has started, we will pay this into your bank account
+			within the next 3 to 5 working days. Otherwise, we will make the payment within 2 weeks of your course start
+			date. </p>
+		<br>
+	</div>
+	<div id="purchasing_info">
+		<h2>Purchasing items</h2>
+		<p>
+			To learn more about purchasing items, such as upgrading an electrical or ergonomic item, purchasing
+			something different from what your Disability Advisor has recommended, or sourcing an item from a different
+			supplier, read our <a href="https://www.saas.gov.uk/files/852/saas-dsa-online-student-guidance-notes.pdf">DSA
+			Guidance Notes</a>.
+		</p>
+		<br>
+	</div>
+	<div id="receipts_info">
+		<h2>Receipts</h2>
+		<p>
+			When you purchase the items outlined in this award, make sure you keep your receipts, as you will need to
+			send these to us using the Document Uploader in your SAAS Account within 6 weeks of purchasing the items.
+			Read our <a href="https://www.saas.gov.uk/files/879/dsa-online-application-guide.pdf">DSA Online Application
+			Guide</a> for details on how to do this.
+		</p>
+		<br>
+	</div>
+	<div id="anythingChange_info">
+		<h2>If anything changes</h2>
+		<p>If you no longer need DSA, or you need additional support,
+			contact your Disability Advisor.</p>
+		<br>
+	</div>
+	<div id="gettingHelp_info">
+		<h2>Getting help</h2>
+		<p>If you need further help in understanding this award,
+			purchasing your recommended equipment, organising your travel
+			arrangements or your Non-Medical Personal Help, contact your Disability Advisor.
+			If you need help uploading receipts or signing
+			into your SAAS Account, <a th:href="@{/help#tab1}">contact us</a>.
+		</p>
+		<p>We recommend you keep a copy of
+			this award notice for your records.</p>
+	</div>
+</div>

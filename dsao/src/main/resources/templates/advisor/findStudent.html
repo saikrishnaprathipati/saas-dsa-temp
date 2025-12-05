@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/dsaLayoutLoggedIn}"
+	th:with="currentPosition='findStudent', currentTab='findStudent'">
+
+<head>
+<title>Find Student</title>
+<meta http-equiv="Cache-Control"
+	content="no-cache, no-store, must-revalidate" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="0" />
+</head>
+
+<body>
+
+	<div layout:fragment="content">
+		<div class="ds_page__middle">
+			<div class="ds_wrapper">
+				<main class="ds_layout  ds_layout--article">
+					<div class="ds_layout__content">
+						<form id="find_Student" th:action="@{/findStudent}"
+							th:object="${findStudentFormVO}" method="POST">
+							<p>
+								<br>
+							</p>
+							<div tabindex="-1" th:if="${#fields.hasAnyErrors()}"
+								class="ds_error-summary" id="error-summary"
+								aria-labelledby="error-summary-title" role="alert">
+								<h2 class="ds_error-summary__title" id="error-summary-title">There
+									is a problem</h2>
+
+								<ul class="ds_error-summary__list">
+									<li th:each="fieldName: ${findStudentFormVO.orderedFields}">
+										<span th:if="${#fields.hasErrors(fieldName)}"> <span
+											th:each="fieldError: ${#fields.errors(fieldName)}"> <span>
+													<span th:if="${fieldName eq 'dateOfBirth'}"> <a
+														th:href="${'#' + 'dobDay'}" th:text="${fieldError}"
+														class="field-error"> </a>
+												</span> <span th:if="${fieldName ne 'dateOfBirth'}"> <a
+														th:href="${'#' + fieldName}" th:text="${fieldError}"
+														class="field-error"> </a>
+												</span>
+											</span>
+										</span>
+									</span>
+									</li>
+								</ul>
+							</div>
+
+							<h1>Find student</h1>
+							<p class="ds_input--fixed-40">Search for a student to start a
+								new DSA application or to see the progress of an existing
+								application.</p>
+							<br>
+							<div class="ds_question" data-module="ds-character-count"
+								th:classappend="${#fields.hasErrors('firstName')} ? 'ds_question--error'">
+								<label class="ds_label" for="firstName">First name</label>
+								<div class="ds_question__error-message"
+									th:if="${#fields.hasErrors('firstName')}"
+									th:errors="*{firstName}"></div>
+								<input
+									th:classappend="${#fields.hasErrors('firstName')} ? 'ds_input--error'"
+									class="ds_input  ds_input--fixed-20" maxlength="25" type="text"
+									id="firstName" th:field="*{firstName}" />
+							</div>
+							<br>
+							<div class="ds_question" data-module="ds-character-count"
+								th:classappend="${#fields.hasErrors('lastName')} ? 'ds_question--error'">
+								<label class="ds_label" for="lastName">Last name</label>
+								<div class="ds_question__error-message"
+									th:if="${#fields.hasErrors('lastName')}"
+									th:errors="*{lastName}"></div>
+								<input
+									th:classappend="${#fields.hasErrors('lastName')} ? 'ds_input--error'"
+									class="ds_input  ds_input--fixed-20" maxlength="25" type="text"
+									id="lastName" th:field="*{lastName}" />
+							</div>
+							<br>
+							<div class="ds_question" id="dateOfBirth"
+								th:classappend="${#fields.hasErrors('dobDay')}
+										or ${#fields.hasErrors('dobMonth')}
+										or ${#fields.hasErrors('dobYear')} 
+										or ${#fields.hasErrors('dateOfBirth')} ? 'ds_question--error'">
+								<fieldset>
+									<h4 class="ds_label">Date of birth (optional)</h4>
+									<p class="ds_hint-text">For example, 16 10 2000.</p>
+									<div id="error_section">
+										<div class="ds_question__error-message"
+											th:if="${#fields.hasErrors('dateOfBirth')}"
+											th:errors="*{dateOfBirth}"></div>
+										<div class="ds_question__error-message"
+											th:if="${#fields.hasErrors('dobDay')}" th:errors="*{dobDay}"></div>
+										<div class="ds_question__error-message"
+											th:if="${#fields.hasErrors('dobMonth')}"
+											th:errors="*{dobMonth}"></div>
+										<div class="ds_question__error-message"
+											th:if="${#fields.hasErrors('dobYear')}"
+											th:errors="*{dobYear}"></div>
+									</div>
+									<div class="ds_field-group  ds_field-group--inline">
+										<div>
+											<label class="ds_label" for="dobDay">Day</label> <input
+												th:classappend="${#fields.hasErrors('dobDay')} or ${#fields.hasErrors('dobMonth')} or ${#fields.hasErrors('dobYear')} or ${#fields.hasErrors('dateOfBirth')} ? 'ds_input--error'"
+												maxlength="2" class="ds_input ds_input--fixed-2" id="dobDay"
+												type="text" th:field="*{dobDay}" />
+										</div>
+										<div>
+											<label class="ds_label" for="dobMonth">Month</label> <input
+												th:classappend="${#fields.hasErrors('dobDay')} or ${#fields.hasErrors('dobMonth')} or ${#fields.hasErrors('dobYear')} or ${#fields.hasErrors('dateOfBirth')} ? 'ds_input--error'"
+												maxlength="2" class="ds_input ds_input--fixed-2"
+												id="dobMonth" type="text" th:field="*{dobMonth}" />
+										</div>
+										<div>
+											<label class="ds_label" for="dobYear">Year</label> <input
+												th:classappend="${#fields.hasErrors('dobDay')} or ${#fields.hasErrors('dobMonth')} or ${#fields.hasErrors('dobYear')} or ${#fields.hasErrors('dateOfBirth')} ? 'ds_input--error'"
+												maxlength="4" class="ds_input ds_input--fixed-4"
+												id="dobYear" type="text" th:field="*{dobYear}" />
+										</div>
+									</div>
+								</fieldset>
+							</div>
+						<div class="ds_button-group">
+							<a th:href="@{/findStudents}"
+							   class="ds_button ds_button--cancel">Back
+							</a>
+							&nbsp;&nbsp;&nbsp;&nbsp;
+							<input type="submit" class="ds_button" name="action" value="Continue">
+						</div>
+							 
+						</form>
+					</div>
+				</main>
+			</div>
+		</div>
+	</div>
+
+</body>
+
+</html>

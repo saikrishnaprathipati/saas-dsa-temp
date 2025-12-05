@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layout/dsaLayoutLoggedIn}"
+	  th:with="currentPosition='specificStudent', currentTab='dashboard'">
+
+<head>
+	<title>Award details</title>
+</head>
+
+<body>
+
+<div layout:fragment="content">
+	<div class="ds_page__middle">
+		<div class="ds_wrapper">
+			<main class="ds_layout  ds_layout--article">
+				<div class="ds_layout__content">
+					<p>
+						<br>
+					</p>
+
+					<a th:href="@{''+${backLink}}" id="advisor_dashboard">&lt;
+						Back to DSA application summary</a>
+					<p></p>
+					<span><strong>SAAS Reference Number</strong>&nbsp;<span
+							th:text="${awardDetails.studentReferenceNumber}"></span> </span>
+					<p></p>
+					<h1>
+						<span th:text="${awardDetails.studentFullName}"></span>
+					</h1>
+					<h2 >
+						Disabled Students’ Allowance Award for the academic year <span
+							th:text="${awardDetails.academicYear}"></span>
+					</h2>
+
+					<span th:if="${LOGGEDIN_USER_TYPE eq 'STUDENT'}">Please
+							find below a breakdown of the funding you have been awarded.</span>
+					<div th:if="${LOGGEDIN_USER_TYPE eq 'ADVISOR'}">
+						
+						<span>Please find below a breakdown of the funding <span
+								th:text="${awardDetails.studentFullName}"></span> has been
+								awarded.
+							</span>
+					</div>
+
+					<div id="consumables_details"
+						 th:if="${awardDetails.consumableItems != null && awardDetails.consumableItems.size > 0}"
+						 th:insert="~{fragments/awardDetails/consumableDetails.html}">
+					</div>
+
+					<div id="equipment_details"
+						 th:if="${awardDetails.equipments!= null &&  awardDetails.equipments.size > 0}"
+						 th:insert="~{fragments/awardDetails/equipmentDetails.html}">
+					</div>
+
+					<div id="nmph_details"
+						 th:if="${awardDetails.nmphItems != null && awardDetails.nmphItems.size > 0}"
+						 th:insert="~{fragments/awardDetails/nmphDetails.html}"></div>
+
+
+					<div id="travel_details"
+						 th:if="${awardDetails.travelExpItems != null && awardDetails.travelExpItems.size > 0}"
+						 th:insert="~{fragments/awardDetails/travelExpDetails.html}"></div>
+
+					<div id="accommodations_details"
+						 th:if="${awardDetails.accommodations != null && awardDetails.accommodations.size > 0}"
+						 th:insert="~{fragments/awardDetails/accommodationDetails.html}">
+					</div>
+
+					<div id="award_info"
+						 th:insert="~{fragments/awardDetails/awardInfo.html}"></div>
+				</div>
+			</main>
+		</div>
+	</div>
+</div>
+
+</body>
+
+</html>

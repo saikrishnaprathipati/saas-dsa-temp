@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layout/dsaLayoutLoggedIn}" th:with="currentPosition='specificStudent'">
+
+<head>
+	<title>Student declaration</title>
+	<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
+	<meta http-equiv="Pragma" content="no-cache"/>
+	<meta http-equiv="Expires" content="0"/>
+</head>
+
+<body>
+
+<div layout:fragment="content">
+
+	<div class="ds_page__middle">
+		<div class="ds_wrapper">
+			<main class="ds_layout  ds_layout--article">
+				<div class="ds_layout__content">
+
+					<p><br></p>
+					<form class="buttonInline" action="#" th:action="@{/studentDeclaration}"
+						  th:object="${declarationFormVO}" method="POST">
+						<input type="hidden" th:value="${dsaApplicationNumber}" name="dsaApplicationNumber"/>
+						<input type="hidden" th:value="${studentReferenceNumber}" name="studentReferenceNumber"/>
+						<input type="hidden" name="action" value="Dashboard"/>
+
+						<input type="submit" class="secondary_form"
+							   value="&lt; Back to DSA application summary">
+					</form>
+					<p></p>
+
+					<form id="advisor_declaration" action="#" th:action="@{/studentDeclaration}"
+						  th:object="${declarationFormVO}" method="POST">
+
+						<div tabindex="-1" th:if="${#fields.hasAnyErrors()}" class="ds_error-summary"
+							 id="error-summary" aria-labelledby="error-summary-title" role="alert">
+							<h2 class="ds_error-summary__title" id="error-summary-title">There is a problem</h2>
+
+							<ul class="ds_error-summary__list">
+								<li th:each="fieldName: ${declarationFormVO.orderedFields}">
+									<span th:if="${#fields.hasErrors(fieldName)}">
+										<span th:each="fieldError: ${#fields.errors(fieldName)}">
+											<span>
+												<a th:href="${'#' + fieldName}" th:text="${fieldError}"
+												   class="field-error">
+												</a>
+											</span>
+										</span>
+									</span>
+								</li>
+							</ul>
+							<p>If you want to report a problem with your application, click on 'I do not agree'.</p>
+						</div>
+
+						<div class="ds_question">
+							<fieldset>
+								<legend>
+									<h1>Student declaration</h1>
+								</legend>
+
+								<p>You must agree to the following statements before you can submit your application for
+									DSA. Read this carefully and select 'I agree'.</p>
+								<p><strong>Confirm that you understand the following:</strong></p>
+								<ul>
+									<li>I have checked the information my Disability Advisor has given on this
+										application, and to the best of my knowledge, my disabilities and the allowances
+										I need are correct.
+									</li>
+									<li>I understand that to process my DSA application, SAAS may contact me or my
+										Disability Advisor to confirm the information provided or to request additional
+										documentation.
+									</li>
+									<li>I understand that if I am paid too much because of a change in my circumstances,
+										money may be taken back from me, stopped or reduced in the future. A change in
+										circumstances could include not starting my course, leaving my course or
+										receiving money from another fund.
+									</li>
+									<li>I understand that if I am paid too much money or a payment is made on my behalf,
+										I may have to pay it back.
+									</li>
+									<li>I will give SAAS receipts for all items purchased using my DSA.
+									</li>
+									<li>I understand that if I give my Disability Advisor or SAAS false, incorrect, or
+										incomplete information, my details will be passed onto the SAAS Counter Fraud
+										team and may have sanctions applied, including having to pay money back.
+									</li>
+									<li>I understand that the information I have provided will be used to prevent,
+										detect, investigate, and report crime. I understand that SAAS may share this
+										information with other organisations.
+									</li>
+									<li>My Disabled Students' Allowance payment is made under the Students' Allowances
+										(Scotland) Regulation 2022.
+									</li>
+								</ul>
+								<br>
+								<div class="ds_field-group" id="declarationCodes"
+									 th:classappend="${#fields.hasErrors('declarationCodes')} ? 'ds_question--error'">
+									<div th:each="declaration : ${studentDeclarationTypes}">
+										<div class="ds_question__error-message"
+											 th:if="${#fields.hasErrors('declarationCodes')}">You must agree to all
+											statements.
+										</div>
+										<div class="ds_checkbox">
+											<input class="ds_checkbox__input" type="checkbox"
+												   th:field="*{declarationCodes}"
+												   th:value="${declaration.declarationCode}">
+											<label class="ds_checkbox__label"
+												   th:for="${#ids.prev('declarationCodes')}"
+												   th:text="${declaration.declarationTypeDesc}">
+											</label>
+										</div>
+									</div>
+									<input type="hidden" th:value="${studentReferenceNumber}"
+										   name="studentReferenceNumber"/>
+									<input type="hidden" th:value="${dsaApplicationNumber}"
+										   name="dsaApplicationNumber"/>
+									<input type="submit" class="ds_button ds_no-margin" name="action" value="I agree">
+								</div>
+							</fieldset>
+						</div>
+
+						<p>If you do not agree to all statements, need help to understand the information on this page
+							or want to withdraw your application, select 'I do not agree' and follow the steps to report
+							a problem to your Disability Advisor.</p>
+
+						<div class="ds_button-group">
+							<button class="ds_button ds_button--cancel" name="action" value="I do not agree"
+									data-button="button-i-do-not-agree">I do not agree
+							</button>
+						</div>
+					</form>
+
+					<form class="buttonInline" action="#" th:action="@{/studentDeclaration}"
+						  th:object="${declarationFormVO}" method="POST">
+						<input type="hidden" th:value="${dsaApplicationNumber}" name="dsaApplicationNumber"/>
+						<input type="hidden" th:value="${studentReferenceNumber}" name="studentReferenceNumber"/>
+						<input type="hidden" name="action" value="Dashboard"/>
+
+						<input type="submit" class="secondary_form"
+							   value="&lt; Back to DSA application summary">
+					</form>
+				</div>
+			</main>
+		</div>
+	</div>
+
+
+</div>
+
+</body>
+
+</html>

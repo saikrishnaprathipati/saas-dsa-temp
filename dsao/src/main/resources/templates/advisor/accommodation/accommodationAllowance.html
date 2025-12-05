@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/dsaLayoutLoggedIn}"
+	th:with="currentPosition='specificStudent', currentTab='dashboard'">
+
+<head>
+<title>Student NMPH Allowances</title>
+<meta http-equiv="Cache-Control"
+	content="no-cache, no-store, must-revalidate" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="0" />
+</head>
+
+<body>
+
+	<div layout:fragment="content">
+
+		<div class="ds_page__middle">
+			<div class="ds_wrapper">
+				<main class="ds_layout  ds_layout--article">
+					<div class="ds_layout__content">
+						<p>
+							<br>
+						</p>
+						<form id="student_nmph_details"
+							th:action="@{/accommodationAllowance}"
+							th:object="${accommodationAllowanceFormVO}" method="POST">
+							<div tabindex="-1" th:if="${#fields.hasAnyErrors()}"
+								class="ds_error-summary" id="error-summary"
+								aria-labelledby="error-summary-title" role="alert">
+								<h2 class="ds_error-summary__title" id="error-summary-title">There
+									is a problem</h2>
+
+								<ul class="ds_error-summary__list">
+									<li
+										th:each="fieldName: ${accommodationAllowanceFormVO.orderedFields}">
+
+										<span th:if="${#fields.hasErrors(fieldName)}"> <span
+											th:each="fieldError: ${#fields.errors(fieldName)}"> <span>
+
+													<a th:href="${'#' + fieldName}" th:text="${fieldError}"
+													class="field-error"> </a>
+
+											</span>
+										</span>
+									</span>
+									</li>
+								</ul>
+							</div>
+
+							<p class="ds_hint-text">Part 2 of 3</p>
+							<div class="ds_question">
+								<fieldset>
+
+									<h1>Add accommodation cost</h1>
+									<p>We will use this to calculate the overall accommodation
+										allowance.</p>
+									<br>
+									<div class="ds_field-group"
+										th:classappend="${#fields.hasErrors('standardAccommodationCost')} ? 'ds_question--error'">
+										<label class="ds_label" for="standardAccommodationCost">Cost
+											of standard accommodation</label>
+										<div class="ds_question__error-message"
+											th:if="${#fields.hasErrors('standardAccommodationCost')}"
+											th:errors="*{standardAccommodationCost}"></div>
+										<p class="ds_hint-text">Per week.</p>
+										<div class="ds_currency-wrapper" data-symbol="£">
+											<input class="ds_input ds_input--fixed-10" type="text"
+												id="standardAccommodationCost" maxlength="8"
+												th:classappend="${#fields.hasErrors('standardAccommodationCost')} ? 'ds_input--error'"
+												data-form="textinput-rate"
+												th:field="*{standardAccommodationCost}">
+										</div>
+									</div>
+									<br>
+									<div class="ds_field-group"
+										th:classappend="${#fields.hasErrors('enhancedAccommodationCost')} ? 'ds_question--error'">
+										<label class="ds_label" for="enhancedAccommodationCost">Cost
+											of enhanced accommodation</label>
+										<div class="ds_question__error-message"
+											th:if="${#fields.hasErrors('enhancedAccommodationCost')}"
+											th:errors="*{enhancedAccommodationCost}"></div>
+										<p class="ds_hint-text">Per week.</p>
+										<div class="ds_currency-wrapper" data-symbol="£">
+											<input class="ds_input ds_input--fixed-10" type="text"
+												id="enhancedAccommodationCost" maxlength="8"
+												th:classappend="${#fields.hasErrors('enhancedAccommodationCost')} ? 'ds_input--error'"
+												data-form="textinput-rate"
+												th:field="*{enhancedAccommodationCost}">
+										</div>
+									</div>
+									<br>
+									<div class="ds_field-group"
+										th:classappend="${#fields.hasErrors('weeks')} ? 'ds_question--error'">
+										<label class="ds_label" for="weeks">Number of weeks
+											accommodation is needed</label>
+										<p class="ds_hint-text">Per academic year.</p>
+
+										<div class="ds_question__error-message"
+											th:if="${#fields.hasErrors('weeks')}" th:errors="*{weeks}"></div>
+										<input class="ds_input ds_input--fixed-10" type="text"
+											id="weeks" maxlength="2"
+											th:classappend="${#fields.hasErrors('weeks')} ? 'ds_input--error'"
+											data-form="textinput-hour" th:field="*{weeks}">
+									</div>
+									<br> <br> <span> </span>
+									<div class="ds_field-group" id="nmphAllowances">
+										<input type="hidden"
+											th:value="${accommodationAllowanceFormVO.studentReferenceNumber}"
+											name="studentReferenceNumber" /> <input type="hidden"
+											th:value="${accommodationAllowanceFormVO.dsaApplicationNumber}"
+											name="dsaApplicationNumber" /> <input type="hidden"
+											th:value="${accommodationAllowanceFormVO.id}" name="id" /> <input
+											type="hidden"
+											th:value="${accommodationAllowanceFormVO.accommodationType}"
+											name="accommodationType" /> <input type="hidden"
+											th:value="${accommodationAllowanceFormVO.backAction}"
+											name="backAction" />
+
+									</div>
+								</fieldset>
+							</div>
+							<div class="ds_button-group">
+								<div class="ds_button-group">
+
+									<!-- <button class="ds_button ds_button--cancel" name="action"
+										value="SELECT_ACCOMMODATION_TYPE" data-button="about-student">Back</button>
+ -->
+									<button class="ds_button ds_button--cancel" name="action"
+										th:value="${BACK_ACTION}" data-button="about-student">Back
+									</button>
+									&nbsp;&nbsp;&nbsp;&nbsp; <input type="submit" class="ds_button"
+										name="action" value="Save and continue">
+								</div>
+								<button class="ds_link  ds_no-margin secondary_form"
+									name="action" value="SKIP_NMPH" th:if="${showSkipNMPH}"
+									data-button="about-student">Skip NMPH</button>
+							</div>
+						</form>
+					</div>
+				</main>
+			</div>
+		</div>
+
+
+	</div>
+
+</body>
+
+</html>

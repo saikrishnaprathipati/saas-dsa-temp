@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/dsaLayoutLoggedIn}"
+	th:with="currentPosition='findStudent', currentTab='findStudent'">
+
+<head>
+<title>Resume Application</title>
+<meta http-equiv="Cache-Control"
+	content="no-cache, no-store, must-revalidate" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="0" />
+
+</head>
+
+<body>
+
+	<div layout:fragment="content">
+		<div class="ds_page__middle">
+			<div class="ds_wrapper">
+				<main class="ds_layout  ds_layout--article">
+					<div class="ds_layout__content">
+
+						<p>
+							<br>
+						</p>
+
+						<div
+							class="ds_warning-text ds_warning-text-new ds_important-text-grey"
+							data-module="ds-notification">
+							<strong class="ds_warning-text__icon" aria-hidden="true"></strong>
+							<strong class="visually-hidden">Warning</strong>
+							<div class="ds_warning-text__text">Do not use your back
+								button when using this service, or you may have to sign in again
+								and your data may not be saved.</div>
+							<button class="ds_notification__close  js-close-notification"
+								type="button" data-button="button-close-this-notification"
+								data-banner="banner-1-close">
+								<span class="visually-hidden">Close this notification</span> <img
+									th:src="@{/images/icon-cross.svg}" class="icon_cross"
+									alt="close">
+							</button>
+						</div>
+
+						<span> <strong>SAAS Reference Number</strong>&nbsp;&nbsp;&nbsp;<span
+							th:text="${dashboardFormVO.studentReferenceNumber}"></span>
+						</span>
+						<h1
+							th:text="${dashboardFormVO.firstName} + ' ' + ${dashboardFormVO.lastName}"></h1>
+						<br>
+
+						<!--/* APPLICATION SECTION */-->
+						<div id="applicationsSection">
+							<h2>DSA Applications</h2>
+							<p>Covers any Disabled Students’ Allowance (DSA) applications
+								that have been started within the online service.</p>
+
+							<!--/* CURRENT APPLICATION */-->
+							<div class="ds_cb__inner"
+								th:if="${dashboardFormVO.newApplication eq false}">
+								<div class="ds_cb__text">
+
+									<div id="canViewApplication" class="dashboard_info"
+										th:if="${dashboardFormVO.applicationStatus.code != 'WITHDRAWN'}">
+
+										<form th:action="@{/initApplicationDashboard}"
+											th:object="${dashboardFormVO}"
+											th:if="${dashboardFormVO.roleName ne 'Disability Administrator' && (LOGGEDIN_USER_TYPE  eq 'STUDENT' || LOGGEDIN_USER_TYPE  eq 'ADVISOR')}"
+											method="POST">
+
+											<span th:if="${LOGGEDIN_USER_TYPE  eq 'ADVISOR'}"> <input
+												type="submit" class="ds_link ds_no-margin secondary_form"
+												th:value="${'DSA application for academic year '  + dashboardFormVO.academicYear}">
+											</span>
+											<span th:if="${LOGGEDIN_USER_TYPE  eq 'STUDENT'}">
+											<span th:if="${dashboardFormVO.applicationStatus.code == 'STARTED' && dashboardFormVO.advisorDeclaration != 'COMPLETED'}">
+												   <input type="submit"
+														  class="ds_link ds_no-margin secondary_form" disabled
+														  th:value="${'DSA application for academic year '  + dashboardFormVO.academicYear}">
+											</span>
+											<span th:if="${dashboardFormVO.applicationStatus.code != 'STARTED' ||
+											dashboardFormVO.applicationStatus.code == 'STARTED' && dashboardFormVO.advisorDeclaration == 'COMPLETED'}">
+											<input type="submit"
+												   class="ds_link ds_no-margin secondary_form"
+												   th:value="${'DSA application for academic year '  + dashboardFormVO.academicYear}">
+											</span>
+										</span>
+											<input type="hidden"
+												th:value="${dashboardFormVO.studentReferenceNumber}"
+												name="studentReferenceNumber" /> <input type="hidden"
+												th:value="${dashboardFormVO.firstName}" name="firstName" />
+											<input type="hidden" th:value=" ${dashboardFormVO.lastName}"
+												name="lastName" /> <input type="hidden"
+												th:value=" ${dashboardFormVO.dob}" name="dob" /> <input
+												type="hidden" th:value=" ${dashboardFormVO.academicYear}"
+												name="academicYear" /> <input type="hidden"
+												th:value=" ${dashboardFormVO.sessionCode}"
+												name="sessionCode" /> <input type="hidden"
+												th:value=" ${dashboardFormVO.fundingEligibilityStatus}"
+												name="fundingEligibilityStatus" />
+										</form>
+
+									</div>
+									<div id="canNotViewApplication"
+										th:if="${dashboardFormVO.applicationStatus.code == 'WITHDRAWN' || dashboardFormVO.roleName eq 'Disability Administrator'}"
+										class="dashboard_info">
+										<span
+											th:text="${'DSA application for academic year '  + dashboardFormVO.academicYear}">
+										</span>
+									</div>
+
+									<p th:text="${dashboardFormVO.institutionName}"></p>
+								</div>
+								<div class="ds_cb__text application_details">
+									<h3>Status</h3>
+
+									<div class="govuk-tag"
+										th:classappend="'govuk-tag--'+${dashboardFormVO.applicationStatus.color}">
+										<span
+											th:text="${dashboardFormVO.applicationStatus.description}"></span>
+									</div>
+									<p>
+										Last updated <span
+											th:text="${dashboardFormVO.applicationUpdated}"></span>
+									</p>
+								</div>
+							</div>
+
+							<!--/* PREVIOUS APPLICATION */-->
+							<div class="ds_cb__inner" th:if="${previousYearFormVO ne null}">
+								<div class="ds_cb__text">
+
+									<div class="dashboard_info"
+										th:if="${previousYearFormVO.applicationStatus.code != 'WITHDRAWN'}">
+
+										<form th:action="@{/initApplicationDashboard}"
+											th:object="${previousYearFormVO}"
+											th:if="${previousYearFormVO.roleName ne 'Disability Administrator'
+											   && (LOGGEDIN_USER_TYPE  eq 'STUDENT' || LOGGEDIN_USER_TYPE  eq 'ADVISOR')}"
+											method="POST">
+
+											<span th:if="${LOGGEDIN_USER_TYPE  eq 'ADVISOR'}"> <input
+												type="submit" class="ds_link ds_no-margin secondary_form"
+												th:value="${'DSA application for academic year '  + previousYearFormVO.academicYear}">
+											</span>
+											<span th:if="${LOGGEDIN_USER_TYPE  eq 'STUDENT'}">
+											<span th:if="${previousYearFormVO.applicationStatus.code == 'STARTED' && previousYearFormVO.advisorDeclaration != 'COMPLETED'}">
+												   <input type="submit"
+														  class="ds_link ds_no-margin secondary_form" disabled
+														  th:value="${'DSA application for academic year '  + previousYearFormVO.academicYear}">
+											</span>
+
+											<span th:if="${previousYearFormVO.applicationStatus.code != 'STARTED' ||
+											(previousYearFormVO.applicationStatus.code eq 'STARTED' && previousYearFormVO.advisorDeclaration == 'COMPLETED')}">
+											<input type="submit"
+												   class="ds_link ds_no-margin secondary_form"
+												   th:value="${'DSA application for academic year '  + previousYearFormVO.academicYear}">
+											</span>
+										</span>
+
+											<input type="hidden"
+												th:value="${previousYearFormVO.studentReferenceNumber}"
+												name="studentReferenceNumber" /> <input type="hidden"
+												th:value="${previousYearFormVO.firstName}" name="firstName" />
+											<input type="hidden"
+												th:value=" ${previousYearFormVO.lastName}" name="lastName" />
+											<input type="hidden" th:value=" ${previousYearFormVO.dob}"
+												name="dob" /> <input type="hidden"
+												th:value=" ${previousYearFormVO.academicYear}"
+												name="academicYear" /> <input type="hidden"
+												th:value=" ${previousYearFormVO.sessionCode}"
+												name="sessionCode" /> <input type="hidden"
+												th:value=" ${previousYearFormVO.fundingEligibilityStatus}"
+												name="fundingEligibilityStatus" />
+										</form>
+
+									</div>
+									<div
+										th:if="${previousYearFormVO.applicationStatus.code == 'WITHDRAWN' || previousYearFormVO.roleName eq 'Disability Administrator'}"
+										class="dashboard_info">
+										<span
+											th:text="${'DSA application for academic year '  + previousYearFormVO.academicYear}">
+										</span>
+									</div>
+
+									<p th:text="${previousYearFormVO.institutionName}"></p>
+								</div>
+								<div class="ds_cb__text application_details">
+									<h3>Status</h3>
+
+									<div class="govuk-tag"
+										th:classappend="'govuk-tag--'+${previousYearFormVO.applicationStatus.color}">
+										<span
+											th:text="${previousYearFormVO.applicationStatus.description}"></span>
+									</div>
+									<p>
+										Last updated <span
+											th:text="${previousYearFormVO.applicationUpdated}"></span>
+									</p>
+								</div>
+							</div>
+
+							<!--/* NEW APPLICATION */-->
+							<div
+								class="ds_warning-text ds_warning-text-new ds_important-text"
+								th:if="${ dashboardFormVO.roleName ne 'Disability Administrator' && LOGGEDIN_USER_TYPE  eq 'ADVISOR'}">
+								<strong class="ds_warning-text__icon" aria-hidden="true"></strong>
+								<strong>Start an application</strong>
+								<div class="ds_warning-text__text">Apply for DSA funding for a student for the first time,
+									or as continuing student. The funding application can be for the current academic year or the previous academic year.
+									It can also be for an additional request for funding as part of an existing award.
+								</div>
+								<form th:action="@{/selectYear}" th:object="${dashboardFormVO}"
+									method="POST">
+									<input type="hidden"
+										th:value="${dashboardFormVO.studentReferenceNumber}"
+										name="studentReferenceNumber" /> <input type="hidden"
+										th:value="${dashboardFormVO.firstName}" name="firstName" /> <input
+										type="hidden" th:value=" ${dashboardFormVO.lastName}"
+										name="lastName" /> <input type="hidden"
+										th:value=" ${dashboardFormVO.dob}" name="dob" /> <input
+										type="hidden" th:value=" ${dashboardFormVO.academicYear}"
+										name="academicYear" /> <input type="hidden"
+										th:value=" ${dashboardFormVO.sessionCode}" name="sessionCode" />
+									<input type="hidden"
+										th:value=" ${dashboardFormVO.fundingEligibilityStatus}"
+										name="fundingEligibilityStatus" /> <input type="submit"
+										class="ds_button dsa_button" value="Start">
+								</form>
+							</div>
+						</div>
+
+						<div id="application_status_info_message"
+							th:if="${canShowApplicationStatusMessage && dashboardFormVO.newApplication eq false}"
+							th:insert="~{fragments/statusInfo/applicationStatusInfo.html}"></div>
+
+						<!--/* AWARDS SECTION */-->
+						<br>
+						<div id="awardsSection"
+							th:if="${AWARD_DETAILS ne null || PREVIOUS_AWARD_DETAILS ne null}">
+							<h2>DSA Awards</h2>
+							<p>Covers any Disabled Students’ Allowance (DSA) awards that
+								have been processed by SAAS within the online service.</p>
+
+							<!--/* CURRENT SESSION AWARD */-->
+							<div class=" "
+								th:if="${AWARD_DETAILS ne null && AWARD_DETAILS.isAwardedInPhaseOne}">
+								<div class=" ">
+									<div class="dashboard_info">
+										<p>DSA award for academic year  <span
+											th:text="${AWARD_DETAILS.academicYear}"></span></p>
+										<p th:text="${AWARD_DETAILS.institution}"></p>
+										<p>This Award is not available to view online, it was distributed via email.</p> 
+									</div>
+									<hr/>
+								</div>
+							</div>
+
+							<div class="ds_cb__inner" th:if="${AWARD_DETAILS ne null && !AWARD_DETAILS.isAwardedInPhaseOne}">
+								<div class="ds_cb__text">
+									<div class="dashboard_info">
+										<div th:if="${LOGGEDIN_USER_TYPE  eq 'STUDENT'}">
+											<a th:href="@{/awardDetails}"
+												th:text="${'DSA award for academic year '  + AWARD_DETAILS.academicYear}"></a>
+										</div>
+										<div th:if="${LOGGEDIN_USER_TYPE  ne 'STUDENT'}">
+											<span
+												th:if="${dashboardFormVO.roleName eq 'Disability Administrator'}"
+												th:text="${'DSA award for academic year '  + AWARD_DETAILS.academicYear}"></span>
+
+											<a th:href="@{/awardDetails}"
+												th:if="${dashboardFormVO.roleName ne 'Disability Administrator' && canAdvisorSeeAward eq 'Y'}"
+												th:text="${'DSA award for academic year '  + AWARD_DETAILS.academicYear}"></a>
+											<span
+												th:if="${dashboardFormVO.roleName ne 'Disability Administrator' && canAdvisorSeeAward eq 'N'}"
+												th:text="${'DSA award for academic year '  + AWARD_DETAILS.academicYear}"></span>
+										</div>
+
+
+									</div>
+									<p th:text="${AWARD_DETAILS.institution}"></p>
+								</div>
+
+								<div class="ds_cb__text application_details">
+									<h3>Status</h3>
+									<div class="govuk-tag"
+										th:classappend="'govuk-tag--'+${AWARD_DETAILS.fundStatus.color}">
+										<span th:text="${AWARD_DETAILS.fundStatus.description}"></span>
+									</div>
+									<p>
+										Last updated <span th:text="${AWARD_DETAILS.awardDate}"></span>
+									</p>
+								</div>
+							</div>
+
+							<!--/* PREVIOUS SESSION AWARD */-->
+							<div class=""
+								th:if="${PREVIOUS_AWARD_DETAILS ne null && PREVIOUS_AWARD_DETAILS.isAwardedInPhaseOne}">
+								<div class="">
+									<div class="dashboard_info">
+										<p>DSA award for academic year  <span
+											th:text="${PREVIOUS_AWARD_DETAILS.academicYear}"></span></p>
+										<p th:text="${PREVIOUS_AWARD_DETAILS.institution}"></p>
+										<p>This Award is not available to view online, it was distributed via email.</p> 
+									</div>
+									<hr/>
+								</div>
+							</div>
+							<div class="ds_cb__inner"
+								th:if="${PREVIOUS_AWARD_DETAILS ne null && !PREVIOUS_AWARD_DETAILS.isAwardedInPhaseOne}">
+								<div class="ds_cb__text">
+									<div class="dashboard_info">
+										<!-- 										<a th:href="@{/previousAwardDetails}"
+											th:if="${LOGGEDIN_USER_TYPE  eq 'STUDENT' ||
+									   dashboardFormVO.roleName ne 'Disability Administrator' && canAdvisorSeePreviousAward eq 'Y'}"
+											th:text="${'DSA award for academic year '  + PREVIOUS_AWARD_DETAILS.academicYear}"></a>
+										<span
+											th:if="${dashboardFormVO.roleName eq 'Disability Administrator' || canAdvisorSeePreviousAward eq 'N'}"
+											th:text="${'DSA award for academic year '  + PREVIOUS_AWARD_DETAILS.academicYear}"></span>
+ -->
+
+										<div th:if="${LOGGEDIN_USER_TYPE  eq 'STUDENT'}">
+											<a th:href="@{/previousAwardDetails}"
+												th:text="${'DSA award for academic year '  +  PREVIOUS_AWARD_DETAILS.academicYear}"></a>
+										</div>
+										<div th:if="${LOGGEDIN_USER_TYPE  ne 'STUDENT'}">
+											<span
+												th:if="${dashboardFormVO.roleName eq 'Disability Administrator'}"
+												th:text="${'DSA award for academic year '  +  PREVIOUS_AWARD_DETAILS.academicYear}"></span>
+
+
+											<a th:href="@{/previousAwardDetails}"
+												th:if="${dashboardFormVO.roleName ne 'Disability Administrator' && canAdvisorSeePreviousAward eq 'Y'}"
+												th:text="${'DSA award for academic year '  +  PREVIOUS_AWARD_DETAILS.academicYear}"></a>
+											<span
+												th:if="${dashboardFormVO.roleName ne 'Disability Administrator' && canAdvisorSeePreviousAward eq 'N'}"
+												th:text="${'DSA award for academic year '  +  PREVIOUS_AWARD_DETAILS.academicYear}"></span>
+										</div>
+
+
+									</div>
+									<p th:text="${PREVIOUS_AWARD_DETAILS.institution}"></p>
+								</div>
+
+								<div class="ds_cb__text application_details">
+									<h3>Status</h3>
+									<div class="govuk-tag"
+										th:classappend="'govuk-tag--'+${PREVIOUS_AWARD_DETAILS.fundStatus.color}">
+										<span
+											th:text="${PREVIOUS_AWARD_DETAILS.fundStatus.description}"></span>
+									</div>
+									<p>
+										Last updated <span
+											th:text="${PREVIOUS_AWARD_DETAILS.awardDate}"></span>
+									</p>
+								</div>
+							</div>
+ 
+							<div id="award_status_info_message"
+								th:if="${canShowAwardStatusMessage}"
+								th:insert="~{fragments/statusInfo/awardStatusInfo.html}"></div>
+						</div>
+
+					</div>
+				</main>
+			</div>
+		</div>
+	</div>
+
+</body>
+
+</html>

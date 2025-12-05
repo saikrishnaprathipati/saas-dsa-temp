@@ -1,0 +1,60 @@
+<ol class="ds_summary-list search-result">
+	<li class="ds_summary-list__item" id="studentDeatilsSection">
+		<div class="ds_summary-list__key">
+
+			<h3 th:if="${dashboardData.sectionStatusData.aboutStudentSectionData.isEnabeldToView} == false">
+				<span>
+					<span
+							th:text="${dashboardData.sectionStatusData.aboutStudentSectionData.section.description}"></span>
+				</span>
+			</h3>
+
+			<form id="about-student-details"
+				  th:if="${dashboardData.sectionStatusData.aboutStudentSectionData.isEnabeldToView} == true"
+				  th:action="@{/studentDetails}" th:object="${aboutDetailsFormVO}" method="POST">
+				<input type="hidden" th:value="${dashboardData.studentReferenceNumber}" name="studentReferenceNumber"/>
+				<input type="hidden" th:value="${dashboardData.dsaApplicationNumber}" name="dsaApplicationNumber"/>
+				<span>
+					<button class="font-weight-normal secondary_form ds_!_padding--0" data-button="about-student">About
+						<span th:text="${dashboardData.firstName}"></span></button>
+				</span>
+			</form>
+		</div>
+
+		<div class="ds_summary-list__value">
+			<strong class="govuk-tag"
+					th:classappend="'govuk-tag--'+${dashboardData.sectionStatusData.aboutStudentSectionData.sectionStatus.color}"><span
+					th:text="${dashboardData.sectionStatusData.aboutStudentSectionData.sectionStatus.description}"></span></strong>
+		</div>
+	</li>
+	<li class="ds_summary-list__item" id="courseDeatilsSection">
+		<div class="ds_summary-list__key">
+
+			<h3 th:if="${dashboardData.sectionStatusData.aboutCourseSectionData.isEnabeldToView} == false">
+				<span>
+					<span
+							th:text="${dashboardData.sectionStatusData.aboutCourseSectionData.section.description}"></span>
+				</span>
+			</h3>
+
+			<form id="about-course-details"
+				  th:if="${dashboardData.sectionStatusData.aboutCourseSectionData.isEnabeldToView} == true"
+				  th:action="@{/courseDetails}" method="POST">
+				<input type="hidden" th:value="${dashboardData.studentReferenceNumber}" name="studentReferenceNumber"/>
+				<input type="hidden" th:value="${dashboardData.dsaApplicationNumber}" name="dsaApplicationNumber"/>
+				<span>
+					<button class="font-weight-normal secondary_form ds_!_padding--0" data-button="about-student">Course
+						details
+					</button>
+				</span>
+			</form>
+		</div>
+
+		<div class="ds_summary-list__value">
+			<strong class="govuk-tag"
+					th:classappend="'govuk-tag--'+${dashboardData.sectionStatusData.aboutCourseSectionData.sectionStatus.color}">
+				<span
+						th:text="${dashboardData.sectionStatusData.aboutCourseSectionData.sectionStatus.description}"></span></strong>
+		</div>
+	</li>
+</ol>

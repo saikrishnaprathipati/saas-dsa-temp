@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+	<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+	<meta content="width=device-width" name="viewport">
+	<title>Student Notification Email</title>
+	<style>
+        @media only screen and (min-device-width: 581px) {
+            .content {
+                width: 580px !important;
+            }
+        }
+	</style>
+</head>
+<body
+		style="font-family: Helvetica, Arial, sans-serif; font-size: 16px; margin: 0; color: #0b0c0c;">
+
+<!--[if (gte mso 9)|(IE)]>
+<table width="580" align="center" cellpadding="0" cellspacing="0" border="0">
+	<tr>
+		<td>
+<![endif]-->
+
+<table width="580" cellpadding="0" cellspacing="0" border="0"
+	   align="center">
+	<tr>
+		<td height="50">&nbsp;</td>
+	</tr>
+	<tr>
+		<td width="138" height="47" valign="middle"><a
+				href="https://www.saas.gov.uk"><img src="cid:SAAS_Logo.png"
+													alt="SAAS Logo" height="47" border="0"></a></td>
+	</tr>
+</table>
+<table class="content" align="center" cellpadding="0" cellspacing="0"
+	   border="0" style="width: 100%; max-width: 580px;">
+	<tr>
+		<td>
+			<h1
+					style="font-family: Helvetica, Arial, sans-serif; font-size: 36px; line-height: 1.315789474; font-weight: 700; margin: 19px 0 38px 0;">
+				Your Disabled Students' Allowance (DSA) Application</h1>
+			<p
+					style="font-family: Helvetica, Arial, sans-serif; font-size: 19px; line-height: 1.315789474; margin: 30px 0 30px 0;">
+				Dear <span th:text="${STUDENT_FULL_NAME}"></span>
+			</p>
+			<p
+					style="font-family: Helvetica, Arial, sans-serif; font-size: 19px; line-height: 1.315789474; margin: 30px 0 30px 0;">
+				DSA is a fund to help you complete your course. It will help pay towards additional costs because of
+				your disability or impairment.
+			</p>
+			<p
+					style="font-family: Helvetica, Arial, sans-serif; font-size: 19px; line-height: 1.315789474; margin: 30px 0 30px 0;">
+				Your Disability Advisor has started an application for DSA for the academic year <span
+					th:text="${academicYear}"></span> and completed their part. We now need you to check and submit the
+				application.
+			</p>
+
+			<h3
+					style="font-family: Helvetica, Arial, sans-serif; font-size: 19px; line-height: 1.315789474; font-weight: 700; margin: 38px 0 19px 0;">
+				What happens next</h3>
+
+			<p
+					style="font-family: Helvetica, Arial, sans-serif; font-size: 19px; line-height: 1.315789474; margin: 30px 0 30px 0;">
+				Please click on the link in this email to review the information your Disability Advisor has provided to
+				make sure it is correct. This should only take a few minutes.
+			</p>
+			<p
+					style="font-family: Helvetica, Arial, sans-serif; font-size: 19px; line-height: 1.315789474; margin: 30px 0 30px 0;">
+				Once you're happy with the application information, you will need to click 'I agree' on the student
+				declaration page and confirm the bank details where you want the funds to be paid. You can enter a
+				different bank account from the one we pay your main SAAS funding into so that you can keep the DSA
+				money separate.
+			</p>
+			<p
+					style="font-family: Helvetica, Arial, sans-serif; font-size: 19px; line-height: 1.315789474; margin: 30px 0 30px 0;">
+				If anything on the application is incorrect or you do not understand any of the statements on the
+				student declaration, click on ‘I do not agree’ on the student declaration page and contact your
+				Disability Advisor to discuss the next steps.
+			</p>
+			<p
+					style="font-family: Helvetica, Arial, sans-serif; font-size: 19px; line-height: 1.315789474; margin: 30px 0 30px 0;">
+				It is important that you click either ‘I agree’ or ‘I do not agree’ otherwise your Disability Advisor
+				cannot make changes and your application will not be processed.
+			</p>
+			<h3
+					style="font-family: Helvetica, Arial, sans-serif; font-size: 19px; line-height: 1.315789474; font-weight: 700; margin: 38px 0 19px 0;">
+				Submit your application</h3>
+			<p
+					style="font-family: Helvetica, Arial, sans-serif; border-left: 5px #000000 solid; padding: 14px 0 14px 14px; font-size: 19px; line-height: 1.315789474; margin: 0 0 19px 0;">
+				<a th:href="${STUDENT_SIGN_IN_URL}">Access the DSA application</a>
+			</p>
+			<p
+					style="font-family: Helvetica, Arial, sans-serif; font-size: 19px; line-height: 1.315789474; margin: 30px 0 30px 0;">
+				You can also access this application by visiting www.saas.gov.uk and signing in to your SAAS Account.
+				You will see the application in your Dashboard.
+			</p>
+			<h3
+					style="font-family: Helvetica, Arial, sans-serif; font-size: 19px; line-height: 1.315789474; font-weight: 700; margin: 38px 0 19px 0;">
+				Getting help</h3>
+			<p
+					style="font-family: Helvetica, Arial, sans-serif; font-size: 19px; line-height: 1.315789474; margin: 30px 0 30px 0;">
+				It’s important that you check the details on your DSA application and accept the student declaration to
+				avoid any delays in getting your funding. If you are unsure of what to do next or think something on the
+				application is incorrect, please talk to your Disability Advisor who will be able to help.
+			</p>
+			<h3
+					style="font-family: Helvetica, Arial, sans-serif; font-size: 19px; line-height: 1.315789474; font-weight: 700; margin: 38px 0 19px 0;">
+				Keeping your account secure</h3>
+			<p
+					style="font-family: Helvetica, Arial, sans-serif; font-size: 19px; line-height: 1.315789474; margin: 30px 0 30px 0;">
+				Never share your sign in details with anyone. Remember to keep your account information, including your
+				email address, up-to-date.
+			</p> <br>
+			<p
+					style="font-family: Helvetica, Arial, sans-serif; font-size: 19px; color: #6F777B; line-height: 1.315789474; margin: 0 0 30px 0;">
+				This is an automatically generated email. Please do not reply. If you need help, please get in touch
+				with your Disability Advisor at your college or university or <a th:href="${CONTACT_US_URL}">contact
+				us</a>. Please disregard this email if you have received it in error.
+			</p>
+		</td>
+	</tr>
+</table>
+
+<!--[if (gte mso 9)|(IE)]>
+</td>
+</tr>
+</table>
+<![endif]-->
+
+</body>
+</html>

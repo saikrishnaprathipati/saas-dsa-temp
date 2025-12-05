@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+	<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+	<meta content="width=device-width" name="viewport">
+	<title>Disabled Students' Allowance (DSA) Application - Report a problem</title>
+	<style>
+        @media only screen and (min-device-width: 581px) {
+            .content {
+                width: 580px !important;
+            }
+        }
+
+        .container {
+            display: flex;
+        }
+
+        .fixed {
+            width: 350px;
+        }
+
+        .flex-item {
+            flex-grow: 1;
+        }
+	</style>
+</head>
+
+<body
+		style="font-family: Helvetica, Arial, sans-serif; font-size: 16px; margin: 0; color: #0b0c0c;">
+
+<!--[if (gte mso 9)|(IE)]>
+<table width="580" align="center" cellpadding="0" cellspacing="0" border="0">
+	<tr>
+		<td>
+<![endif]-->
+
+<table width="580" cellpadding="0" cellspacing="0" border="0"
+	   align="center">
+	<tr>
+		<td height="50">&nbsp;</td>
+	</tr>
+	<tr>
+		<td width="138" height="47" valign="middle"><a
+				href="https://www.saas.gov.uk"><img src="cid:SAAS_Logo.png"
+													alt="SAAS Logo" height="47" border="0"></a></td>
+	</tr>
+</table>
+<table class="content" align="center" cellpadding="0" cellspacing="0"
+	   border="0" style="width: 100%; max-width: 580px;">
+	<tr>
+		<td>
+			<h1
+					style="font-family: Helvetica, Arial, sans-serif; font-size: 36px; line-height: 1.315789474; font-weight: 700; margin: 19px 0 38px 0;">
+				A student has reported a problem with their DSA application</h1>
+
+			<p style="font-family: Helvetica, Arial, sans-serif; font-size: 19px; line-height: 1.315789474; margin: 30px 0 30px 0;">
+				Dear <span th:text="${ADVISOR_FULL_NAME}"></span>
+			</p>
+
+			<p
+					style="font-family: Helvetica, Arial, sans-serif; font-size: 19px; line-height: 1.315789474; margin: 30px 0 30px 0;">
+				The following student has informed us of a problem with their DSA application for the academic year
+				<span th:text="${academicYear}"></span>.
+			</p>
+
+			<div class="container" style="border-bottom: 1px #EBEBEB solid; padding:0 0 14px 14px;">
+				<div class="fixed">
+					<strong>SAAS Reference Number</strong>
+				</div>
+				<div class="flex-item" th:text="${SAAS_REFERNECE_NUMBER}"></div>
+			</div>
+			<br>
+			<div class="container" style="border-bottom: 1px #EBEBEB solid; padding:0 0 14px 14px;">
+				<div class="fixed">
+					<strong>Name</strong>
+				</div>
+				<div class="flex-item" th:text="${STUDENT_FULL_NAME}"></div>
+			</div>
+
+			<h3 style="font-family: Helvetica, Arial, sans-serif; font-size: 19px; line-height: 1.315789474; font-weight: 700; margin: 38px 0 19px 0;"
+				th:text="${issueTypeName}"></h3>
+
+			<p style="font-family: Helvetica, Arial, sans-serif; font-size: 19px; line-height: 1.315789474; margin: 30px 0 30px 0;"
+			   th:text="${issueTypeDescription}"></p>
+
+			<h3 style="font-family: Helvetica, Arial, sans-serif; font-size: 19px; line-height: 1.315789474; font-weight: 700; margin: 38px 0 19px 0;">
+				What happens next</h3>
+
+			<p style="font-family: Helvetica, Arial, sans-serif; font-size: 19px; line-height: 1.315789474; margin: 30px 0 30px 0;">
+				The application is still active. We have emailed the student to tell them that their Disability Advisor
+				will contact them to discuss the reason they cannot complete their DSA application as noted above.</p>
+
+			<p style="font-family: Helvetica, Arial, sans-serif; font-size: 19px; line-height: 1.315789474; margin: 30px 0 30px 0;">
+				Please contact the student to <span th:text="${issueTypeInlineText}"></span>. If they want to make
+				changes, you can amend the application and re-submit the advisor declaration. Once you have done this,
+				the student can sign the student declaration, confirm their bank account details and submit the
+				application for processing.
+			</p>
+
+			<p style="font-family: Helvetica, Arial, sans-serif; font-size: 19px; line-height: 1.315789474; margin: 30px 0 30px 0;">
+				If no action is taken within 90 days, we will automatically withdraw their application.
+			</p>
+
+			<p style="font-family: Helvetica, Arial, sans-serif; font-size: 19px; line-height: 1.315789474; margin: 30px 0 30px 0;">
+				Sign in to your DSA Account to the view status of this application.
+			</p>
+
+			<h3 style="font-family: Helvetica, Arial, sans-serif; font-size: 19px; line-height: 1.315789474; font-weight: 700; margin: 38px 0 19px 0;">
+				Sign in</h3>
+
+			<p style="font-family: Helvetica, Arial, sans-serif; border-left: 5px #000000 solid; padding: 14px 0 14px 14px; font-size: 19px; line-height: 1.315789474; margin: 0 0 19px 0;">
+				<a th:href="${ADVISOR_SIGN_IN_URL}">Link to sign in [HEI inbox - goes to sign in]</a>
+			</p>
+
+			<p style="font-family: Helvetica, Arial, sans-serif; font-size: 19px; line-height: 1.315789474; margin: 30px 0 30px 0;">
+				You can also access this application by visiting <a th:href="${ADVISOR_SIGN_IN_URL}">DSA website</a>
+				and <a th:href="${ADVISOR_SIGN_IN_URL}">signing in</a> to your DSA Account. You will see the status of
+				your application in your Dashboard.
+			</p>
+
+
+			<h3 style="font-family: Helvetica, Arial, sans-serif; font-size: 19px; line-height: 1.315789474; font-weight: 700; margin: 38px 0 19px 0;">
+				Keeping your account secure</h3>
+
+			<p style="font-family: Helvetica, Arial, sans-serif; font-size: 19px; line-height: 1.315789474; margin: 30px 0 30px 0;">
+				Never share your login details with anyone. Please remember to keep your account information, including
+				your email address, up-to-date.
+			</p>
+
+			<p style="font-family: Helvetica, Arial, sans-serif; font-size: 19px; color: #6F777B; line-height: 1.315789474; margin: 0 0 30px 0;">
+				This is an automatically generated email. Please do not reply. If you need help, contact the <a
+					th:href="${DSA_TEAM_CONTACT_US_URL}">DSA Team</a>. Disregard this email if you have received it in
+				error.
+			</p>
+
+		</td>
+	</tr>
+</table>
+<!--[if (gte mso 9)|(IE)]>
+</td>
+</tr>
+</table>
+<![endif]-->
+</body>
+
+</html>

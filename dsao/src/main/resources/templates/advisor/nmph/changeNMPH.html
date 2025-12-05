@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layout/dsaLayoutLoggedIn}" th:with="currentPosition='specificStudent', currentTab='dashboard'">
+
+<head>
+	<title>Change NMPH Allowance</title>
+	<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+	<meta http-equiv="Pragma" content="no-cache" />
+	<meta http-equiv="Expires" content="0" />
+</head>
+
+<body>
+
+<div layout:fragment="content">
+
+	<div class="ds_page__middle">
+		<div class="ds_wrapper">
+			<main class="ds_layout  ds_layout--article">
+				<div class="ds_layout__content">
+					<p><br></p>
+					<form id="student_nmph_details" th:action="@{/changeNMPH}" th:object="${changeNMPHFormVO}"
+						  method="POST">
+						<div tabindex="-1" th:if="${#fields.hasAnyErrors()}" class="ds_error-summary"
+							 id="error-summary" aria-labelledby="error-summary-title" role="alert">
+							<h2 class="ds_error-summary__title" id="error-summary-title">There is a problem</h2>
+
+							<ul class="ds_error-summary__list">
+								<li th:each="fieldName: ${changeNMPHFormVO.orderedFields}">
+
+										<span th:if="${#fields.hasErrors(fieldName)}">
+											<span th:each="fieldError: ${#fields.errors(fieldName)}">
+												<span>
+
+													<a th:href="${'#' + fieldName}" th:text="${fieldError}"
+													   class="field-error">
+													</a>
+
+												</span>
+											</span>
+										</span>
+								</li>
+							</ul>
+						</div>
+
+						<p class="ds_hint-text">Part 1 of 2</p>
+						<div class="ds_question">
+							<fieldset>
+								<legend>
+									<h1><span th:text="${studentFirstName}"></span>'s Non-Medical Personal Help (NMPH)
+									</h1>
+								</legend>
+
+								<p class="ds_input--fixed-40">Personal helpers including note takers, mental health
+									mentors, sign language
+									interpreters and study skills support. It does not cover disability related
+									expenditure needed outside of the student’s studies.</p>
+								<p>
+									Claimed yearly. Allowance limit per academic year: <strong><span
+										th:text="${nmphCap}"></span></strong></p>
+								<br>
+								<div class="ds_field-group" data-module="ds-character-count"
+									 th:classappend="${#fields.hasErrors('typeOfSupport')} ? 'ds_question--error'">
+									<label class="ds_label" for="typeOfSupport">Type of support</label>
+									<div class="ds_question__error-message"
+										 th:if="${#fields.hasErrors('typeOfSupport')}" th:errors="*{typeOfSupport}">
+									</div>
+									<input class="ds_input ds_input--fixed-30" type="text" id="typeOfSupport"
+										   th:classappend="${#fields.hasErrors('typeOfSupport')} ? 'ds_input--error'"
+										   th:field="*{typeOfSupport}">
+								</div>
+								<br>
+								<div class="ds_field-group" data-module="ds-character-count"
+									 th:classappend="${#fields.hasErrors('recommendedProvider')} ? 'ds_question--error'">
+									<label class="ds_label" for="recommendedProvider">Recommended provider</label>
+									<p class="ds_hint-text">Person or company providing the service.</p>
+									<div class="ds_question__error-message"
+										 th:if="${#fields.hasErrors('recommendedProvider')}"
+										 th:errors="*{recommendedProvider}"></div>
+									<input class="ds_input ds_input--fixed-30" type="text" id="recommendedProvider"
+										   th:classappend="${#fields.hasErrors('recommendedProvider')} ? 'ds_input--error'"
+										   th:field="*{recommendedProvider}">
+								</div>
+								<br>
+								<div class="ds_field-group"
+									 th:classappend="${#fields.hasErrors('hourlyRate')} ? 'ds_question--error'">
+									<label class="ds_label" for="hourlyRate">Hourly rate</label>
+									<div class="ds_question__error-message"
+										 th:if="${#fields.hasErrors('hourlyRate')}" th:errors="*{hourlyRate}"></div>
+									<div class="ds_currency-wrapper" data-symbol="£">
+										<input class="ds_input ds_input--fixed-10" type="text" id="hourlyRate"
+											   maxlength="8"
+											   th:classappend="${#fields.hasErrors('hourlyRate')} ? 'ds_input--error'"
+											   data-form="textinput-rate" th:field="*{hourlyRate}">
+									</div>
+								</div>
+								<br>
+								<div class="ds_field-group"
+									 th:classappend="${#fields.hasErrors('hours')} ? 'ds_question--error'">
+									<label class="ds_label" for="hours">Hours per week</label>
+									<p class="ds_hint-text">Enter a number between 1 and 50.</p>
+
+									<div class="ds_question__error-message" th:if="${#fields.hasErrors('hours')}"
+										 th:errors="*{hours}"></div>
+									<input class="ds_input ds_input--fixed-10" type="text" id="hours" maxlength="2"
+										   th:classappend="${#fields.hasErrors('hours')} ? 'ds_input--error'"
+										   data-form="textinput-hour" th:field="*{hours}">
+								</div>
+								<br>
+								<div class="ds_field-group"
+									 th:classappend="${#fields.hasErrors('weeks')} ? 'ds_question--error'">
+									<label class="ds_label" for="weeks">Weeks</label>
+									<p class="ds_hint-text">Per academic year.</p>
+									<div class="ds_question__error-message" th:if="${#fields.hasErrors('weeks')}"
+										 th:errors="*{weeks}"></div>
+									<div class="ds_select-wrapper ds_input--fixed-10">
+										<select th:field="*{weeks}"
+												class="ds_select ds_input--fixed-10 js-has-tracking-event" id="weeks"
+												th:classappend="${#fields.hasErrors('weeks')} ? 'ds_input--error'">
+
+											<option th:each="i : ${#numbers.sequence(0, 52)}" th:value="${i}"
+													th:text="${i == 0 ? '' : i}">
+											</option>
+										</select>
+
+										<span class="ds_select-arrow" aria-hidden="true"></span>
+									</div>
+								</div>
+								<br>
+								<div class="ds_field-group" id="nmphAllowances">
+									<input type="hidden" th:value="${changeNMPHFormVO.id}" name="id"/>
+									<input type="hidden" th:value="${studentReferenceNumber}"
+										   name="studentReferenceNumber"/>
+									<input type="hidden" th:value="${dsaApplicationNumber}"
+										   name="dsaApplicationNumber"/>
+									<input type="hidden" th:value="${studentFirstName}" name="studentFirstName"/>
+								</div>
+							</fieldset>
+						</div>
+
+						<div class="ds_button-group">
+							<div class="ds_button-group">
+								<input type="submit" class="ds_button ds_button--cancel" name="action"
+									   value="Change">&nbsp;&nbsp;&nbsp;&nbsp;
+								<button class="ds_link  ds_no-margin secondary_form" name="action"
+										th:value="${CANCEL_ACTION}"
+										data-button="about-student">Cancel
+								</button>
+							</div>
+						</div>
+					</form>
+				</div>
+			</main>
+		</div>
+	</div>
+
+
+</div>
+
+</body>
+
+</html>

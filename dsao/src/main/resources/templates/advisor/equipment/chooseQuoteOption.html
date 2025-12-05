@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layout/dsaLayoutLoggedIn}" th:with="currentPosition='specificStudent', currentTab='dashboard'">
+
+<head>
+	<title>Choose Quote for Equipment, software and accessories</title>
+	<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
+	<meta http-equiv="Pragma" content="no-cache"/>
+	<meta http-equiv="Expires" content="0"/>
+</head>
+
+<body>
+
+<div layout:fragment="content">
+
+	<div class="ds_page__middle">
+		<div class="ds_wrapper">
+			<main class="ds_layout  ds_layout--article">
+				<div class="ds_layout__content">
+					<p><br></p>
+					<form id="add_equipment" action="#" th:action="@{/addQuoteOption}"
+						  th:object="${chooseQuoteOptionFormVO}" method="POST">
+
+						<div tabindex="-1" th:if="${#fields.hasAnyErrors()}" class="ds_error-summary"
+							 id="error-summary" aria-labelledby="error-summary-title" role="alert">
+							<h2 class="ds_error-summary__title" id="error-summary-title">There is a problem</h2>
+							<ul class="ds_error-summary__list">
+								<li th:each="fieldName: ${chooseQuoteOptionFormVO.orderedFields}">
+										<span th:if="${#fields.hasErrors(fieldName)}">
+											<span th:each="fieldError: ${#fields.errors(fieldName)}">
+												<span>
+
+													<a th:href="${'#' + fieldName}" th:text="${fieldError}"
+													   class="field-error">
+													</a>
+
+												</span>
+											</span>
+										</span>
+								</li>
+							</ul>
+						</div>
+
+						<p class="ds_hint-text">Part 1 of 3</p>
+						<h1><span th:text="${studentFirstName}"></span>’s equipment, software and accessories</h1>
+						<p class="ds_input--fixed-40">Equipment, software and accessories required by the
+							student to undertake the
+							course. This can include computing equipment, ergonomics, assistive software and
+							other technical aids.</p>
+						<p>Claimed for the duration of the course. Allowance limit per course:
+							<strong th:text="${equipmentCap}"></strong></p>
+						<br>
+
+
+						<div class="ds_question ds_input--fixed-40"
+							 th:classappend="${#fields.hasErrors('useQuote')} ? 'ds_question--error'">
+							<fieldset>
+								<legend>
+									<h2>Choose an option</h2>
+								</legend>
+								<p class="small_text_grey">If you want to add a combination of a quote for several items
+									and other items
+									individually, you can come back to this page to add more.</p>
+
+								<div class="ds_field-group">
+									<div class="ds_radio">
+										<input class="ds_radio__input" id="yes" type="radio" name="radios"
+											   th:field="*{useQuote}" value="YES"
+											   data-form="radio-radios-yes">
+										<label class="ds_radio__label" for="yes"> <strong>I have quote for several
+											items. </strong></label>
+										<span class="small_text_grey">Upload a quote from 1 or more suppliers. The quote can include large equipment, ergonomic items,
+											delivery and installation priced together. We will need the name of the supplier and a quote reference number.</span>
+
+									</div>
+									<div class="ds_radio">
+										<input class="ds_radio__input" id="useQuote" type="radio"
+											   name="radios" th:field="*{useQuote}" value="NO"
+											   data-form="radio-radios-no">
+										<label class="ds_radio__label" for="useQuote"><strong>I do not have a quote from
+											supplier,
+											I want to add items individually.</strong></label>
+										<span class="small_text_grey">Add a description and the cost of each item separately.
+											Once you have added all items, we will calculate an overall cost.</span>
+									</div>
+								</div>
+
+							</fieldset>
+							<input type="hidden" th:value="${chooseQuoteOptionFormVO.dsaApplicationNumber}"
+								   name="dsaApplicationNumber"/>
+							<input type="hidden" th:value="${chooseQuoteOptionFormVO.studentReferenceNumber}"
+								   name="studentReferenceNumber"/>
+						</div>
+
+						<div class="ds_button-group">
+							<button class="ds_button ds_button--cancel" name="action" value="BACK"
+									data-button="about-student">Back
+							</button>
+							<input type="submit" class="ds_button" name="action" value="Confirm and continue">
+
+							<br>
+							<button class="ds_link  ds_no-margin secondary_form" name="action" value="SKIP_EQUIPMENT"
+									th:if="${showSkipEquipment}"
+									data-button="about-student">Skip equipment,software and accessories
+							</button>
+						</div>
+					</form>
+				</div>
+			</main>
+		</div>
+	</div>
+
+</div>
+</body>
+</html>

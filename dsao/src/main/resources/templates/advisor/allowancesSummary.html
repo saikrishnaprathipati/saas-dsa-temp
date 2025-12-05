@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layout/dsaLayoutLoggedIn}" th:with="currentPosition='specificStudent', currentTab='dashboard'">
+
+<head>
+	<title>Allowances Summary</title>
+	<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
+	<meta http-equiv="Pragma" content="no-cache"/>
+	<meta http-equiv="Expires" content="0"/>
+</head>
+
+<body>
+
+<div layout:fragment="content">
+	<div class="ds_page__middle">
+		<div class="ds_wrapper">
+			<br>
+			<div th:if="${allowancesNotCompleted}" data-module="ds-notification">
+				<div class="ds_warning-text ds_warning-text-new  ">
+					<strong class="ds_warning-text__icon" aria-hidden="true"></strong>
+					<strong class="visually-hidden">Warning</strong>
+					<div class="ds_warning-text__text">
+						You must complete at least 1 allowance section to continue.
+					</div>
+					<button class="ds_notification__close js-close-notification" type="button"
+							data-button="button-close-this-notification" data-banner="banner-1-close">
+						<span class="visually-hidden">Close this notification</span>
+						<img th:src="@{/images/icon-cross.svg}" class="icon_cross" alt="close">
+					</button>
+				</div>
+			</div>
+
+			<main class="ds_layout  ds_layout--article">
+				<div class="ds_layout__content">
+					<input type="hidden" th:value="${studentReferenceNumber}" name="studentReferenceNumber"/>
+					<input type="hidden" th:value="${dsaApplicationNumber}" name="dsaApplicationNumber"/>
+
+					<form class="buttonInline" action="#" th:if="${LOGGEDIN_USER_TYPE}  eq 'ADVISOR'"
+						  th:action="@{/applicationDashboard}"
+						  th:object="${applicationKeyDataFormVO}" method="POST">
+						<input type="hidden" th:value="${dsaApplicationNumber}" name="dsaApplicationNumber"/>
+						<input type="hidden" th:value="${studentReferenceNumber}" name="studentReferenceNumber"/>
+						<input type="hidden" name="action" value="Dashboard"/>
+
+						<input type="submit" class="secondary_form"
+							   value="&lt; Back to DSA application summary">
+					</form>
+
+					<form class="buttonInline" action="#" th:if="${LOGGEDIN_USER_TYPE}  eq 'STUDENT'"
+						  th:action="@{/studentDeclaration}"
+						  th:object="${applicationKeyDataFormVO}" method="POST">
+						<input type="hidden" th:value="${dsaApplicationNumber}" name="dsaApplicationNumber"/>
+						<input type="hidden" th:value="${studentReferenceNumber}" name="studentReferenceNumber"/>
+						<input type="hidden" name="action" value="Dashboard"/>
+						<input type="submit" class="secondary_form"
+							   value="&lt; Back to DSA application summary">
+					</form>
+					<p></p>
+
+					<h1>Allowances</h1>
+
+					<div id="consumables_container" aria-label="consumables summary"
+						 th:insert="~{fragments/allowances-summary/consumables.html}">
+					</div>
+					<hr>
+					<br>
+					<div id="equipment_container" aria-label="equipment summary"
+						 th:insert="~{fragments/allowances-summary/equipment.html}"></div>
+					<hr>
+					<br>
+					<div id="nmph_container" aria-label="nmph summary"
+						 th:insert="~{fragments/allowances-summary/nmph.html}"></div>
+					<hr>
+					<br>
+					<div id="travel_container" aria-label="travel summary"
+						 th:insert="~{fragments/allowances-summary/travel.html}"></div>
+					<br>
+					<hr>
+					<div id="accommodation_container" aria-label="accommodation summary"
+						 th:insert="~{fragments/allowances-summary/accommodation.html}"></div>
+
+					<!--/* Advisor Buttons */-->
+					<div class="ds_button-group" th:if="${LOGGEDIN_USER_TYPE}  eq 'ADVISOR'">
+						<form class="buttonInline" action="#" th:action="@{/saveAllowancesSummary}"
+							  th:object="${consumableItemRemoveFormVO}" th:if="${ADVISOR_DECLARTION_NOT_COMPLETED}"
+							  method="POST">
+							<button class="ds_button  ds_no-margin" name="action" value="SAVE_ALLOWANCES_ACTION"
+									data-button="about-student">Save and continue
+							</button>
+
+							<input type="hidden" th:value="${dsaApplicationNumber}" name="dsaApplicationNumber"/>
+							<input type="hidden" th:value="${studentReferenceNumber}"
+								   name="studentReferenceNumber"/>
+						</form>
+					</div>
+
+					<!--/* Student Buttons */-->
+					<div class="ds_button-group" th:if="${LOGGEDIN_USER_TYPE}  eq 'STUDENT'">
+						<form class="buttonInline" action="#" th:action="@{/studentDeclaration}"
+							  th:object="${consumableItemRemoveFormVO}" th:if="${STUDENT_DECLARTION_NOT_COMPLETED}"
+							  method="POST">
+							<button class="ds_button  ds_no-margin" name="action" value="STUDENT_DECLARATION"
+									data-button="about-student">Continue
+							</button>
+
+							<input type="hidden" th:value="${dsaApplicationNumber}" name="dsaApplicationNumber"/>
+							<input type="hidden" th:value="${studentReferenceNumber}"
+								   name="studentReferenceNumber"/>
+						</form>
+					</div>
+
+					<form class="buttonInline" action="#" th:if="${LOGGEDIN_USER_TYPE}  eq 'ADVISOR'"
+						  th:action="@{/applicationDashboard}"
+						  th:object="${applicationKeyDataFormVO}" method="POST">
+						<input type="hidden" th:value="${dsaApplicationNumber}" name="dsaApplicationNumber"/>
+						<input type="hidden" th:value="${studentReferenceNumber}" name="studentReferenceNumber"/>
+						<input type="hidden" name="action" value="Dashboard"/>
+
+						<input type="submit" class="secondary_form"
+							   value="&lt; Back to DSA application summary">
+					</form>
+
+					<form class="buttonInline" action="#" th:if="${LOGGEDIN_USER_TYPE}  eq 'STUDENT'"
+						  th:action="@{/studentDeclaration}"
+						  th:object="${applicationKeyDataFormVO}" method="POST">
+						<input type="hidden" th:value="${dsaApplicationNumber}" name="dsaApplicationNumber"/>
+						<input type="hidden" th:value="${studentReferenceNumber}" name="studentReferenceNumber"/>
+						<input type="hidden" name="action" value="Dashboard"/>
+
+						<input type="submit" class="secondary_form"
+							   value="&lt; Back to DSA application summary">
+					</form>
+
+				</div>
+			</main>
+		</div>
+	</div>
+</div>
+
+</body>
+
+</html>

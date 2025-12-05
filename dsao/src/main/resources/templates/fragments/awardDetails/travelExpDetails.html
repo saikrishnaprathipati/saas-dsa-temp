@@ -1,0 +1,67 @@
+<div class="bottom_pagination">
+	<p>
+		<br>
+	</p>
+
+	<h2>Travel expenses</h2>
+
+	<div class="ds_pagination consumable"
+		 th:if="${awardDetails.travelExpItems.size > 0}">
+		<p></p>
+		<h2>
+			<span class="total_award_text">Total awarded<br></span> <strong
+				th:text="${awardDetails.travelExpTotal}"></strong>
+		</h2>
+	</div>
+
+</div>
+ 
+<p th:text="${awardDetails.taxiTravelExpText}"></p>
+<p th:text="${awardDetails.otherTravelExpText}"></p>
+
+<div class="ds_accordion-item">
+	<input type="checkbox"
+		   class="visually-hidden  ds_accordion-item__control" id="panel-5"
+		   aria-labelledby="panel-1-heading">
+	<div class="ds_accordion-item__header">
+		<h3 id="panel-1-heading"
+			class="ds_accordion-item__title dsa_accordion-item__title">Show
+			breakdown</h3>
+		<span class="ds_accordion-item__indicator"></span> <label
+			class="ds_accordion-item__label" for="panel-5"><span
+			class="visually-hidden">Show this section</span></label>
+	</div>
+	<div class="ds_accordion-item__body">
+		<table class=" ds_table dsa_allowance_table"
+			   data-smallscreen="scrolling">
+			<caption class="visually-hidden">Travel expenses</caption>
+			<thead>
+			<tr>
+				<th scope="col">Transport type</th>
+				<th scope="col">Start location<br>
+				</th>
+				<th scope="col">End location</th>
+				<th scope="col">Return journeys<br>
+					<p class="ds_hint-text dsa_vat">Per week.</p>
+				</th>
+				<th scope="col">Weeks<br>
+					<p class="ds_hint-text dsa_vat">Per academic year.</p>
+				</th>
+				<th scope="col">Amount<br>
+					 
+				</th>
+			</tr>
+			</thead>
+			<tbody>
+			<tr th:each="item: ${awardDetails.travelExpItems}">
+				<td th:text="${item.transportType}"></td>
+				<td th:text="${item.startLocation}"></td>
+				<td th:text="${item.endLocation}"></td>
+				<td th:text="${item.returnJourneys}"></td>
+				<td th:text="${item.weeks}"></td>
+				<td th:text="${item.maxAmountStr}"></td>
+			</tr>
+			</tbody>
+		</table>
+	</div>
+</div>

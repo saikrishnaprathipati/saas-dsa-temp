@@ -1,0 +1,112 @@
+<!--/* Aplication status message SECTION */-->
+
+<div id="statusMessageSection" > 
+	<!--/* STEPS RECEIVED STATUS MESSAGE */-->
+	<div class="ds_warning-text ds_warning-text-new ds_withdraw-text"
+		th:if="${dashboardFormVO.applicationStatus.code == 'RECEIVED'}">
+		<strong class="ds_warning-text__icon" aria-hidden="true"></strong> <strong>What
+			does this status mean?</strong>
+		<p></p>
+		<div class="ds_warning-text__text">We have received this
+			application and will be processing it in due course.</div>
+	</div>
+
+ 
+<!-- 	<div class="ds_warning-text ds_warning-text-new ds_withdraw-text"
+		th:if="${dashboardFormVO.applicationStatus.code == 'AWARDED'}">
+		<strong class="ds_warning-text__icon" aria-hidden="true"></strong> <strong>What
+			does this status mean?</strong>
+		<p></p>
+		<div class="ds_warning-text__text"
+			th:if="${LOGGEDIN_USER_TYPE  eq 'STUDENT'}">We have been
+			awarded DSA.</div>
+		<div class="ds_warning-text__text"
+			th:if="${LOGGEDIN_USER_TYPE  eq 'STUDENT'}">We have sent you an
+			email to tell you what you have been awarded.</div>
+		<div class="ds_warning-text__text"
+			th:if="${LOGGEDIN_USER_TYPE  ne 'STUDENT'}">We have awarded
+			DSA.</div>
+		<div class="ds_warning-text__text"
+			th:if="${LOGGEDIN_USER_TYPE  ne 'STUDENT'}">
+			We have sent <span th:text="${dashboardFormVO.firstName}"></span> an
+			email which details what has been awarded.
+		</div>
+	</div> -->
+
+	<!--/* NOT AWARDED STATUS MESSAGE */-->
+	<div class="ds_warning-text ds_warning-text-new ds_withdraw-text"
+		th:if="${dashboardFormVO.applicationStatus.code == 'NOT_AWARDED'}">
+		<strong class="ds_warning-text__icon" aria-hidden="true"></strong> <strong>What
+			does this status mean?</strong>
+		<p></p>
+		<div class="ds_warning-text__text"
+			th:if="${LOGGEDIN_USER_TYPE  eq 'STUDENT'}">We have reviewed
+			this application and been unable to award DSA.</div>
+		<div class="ds_warning-text__text"
+			th:if="${LOGGEDIN_USER_TYPE  eq 'STUDENT'}">We have sent you an
+			email to tell you why this application has not been approved.</div>
+		<div class="ds_warning-text__text"
+			th:if="${LOGGEDIN_USER_TYPE  ne 'STUDENT'}">We have reviewed
+			the student’s application and been unable to award DSA.</div>
+		<div class="ds_warning-text__text"
+			th:if="${LOGGEDIN_USER_TYPE  ne 'STUDENT'}">
+			We have sent <span th:text="${dashboardFormVO.firstName}"></span> an
+			email explaining why this application has not been approved.
+		</div>
+	</div>
+
+	<!--/* PENDING STATUS MESSAGE */-->
+	<div class="ds_warning-text ds_warning-text-new ds_withdraw-text"
+		th:if="${dashboardFormVO.applicationStatus.code == 'PENDING'}">
+		<strong class="ds_warning-text__icon" aria-hidden="true"></strong> <strong>What
+			does this status mean?</strong>
+		<p></p>
+		<div class="ds_warning-text__text"
+			th:if="${LOGGEDIN_USER_TYPE  eq 'STUDENT'}">We have reviewed
+			your application but need more information before it can be
+			processed. We have asked your Disability Advisor for the information
+			we need. You can contact them for further details.</div>
+		<div class="ds_warning-text__text"
+			th:if="${LOGGEDIN_USER_TYPE  ne 'STUDENT'}">We have reviewed
+			the student’s application but need more information before it can be
+			processed. We have sent you an email request for the information we
+			need. We have advised the student to contact you for further details.
+		</div>
+	</div>
+
+	<!--/* IN PROGRESS STATUS MESSAGE */-->
+	<div class="ds_warning-text ds_warning-text-new ds_withdraw-text"
+		th:if="${dashboardFormVO.applicationStatus.code == 'IN_PROGRESS'}">
+		<strong class="ds_warning-text__icon" aria-hidden="true"></strong> <strong>What
+			does this status mean?</strong>
+		<p></p>
+		<div class="ds_warning-text__text"
+			th:if="${LOGGEDIN_USER_TYPE  eq 'STUDENT'}">We have received
+			your application and it is being processed. If we need any more
+			information we will contact your Disability Advisor. We will send you
+			an email once your application has been processed and we have
+			published an award decision.</div>
+		<div class="ds_warning-text__text"
+			th:if="${LOGGEDIN_USER_TYPE  ne 'STUDENT'}">We have received
+			the student’s application and it is being processed. If we need any
+			more information we will contact you. We will send you an email once
+			the application has been processed and we have published an award
+			decision.</div>
+	</div>
+
+	<!--/* WITHDRAWN STATUS MESSAGE */-->
+	<div class="ds_warning-text ds_warning-text-new ds_withdraw-text"
+		th:if="${dashboardFormVO.applicationStatus.code == 'WITHDRAWN'}">
+		<strong class="ds_warning-text__icon" aria-hidden="true"></strong> <strong>What
+			does this status mean?</strong>
+		<p></p>
+		<div class="ds_warning-text__text"
+			th:if="${LOGGEDIN_USER_TYPE  eq 'STUDENT'}">The application has
+			been withdrawn. If you wish to make another application, speak to you
+			Disability Advisor.</div>
+		<div class="ds_warning-text__text"
+			th:unless="${LOGGEDIN_USER_TYPE  eq 'STUDENT'}">The application
+			has been withdrawn, a new application for the year can be submitted.</div>
+	</div>
+</div>
+

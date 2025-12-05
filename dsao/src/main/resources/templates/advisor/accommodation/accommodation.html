@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layout/dsaLayoutLoggedIn}"
+	  th:with="currentPosition='specificStudent'">
+
+<head>
+	<title>Accommodation type</title>
+	<meta http-equiv="Cache-Control"
+		  content="no-cache, no-store, must-revalidate"/>
+	<meta http-equiv="Pragma" content="no-cache"/>
+	<meta http-equiv="Expires" content="0"/>
+</head>
+
+<body>
+
+<div layout:fragment="content">
+
+	<div class="ds_page__middle">
+		<div class="ds_wrapper">
+			<main class="ds_layout  ds_layout--article">
+				<div class="ds_layout__content">
+					<p>
+						<br>
+					</p>
+					<form th:action="@{/addAccommodationType}"
+						  th:object="${accommodationFormVO}" method="POST">
+						<div tabindex="-1" th:if="${#fields.hasAnyErrors()}"
+							 class="ds_error-summary" id="error-summary"
+							 aria-labelledby="error-summary-title" role="alert">
+							<h2 class="ds_error-summary__title" id="error-summary-title">There
+								is a problem</h2>
+							<ul class="ds_error-summary__list">
+								<li th:each="fieldName: ${accommodationFormVO.orderedFields}">
+
+										<span th:if="${#fields.hasErrors(fieldName)}"> <span
+												th:each="fieldError: ${#fields.errors(fieldName)}"> <a
+												th:href="${'#' + fieldName}" th:text="${fieldError}"
+												class="field-error"> </a>
+										</span>
+									</span>
+								</li>
+							</ul>
+						</div>
+						<p class="ds_hint-text">Part 1 of 3</p>
+						<h1>
+							<span th:text="${studentFirstName}"></span>'s accommodation
+							allowance <br>
+						</h1>
+						<p>DSA does not cover the cost of student accommodation.
+							However, we can pay the difference if the student needs enhanced
+							accommodation because of a disability when living in private
+							accommodation.</p>
+						<p>If the student is living in institution-run accommodation,
+							the college or university should consider their duties under the
+							Equality Act in regards to reasonable adjustments and consider
+							whether the additional costs should be met by their own budgets.</p>
+						<p>Details of the accommodation requirement must be included
+							in the Needs Assessment Report.</p>
+						<p></p>
+
+						<div class="ds_question"
+							 th:classappend="${#fields.hasErrors('accommodationType')} ? 'ds_question--error'">
+							<br/>
+							<fieldset>
+								<legend>Choose accommodation type</legend>
+								<p></p>
+								<div class="ds_field-group">
+									<div class="ds_radio">
+										<input class="ds_radio__input" id="accommodationType"
+											   type="radio" name="radios" th:field="*{accommodationType}"
+											   value="PRIVATE" data-form="radio-radios-yes"> <label
+											class="ds_radio__label" for="accommodationType"> <strong>Private
+										accommodation</strong></label> <span class="small_text_grey">The
+												student is living in private accommodation, independent of
+												the college or university.</span>
+
+									</div>
+									<div class="ds_radio">
+										<input class="ds_radio__input" id="otherAccommodation"
+											   type="radio" name="radios" th:field="*{accommodationType}"
+											   value="OTHER" data-form="radio-radios-no"> <label
+											class="ds_radio__label" for="otherAccommodation">
+										<strong>Other</strong></label><span
+											class="small_text_grey">The student is living in
+												accommodation other than private rented. We will contact the
+												Disability Advisor to discuss the accommodation type and
+												requirements.</span>
+									</div>
+								</div>
+							</fieldset>
+
+							<input type="hidden" th:value="${accommodationFormVO.dsaApplicationNumber}"
+								   name="dsaApplicationNumber"/>
+							<input type="hidden" th:value="${accommodationFormVO.studentReferenceNumber}"
+								   name="studentReferenceNumber"/>
+							<input type="hidden" th:value="${accommodationFormVO.backAction}"
+								   name="backAction"/>
+						</div>
+						<div class="ds_button-group">
+							<div class="ds_button-group">
+
+								<button class="ds_button ds_button--cancel" name="action"
+										value="BACK_ACTION">Back
+								</button>
+								&nbsp;&nbsp;&nbsp;&nbsp;
+								<button class="ds_button" name="action"
+										value="INIT_ACCOMMODATION_DETAILS" data-button="about-student">Save
+									and continue
+								</button>
+							</div>
+							<button class="ds_link  ds_no-margin secondary_form"
+									name="action" value="SKIP_ACCOMMODATION" th:if="${showSkipAccommodation}"
+									data-button="about-student">Skip Accommodation
+							</button>
+						</div>
+					</form>
+				</div>
+			</main>
+		</div>
+	</div>
+
+
+</div>
+
+</body>
+
+</html>

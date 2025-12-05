@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layout/dsaLayoutLoggedIn}" th:with="currentPosition='specificStudent', currentTab='dashboard'">
+
+<head>
+	<title>DSA show Quote</title>
+	<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
+	<meta http-equiv="Pragma" content="no-cache"/>
+	<meta http-equiv="Expires" content="0"/>
+</head>
+
+<body>
+
+<div layout:fragment="content">
+
+	<div class="ds_page__middle">
+		<div class="ds_wrapper">
+			<main class="ds_layout  ds_layout--article">
+				<div class="ds_layout__content">
+					<p><br></p>
+
+					<div class="ds_question">
+						<div class="ds_question">
+							<fieldset aria-describedby="ds_hint">
+								<p class="ds_hint-text" id="ds_hint">Part 2 of 3</p>
+								<h1>Upload quote </h1>
+								<p class="ds_hint-text" id="ds_description">
+									Upload the quote document you have received from a supplier.
+									This should include all items required, quote reference number and total cost.
+								</p>
+								<p class="ds_hint-text" id="ds_description_file">
+									The selected file must be a PDF and smaller than 5MB in size.</p>
+							</fieldset>
+						</div>
+					</div>
+
+					<div class="ds_question">
+						<br>
+						<p>You have uploaded <strong><span th:text="${quotes.size}"></span></strong> document(s).
+						</p>
+
+						<table class="ds_table dsa_allowance_table" data-smallscreen="scrolling"
+							   th:if="${quotes.size > 0}">
+							<caption class="hidden">Quotes</caption>
+
+							<thead>
+							<tr>
+								<th scope="col">Document name</th>
+								<th scope="col">Size</th>
+							</tr>
+							</thead>
+
+							<tbody>
+							<tr th:each="quote : ${quotes}">
+								<td th:text="${quote.fileName}"></td>
+								<td th:text="${quote.size}"></td>
+								<td>
+									<form th:action="@{/removeQuote}" th:object="${removeQuoteFormVO}" method="POST">
+										<button class="ds_link  ds_no-margin secondary_form" name="action"
+												value="remove from show quote"
+												data-button="about-quote">Remove
+										</button>
+										<input type="hidden" th:value="${quote.quoteId}" name="quoteId"/>
+										<input type="hidden" th:value="${quote.dsaApplicationNumber}"
+											   name="dsaApplicationNumber"/>
+										<input type="hidden" th:value="${quote.studentReferenceNumber}"
+											   name="studentReferenceNumber"/>
+										<input type="hidden" th:value="${quote.advisorId}" name="advisorId"/>
+										<input type="hidden" th:value="${quote.firstName}" name="firstName"/>
+										<input type="hidden" th:value="${quote.lastName}" name="lastName"/>
+										<input type="hidden" th:value="${quote.quoteReference}" name="quoteReference"/>
+										<input type="hidden" th:value="${quote.cost}" name="totalCost"/>
+										<input type="hidden" th:value="${quote.supplier}" name="supplier"/>
+										<input type="hidden" th:value="${quote.sessionCode}" name="sessionCode"/>
+									</form>
+								</td>
+							</tr>
+							</tbody>
+						</table>
+					</div>
+
+
+					<div class="ds_button-group">
+						<div class="ds_button-group">
+							<form class="showQuote" method="POST" th:object="${quoteDetailsFormVO}"
+								  th:action="@{/showQuoteSummary}"
+								  action="#" enctype="multipart/form-data">
+								<input type="hidden" th:value="${quoteDetailsFormVO.studentReferenceNumber}"
+									   name="studentReferenceNumber"/>
+								<input type="hidden" th:value="${quoteDetailsFormVO.dsaApplicationNumber}"
+									   name="dsaApplicationNumber"/>
+								<input type="hidden" th:value="${quoteDetailsFormVO.firstName}" name="firstName"/>
+								<input type="hidden" th:value=" ${quoteDetailsFormVO.lastName}" name="lastName"/>
+								<input type="hidden" th:value="${quoteDetailsFormVO.sessionCode}" name="sessionCode"/>
+								<input type="hidden" th:value="${quoteDetailsFormVO.supplier}" name="supplier"/>
+								<input type="hidden" th:value="${quoteDetailsFormVO.quoteReference}"
+									   name="quoteReference"/>
+								<input type="hidden" th:value="${quoteDetailsFormVO.totalCost}" name="totalCost"/>
+
+								<input type="submit" class="ds_button ds_button--cancel" name="action"
+									   value="Back">&nbsp;&nbsp;&nbsp;&nbsp;
+								<input type="submit" class="ds_button" name="action" value="Confirm and continue">
+							</form>
+						</div>
+					</div>
+				</div>
+			</main>
+		</div>
+	</div>
+
+</div>
+</body>
+</html>

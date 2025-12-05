@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layout/dsaLayout}" th:with="hideBeta=true">
+
+<head>
+	<title>Start</title>
+</head>
+
+<body>
+<div layout:fragment="content">
+	<div class="ds_wrapper">
+		<main id="main-content" class="ds_layout ds_layout--article">
+			<div class="ds_layout__content">
+				<p></p>
+				<div class="ds_notification-panel ds_notification-panel--success">
+					<h1 class="ds_notification-panel__title">Account created</h1>
+					<div class="ds_notification-panel__content">
+						<p>
+							You have successfully created a DSA Account.
+							<br><br>
+						</p>
+					</div>
+				</div>
+
+				<p>Sign in to your DSA Account to complete a DSA application on behalf of a student.
+				</p>
+
+				<p>
+					<a id="login" th:href="@{/login}" class="ds_button dsa_button">Sign in to use the DSA service</a>
+				</p>
+
+				<h3>Keeping your account secure</h3>
+				<p></p>
+				<div class="ds_input--fixed-40">
+					<p>Never share your sign in details with anyone. You can sign out at any time and come back to
+						complete
+						an application.</p>
+					<p>As you will be accessing your advisor account throughout a student’s studies, remember to keep
+						your
+						account information, including your email address, up-to-date.</p>
+				</div>
+			</div>
+		</main>
+	</div>
+</div>
+</body>
+
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layout/dsaLayout}" th:with="hideBeta=true">
+
+<head>
+	<title>Create Account</title>
+</head>
+
+<body>
+<div layout:fragment="content">
+
+	<div class="ds_wrapper">
+		<main id="main-content" class="ds_layout ds_layout--article">
+			<div class="ds_layout__content">
+
+				<form id="createAccountForm" action="#" th:action="@{/lookupAccount}" method="post"
+					  th:object="${createAccountFormVO}">
+
+					<div tabindex="-1" th:if="${#fields.hasErrors('emailAddress')}" class="ds_error-summary ds_input--fixed-40"
+						 id="error-summary" aria-labelledby="error-summary-title" role="alert">
+						<h2 class="ds_error-summary__title" id="error-summary-title">There is a problem</h2>
+
+						<ul class="ds_error-summary__list">
+							<li>
+								<span>
+									<a th:href="${'#' + 'emailAddress'}" th:errors="*{emailAddress}"
+									   class="field-error"></a>
+								</span>
+							</li>
+						</ul>
+					</div>
+
+					<div class="border border-secondary p-3 rounded">
+						<br>
+						<h1 class="ds_h1 dsa_h1">Create an account</h1>
+						<p class="ds_input--fixed-40">To create a Disabled Students’ Allowance Account, enter your college or university email
+							address. This helps us to verify your details.
+						</p>
+						<p>Do not use a team email address.</p>
+						<p><br></p>
+					</div>
+
+					<div class="ds_question"
+						 th:classappend="${#fields.hasErrors('emailAddress')} ? 'ds_question--error'">
+
+						<label class="ds_label" for="emailAddress">Work email address</label>
+
+						<div class="ds_question__error-message ds_input--fixed-40" th:if="${#fields.hasErrors('emailAddress')}"
+							 th:errors="*{emailAddress}">
+						</div>
+
+						<input th:classappend="${#fields.hasErrors('emailAddress')} ? 'ds_input--error'"
+							   class="ds_input ds_input--fixed-20" maxlength="254" type="text" id="emailAddress"
+							   name="emailAddress" th:field="*{emailAddress}"/>
+						<div th:if="${createAccountFormVO.isEmailAlreadyActive} != null">
+
+							<p class="small_text_grey"><a th:href="@{/login}">Sign in</a> to your account to use the DSA
+								service</p>
+						</div>
+					</div>
+
+					<div class="ds_button-group">
+						<input type="submit" class="ds_button dsa_button" value="Save and continue">
+					</div>
+				</form>
+			</div>
+		</main>
+	</div>
+</div>
+</body>
+
+</html>

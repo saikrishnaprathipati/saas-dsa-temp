@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/dsaLayoutLoggedIn}"
+	th:with="currentPosition='findStudent', currentTab='findStudent'">
+
+<head>
+<title>Find Student</title>
+<meta http-equiv="Cache-Control"
+	content="no-cache, no-store, must-revalidate" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="0" />
+</head>
+
+<body>
+
+	<div layout:fragment="content">
+		<div class="ds_page__middle">
+			<div class="ds_wrapper">
+				<main class="ds_layout  ds_layout--article">
+					<div class="ds_layout__content">
+						<form id="find_Student" th:action="@{/findStudentByStudRef}"
+							th:object="${findStudentByStudrefFormVO}" method="POST">
+							<p>
+								<br>
+
+							</p>
+							<div tabindex="-1" th:if="${#fields.hasAnyErrors()}"
+								class="ds_error-summary" id="error-summary"
+								aria-labelledby="error-summary-title" role="alert">
+								<h2 class="ds_error-summary__title" id="error-summary-title">There
+									is a problem</h2>
+
+								<ul class="ds_error-summary__list">
+									<li
+										th:each="fieldName: ${findStudentByStudrefFormVO.orderedFields}">
+
+										<span th:if="${#fields.hasErrors(fieldName)}"> <span
+											th:each="fieldError: ${#fields.errors(fieldName)}"> <a
+												th:href="${'#' + fieldName}" th:text="${fieldError}"
+												class="field-error"> </a>
+										</span>
+									</span>
+									</li>
+								</ul>
+							</div>
+
+							<h1>Find Student Using Student Reference Number</h1>
+							<p class="ds_input--fixed-45">We will use this to Find a
+								Student using their Student Reference Number
+							<p>&nbsp;</p>
+							<div class="ds_question"
+								th:classappend="${#fields.hasErrors('studentReferenceNumber')} ? 'ds_question--error'">
+								<fieldset>
+
+									<div class="ds_question" data-module="ds-character-count">
+										<label class="ds_label" for="studentReferenceNumber">Student
+											Reference Number</label> <span class="small_text_grey">Must be
+											6 or 8 digits long.</span>
+										<div class="ds_question__error-message"
+											th:if="${#fields.hasErrors('studentReferenceNumber')}"
+											th:errors="*{studentReferenceNumber}"></div>
+										<input
+											th:classappend="${#fields.hasErrors('studentReferenceNumber')} ? 'ds_input--error'"
+											class="ds_input  ds_input--fixed-20" maxlength="8"
+											type="text" id="studentReferenceNumber"
+											th:field="*{studentReferenceNumber}" />
+
+									</div>
+								</fieldset>
+
+							</div>
+
+
+							<div class="ds_button-group">
+								<a th:href="@{/findStudents}"
+									class="ds_button ds_button--cancel">Back </a>
+								&nbsp;&nbsp;&nbsp;&nbsp; <input type="submit" class="ds_button"
+									name="action" value="Continue">
+							</div>
+						</form>
+					</div>
+				</main>
+			</div>
+		</div>
+	</div>
+
+</body>
+
+</html>

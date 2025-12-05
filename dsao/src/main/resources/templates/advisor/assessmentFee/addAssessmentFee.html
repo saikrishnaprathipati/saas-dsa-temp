@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layout/dsaLayoutLoggedIn}" th:with="currentPosition='specificStudent', currentTab='dashboard'">
+
+<head>
+	<title>Needs assessment fee</title>
+	<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+	<meta http-equiv="Pragma" content="no-cache" />
+	<meta http-equiv="Expires" content="0" />
+</head>
+
+<body>
+
+<div layout:fragment="content">
+
+	<div class="ds_page__middle">
+		<div class="ds_wrapper">
+			<main class="ds_layout  ds_layout--article">
+				<div class="ds_layout__content">
+					<p><br></p>
+					<form id="student_personal_details" action="#" th:action="@{${ACTION_NAME}}"
+						  th:object="${assessmentFeeFormVO}" method="POST">
+
+						<div tabindex="-1" th:if="${#fields.hasAnyErrors()}" class="ds_error-summary"
+							 id="error-summary" aria-labelledby="error-summary-title" role="alert">
+							<h2 class="ds_error-summary__title" id="error-summary-title">There is a problem</h2>
+
+							<ul class="ds_error-summary__list">
+								<li th:each="fieldName: ${assessmentFeeFormVO.orderedFields}">
+
+										<span th:if="${#fields.hasErrors(fieldName)}">
+											<span th:each="fieldError: ${#fields.errors(fieldName)}">
+												<span>
+
+													<a th:href="${'#' + fieldName}" th:text="${fieldError}"
+													   class="field-error">
+													</a>
+
+												</span>
+											</span>
+										</span>
+								</li>
+							</ul>
+						</div>
+
+						<div class="ds_question">
+							<h1 id="ds_hint">Payment for Needs Assessment Report</h1>
+							<p>We need to know the assessment fee so that we can reimburse your college or
+								university.</p>
+							<br>
+							<div class="ds_field-group"
+								 th:classappend="${#fields.hasErrors('assessmentFeeCentreName')} ? 'ds_question--error'">
+								<label class="ds_label" for="assessmentFeeCentreName">Name of assessment
+									centre</label>
+								<p class="ds_hint-text">This can be an approved needs assessment centre, college or
+									university.</p>
+								<div class="ds_question__error-message"
+									 th:if="${#fields.hasErrors('assessmentFeeCentreName')}"
+									 th:errors="*{assessmentFeeCentreName}">
+								</div>
+								<input class="ds_input ds_input--fixed-30" type="text" id="assessmentFeeCentreName"
+									   maxlength="50"
+									   th:classappend="${#fields.hasErrors('assessmentFeeCentreName')} ? 'ds_input--error'"
+									   th:field="*{assessmentFeeCentreName}">
+							</div>
+
+							<div class="ds_field-group"
+								 th:classappend="${#fields.hasErrors('assessorName')} ? 'ds_question--error'">
+								<label class="ds_label" for="assessorName">Name of assessor</label>
+								<p class="ds_hint-text">A qualified assessor who has carried out the needs
+									assessment.</p>
+								<div class="ds_question__error-message" th:if="${#fields.hasErrors('assessorName')}"
+									 th:errors="*{assessorName}">
+								</div>
+								<input class="ds_input ds_input--fixed-30" type="text" id="assessorName"
+									   maxlength="50"
+									   th:classappend="${#fields.hasErrors('assessorName')} ? 'ds_input--error'"
+									   th:field="*{assessorName}">
+							</div>
+
+
+							<div class="ds_field-group"
+								 th:classappend="${#fields.hasErrors('totalHours')} ? 'ds_question--error'">
+								<label class="ds_label" for="totalHours">Total hours</label>
+								<p class="ds_hint-text">The time it took to complete the needs assessment and the
+									Needs Assessment Report.</p>
+								<div class="ds_question__error-message" th:if="${#fields.hasErrors('totalHours')}"
+									 th:errors="*{totalHours}">
+								</div>
+								<input class="ds_input ds_input--fixed-10" type="text" id="totalHours" maxlength="2"
+									   th:classappend="${#fields.hasErrors('totalHours')} ? 'ds_input--error'"
+									   th:field="*{totalHours}">
+							</div>
+
+
+							<div class="ds_field-group"
+								 th:classappend="${#fields.hasErrors('cost')} ? 'ds_question--error'">
+								<label class="ds_label" for="cost">Total Cost</label>
+								<p class="ds_hint-text">The total cost of the needs assessment including VAT.</p>
+								<div class="ds_question__error-message" th:if="${#fields.hasErrors('cost')}"
+									 th:errors="*{cost}"></div>
+
+								<div class="ds_currency-wrapper" data-symbol="£">
+									<input class="ds_input ds_input--fixed-10" type="text" id="cost"
+										   maxlength="8"
+										   th:classappend="${#fields.hasErrors('cost')} ? 'ds_input--error'"
+										   data-form="textinput-total" th:field="*{cost}">
+								</div>
+							</div>
+
+						</div>
+						<br>
+						<div class="ds_button-group">
+							<div class="ds_button-group">
+								<input type="hidden" th:value="${studentReferenceNumber}"
+									   name="studentReferenceNumber"/>
+								<input type="hidden" th:value="${dsaApplicationNumber}"
+									   name="dsaApplicationNumber"/>
+								<input type="hidden" th:value="${assessmentFeeFormVO.id}" name="id"/>
+								<input type="submit" class="ds_button ds_button--cancel" name="action"
+									   value="Back">&nbsp;&nbsp;&nbsp;&nbsp;
+								<input type="submit" class="ds_button" name="action" value="Save and continue">
+							</div>
+						</div>
+						<button class="ds_link  ds_no-margin secondary_form" name="action" value="SKIP_TO_ADDITIONAL_INFO"
+								th:if="${showSkipAssessmentFeeLink}"
+								data-button="about-student">Skip Payment for Needs Assessment Report
+						</button>
+
+					</form>
+				</div>
+			</main>
+		</div>
+	</div>
+
+
+</div>
+
+</body>
+
+</html>

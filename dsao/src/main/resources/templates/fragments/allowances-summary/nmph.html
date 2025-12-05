@@ -1,0 +1,105 @@
+<div class="bottom_pagination">
+	<h2>Non-Medical Personal Help (NMPH)</h2>
+	<div class="ds_pagination consumable" th:if="${nmphItems.size > 0}">
+		<h2>Total:&nbsp;&nbsp;&nbsp;<strong th:text="${nmphTotal}"></strong></h2>
+	</div>
+	<form action="#" th:action="@{/addNMPHAllowance}" class="ds_pagination"
+		  th:object="${addNMPHFormVO}" method="POST" th:if="${nmphItems.size <= 0}">
+		<button th:if="${ADVISOR_DECLARTION_NOT_COMPLETED && LOGGEDIN_USER_TYPE  eq 'ADVISOR'}"
+				class="ds_button ds_button--secondary dsa_section"
+				name="action" value="ADD_NMPH_FROM_SUMMARY">Add
+		</button>
+		<input type="hidden" th:value="${dsaApplicationNumber}" name="dsaApplicationNumber"/>
+		<input type="hidden" th:value="${studentReferenceNumber}" name="studentReferenceNumber"/>
+	</form>
+</div>
+
+<p class="ds_input--fixed-40">Personal helpers including note takers, mental health mentors, sign language interpreters
+	and study skills support. It does not cover disability related expenditure needed
+	outside of the student’s studies.</p>
+<p>Claimed yearly. Allowance limit per academic year: <strong th:text="${nmphCap}"></strong></p>
+
+<details class="ds_details" th:if="${nmphItems.size > 0}">
+	<summary class="ds_details__summary show_more" aria-label="nmph summary">
+		<span>Show more</span>
+	</summary>
+	<div>
+		<br>
+		<table class="ds_table dsa_allowance_table" data-smallscreen="scrolling">
+			<caption class="visually-hidden">NMPH items list</caption>
+			<thead>
+			<tr>
+				<th scope="col">Type of support</th>
+
+				<th scope="col">Recommended provider</th>
+				<th scope="col">Hourly rate<br>
+					<p class="ds_hint-text dsa_vat">Including VAT.</p>
+				</th>
+				<th scope="col">Hours<br>
+					<p class="ds_hint-text dsa_vat">Per week.</p>
+				</th>
+				<th scope="col">Weeks<br>
+					<p class="ds_hint-text dsa_vat">Per year.</p>
+				</th>
+				<th scope="col">Cost<br>
+					<p class="ds_hint-text dsa_vat">Including VAT.</p>
+				</th>
+			</tr>
+			</thead>
+			<tbody>
+			<tr th:each="item: ${nmphItems}">
+				<td><span th:text="${item.typeOfSupport}"></span>
+
+				</td>
+				<td><span th:text="${item.recommendedProvider}"></span></td>
+				<td><span th:text="${item.hourlyRateStr}"></span></td>
+				<td><span th:text="${item.hours}"></span></td>
+				<td><span th:text="${item.weeks}"></span></td>
+				<td><span th:text="${item.costStr}"></span></td>
+				<td>
+					<form id="change_nmph" action="#" th:action="@{/changeNMPH}"
+						  th:if="${ADVISOR_DECLARTION_NOT_COMPLETED && LOGGEDIN_USER_TYPE  eq 'ADVISOR'}"
+						  th:object="${changeNMPHFormVO}" method="POST">
+						<button class="ds_link  ds_no-margin" name="action"
+								value="INT_CHANGEN_MPH" data-button="about-student">Change
+						</button>
+						<input type="hidden" th:value="${item.id}" name="id"/>
+						<input type="hidden" th:value="${dsaApplicationNumber}"
+							   name="dsaApplicationNumber"/>
+						<input type="hidden" th:value="${studentReferenceNumber}"
+							   name="studentReferenceNumber"/>
+					</form>
+				</td>
+				<td>
+					<form id="remove_nmph" action="#" th:action="@{/removeNMPH}"
+						  th:if="${ADVISOR_DECLARTION_NOT_COMPLETED && LOGGEDIN_USER_TYPE  eq 'ADVISOR'}"
+						  th:object="${addNMPHFormVO}" method="POST">
+						<button class="ds_link  ds_no-margin" name="action" value="remove"
+								data-button="about-student">Remove
+						</button>
+						<input type="hidden" th:value="${item.id}" name="itemId"/>
+
+						<input type="hidden" th:value="${item.typeOfSupport}"
+							   name="itemName"/>
+						<input type="hidden" th:value="${dsaApplicationNumber}"
+							   name="dsaApplicationNumber"/>
+						<input type="hidden" th:value="${studentReferenceNumber}"
+							   name="studentReferenceNumber"/>
+					</form>
+				</td>
+			</tr>
+			</tbody>
+		</table>
+
+		<form id="add_nmph_all_summary" action="#"
+			  th:action="@{/addNMPHAllowance}" th:object="${addNMPHFormVO}"
+			  th:if="${nmphItems.size > 0 && ADVISOR_DECLARTION_NOT_COMPLETED && LOGGEDIN_USER_TYPE  eq 'ADVISOR'}"
+			  method="POST">
+			<button class="ds_link  ds_no-margin" name="action" value="ADD_NMPH_FROM_SUMMARY"
+					data-button="about-student">Add another
+			</button>
+			<input type="hidden" th:value="${dsaApplicationNumber}" name="dsaApplicationNumber"/>
+			<input type="hidden" th:value="${studentReferenceNumber}" name="studentReferenceNumber"/>
+		</form>
+	</div>
+</details>

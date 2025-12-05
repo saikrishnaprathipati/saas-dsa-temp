@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layout/dsaLayout}">
+
+<head>
+	<title>Page Error</title>
+	<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
+	<meta http-equiv="Pragma" content="no-cache"/>
+	<meta http-equiv="Expires" content="0"/>
+</head>
+
+<body>
+<div layout:fragment="content">
+
+	<div class="ds_wrapper">
+		<main id="main-content" class="ds_layout ds_layout--article">
+			<div class="ds_layout__content">
+				<p><br></p>
+				<h1>Session Timed Out</h1>
+				<a href="javascript:" id="pageNotFoundBack">&lt; Back</a>
+				<p></p>
+				<p> Try again later.</p>
+				<p class="ds_input--fixed-40">If you no longer have access to the email account,
+					you can contact the<a th:href="@{/help#tab3}"> DSA Team</a> for help with the DSA service</p>
+
+				<p class="ds_input--fixed-40">Alternately, you can use
+					<a th:href="@{/login}" id="login">Advisor sign in</a> to access your Advisor DSA Account
+					or <a th:href="@{/studentLogin}" id="studentLogin">Student sign in</a> to use your Student Account.
+			</div>
+		</main>
+	</div>
+</div>
+</body>
+
+</html>

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+	<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+	<meta content="width=device-width" name="viewport">
+	<title>Student Submit Notification Email</title>
+	<style>
+        @media only screen and (min-device-width: 581px) {
+            .content {
+                width: 580px !important;
+            }
+        }
+	</style>
+</head>
+
+<body
+		style="font-family: Helvetica, Arial, sans-serif; font-size: 16px; margin: 0; color: #0b0c0c;">
+
+<!--[if (gte mso 9)|(IE)]>
+<table width="580" align="center" cellpadding="0" cellspacing="0" border="0">
+	<tr>
+		<td>
+<![endif]-->
+
+<table width="580" cellpadding="0" cellspacing="0" border="0"
+	   align="center">
+	<tr>
+		<td height="50">&nbsp;</td>
+	</tr>
+	<tr>
+		<td width="138" height="47" valign="middle"><a
+				href="https://www.saas.gov.uk"><img src="cid:SAAS_Logo.png"
+													alt="SAAS Logo" height="47" border="0"></a></td>
+	</tr>
+</table>
+<table class="content" align="center" cellpadding="0" cellspacing="0"
+	   border="0" style="width: 100%; max-width: 580px;">
+	<tr>
+		<td>
+			<h1
+					style="font-family: Helvetica, Arial, sans-serif; font-size: 36px; line-height: 1.315789474; font-weight: 700; margin: 19px 0 38px 0;">
+				Your Disabled Students’ Allowance (DSA) application has been
+				submitted</h1>
+			<p
+					style="font-family: Helvetica, Arial, sans-serif; font-size: 19px; line-height: 1.315789474; margin: 30px 0 30px 0;">
+				Dear <span th:text="${STUDENT_FULL_NAME}"></span>
+			</p>
+			<h3
+					style="font-family: Helvetica, Arial, sans-serif; font-size: 19px; line-height: 1.315789474; font-weight: 700; margin: 38px 0 19px 0;">
+				What happens next</h3>
+			<p
+					style="font-family: Helvetica, Arial, sans-serif; font-size: 19px; line-height: 1.315789474; margin: 30px 0 30px 0;">
+				We will now check the information you have given us along with the
+				evidence submitted and will be in touch if we need anything else.</p>
+
+			<p
+					style="font-family: Helvetica, Arial, sans-serif; font-size: 19px; line-height: 1.315789474; margin: 30px 0 30px 0;">
+				Please quote your SAAS Reference Number if you need to talk to us
+				about your DSA application. This can be found on your SAAS Account
+				Dashboard. Our current processing time is 4 weeks and we will
+				contact you by email to let you know the outcome of your
+				application. We will also let your Disability Advisor know.</p>
+
+			<h3
+					style="font-family: Helvetica, Arial, sans-serif; font-size: 19px; line-height: 1.315789474; font-weight: 700; margin: 38px 0 19px 0;">
+				How to check the progress of your application</h3>
+
+			<p
+					style="font-family: Helvetica, Arial, sans-serif; font-size: 19px; line-height: 1.315789474; margin: 30px 0 30px 0;">
+				You can sign in to your SAAS Account Dashboard to view your
+				application at any time.</p>
+			<p
+					style="font-family: Helvetica, Arial, sans-serif; font-size: 19px; line-height: 1.315789474; margin: 30px 0 30px 0;">
+				If you need to make a change or add to your application, or want to
+				let us know about a worsening or new disability, please get in
+				touch with your Disability Advisor who will advise you on what to
+				do.</p>
+			<h3
+					style="font-family: Helvetica, Arial, sans-serif; font-size: 19px; line-height: 1.315789474; font-weight: 700; margin: 38px 0 19px 0;">
+				Sign in to your SAAS Account</h3>
+
+			<p
+					style="font-family: Helvetica, Arial, sans-serif; border-left: 5px #000000 solid; padding: 14px 0 14px 14px; font-size: 19px; line-height: 1.315789474; margin: 0 0 19px 0;">
+				<a th:href="${STUDENT_SIGN_IN_URL}">https://www.saas.gov.uk/sign-in</a>
+			</p>
+
+			<h3
+					style="font-family: Helvetica, Arial, sans-serif; font-size: 19px; line-height: 1.315789474; font-weight: 700; margin: 38px 0 19px 0;">
+				Keeping your account secure</h3>
+			<p
+					style="font-family: Helvetica, Arial, sans-serif; font-size: 19px; line-height: 1.315789474; margin: 30px 0 30px 0;">
+				Never share your sign in details with anyone. Please remember to
+				keep your account information, including your email address,
+				up-to-date.</p> <br>
+			<p
+					style="font-family: Helvetica, Arial, sans-serif; font-size: 19px; color: #6F777B; line-height: 1.315789474; margin: 0 0 30px 0;">
+				This is an automatically generated email. Please do not reply. If
+				you need help, please get in touch with your Disability Advisor at
+				your college or university or <a th:href="${CONTACT_US_URL}">contact
+				us</a>. Please disregard this email if you have received it in error.
+			</p>
+		</td>
+	</tr>
+</table>
+
+<!--[if (gte mso 9)|(IE)]>
+</td>
+</tr>
+</table>
+<![endif]-->
+
+</body>
+
+</html>

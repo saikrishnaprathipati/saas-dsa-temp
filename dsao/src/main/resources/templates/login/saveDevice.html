@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layout/dsaLayoutLoggedIn}" th:with="hideBeta=true">
+
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Save Device</title>
+	<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+	<meta http-equiv="Pragma" content="no-cache" />
+	<meta http-equiv="Expires" content="0" />
+</head>
+
+<body>
+<div layout:fragment="content">
+	<div class="ds_wrapper">
+		<main id="main-content" class="ds_layout ds_layout--article">
+			<div class="ds_layout__content ds_input--fixed-40">
+				<p><br></p>
+
+				<form id="saveDeviceForm" action="#" th:action="@{/rememberDeviceAndContinue}" method="post"
+					  th:object="${saveDeviceFormVO}">
+					<h1 class="ds_h1 dsa_h1">Save this device</h1>
+					<p>You can save this device and access your account without using a sign-in link for
+						7 days.</p>
+					<p><br></p>
+					<div class="ds_field-group">
+						<div class="ds_checkbox">
+							<input class="ds_checkbox__input" name="rememberDevice"
+								   id="rememberDevice" type="checkbox"
+								   th:field="${saveDeviceFormVO.rememberDevice}"/>
+							<label class="ds_checkbox__label" for="rememberDevice"><strong>Remember me
+								for 7 days</strong></label>
+							<p class="ds_hint-text" id="ds_hint">Please do not select this checkbox if
+								you access your DSA Account on a shared computer.</p>
+						</div>
+					</div>
+					<p></p>
+					<div class="ds_button-group">
+						<input type="submit" class="ds_button dsa_button" value="Save and continue">
+					</div>
+
+					<input type="hidden" th:value="${advisor.email}" name="email"/>
+					<input type="hidden" th:value="${advisor.userId}" name="userId"/>
+				</form>
+
+			</div>
+		</main>
+	</div>
+</div>
+</body>
+
+</html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/dsaLayoutLoggedIn}" th:with="currentPosition='specificStudent'">
+
+<head>
+	<title>Remove bank account</title>
+	<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+	<meta http-equiv="Pragma" content="no-cache" />
+	<meta http-equiv="Expires" content="0" />
+</head>
+
+<body>
+
+	<div layout:fragment="content">
+
+		<div class="ds_page__middle">
+			<div class="ds_wrapper">
+				<main class="ds_layout  ds_layout--article">
+					<div class="ds_layout__content">
+						<form id="remove_consumable" th:action="@{/removeBankAccount}" th:object="${removeItemFormVO}"
+							method="POST">
+
+							<div tabindex="-1" th:if="${#fields.hasAnyErrors()}" class="ds_error-summary"
+								id="error-summary" aria-labelledby="error-summary-title" role="alert">
+								<h2 class="ds_error-summary__title" id="error-summary-title">There is a problem</h2>
+
+								<ul class="ds_error-summary__list">
+									<li th:each="fieldName: ${removeItemFormVO.orderedFields}">
+
+										<span th:if="${#fields.hasErrors(fieldName)}">
+											<span th:each="fieldError: ${#fields.errors(fieldName)}">
+
+												<a th:href="${'#' + fieldName}" th:text="${fieldError}"
+													class="field-error">
+												</a>
+											</span>
+										</span>
+									</li>
+								</ul>
+							</div>
+
+							<div class="ds_question"
+								th:classappend="${#fields.hasErrors('removeItem')} ? 'ds_question--error'">
+								<fieldset>
+
+									<legend>
+										<h1> Are you sure you want to remove <br><span
+												th:text="${removeItemFormVO.itemName}"></span>?</h1>
+									</legend>
+									<div class="ds_field-group">
+										<div class="ds_radio">
+											<input class="ds_radio__input" id="yes" type="radio" name="radios"
+												th:field="*{removeItem}" value="YES" data-form="radio-radios-yes">
+											<label class="ds_radio__label" for="yes">Yes</label>
+										</div>
+										<div class="ds_radio">
+											<input class="ds_radio__input" id="removeItem" type="radio" name="radios"
+												th:field="*{removeItem}" value="NO" data-form="radio-radios-no">
+											<label class="ds_radio__label" for="removeItem">No</label>
+										</div>
+									</div>
+								</fieldset>
+
+								<input type="hidden" th:value="${removeItemFormVO.dsaApplicationNumber}"
+									name="dsaApplicationNumber" />
+								<input type="hidden" th:value="${removeItemFormVO.studentReferenceNumber}"
+									name="studentReferenceNumber" />
+								<input type="hidden" th:value="${removeItemFormVO.itemId}" name="itemId" />
+								<input type="hidden" th:value="${removeItemFormVO.itemName}" name="itemName" />
+							</div>
+
+							<div class="ds_button-group">
+
+								<button class="ds_button ds_button--cancel" name="action"
+									th:value="BANK_ACCOUNT_SUMMARY" data-button="back-bank-details">Back
+								</button>
+								&nbsp;&nbsp;&nbsp;&nbsp;
+								<button class="ds_button" name="action"
+									th:value="REMOVE_BANK_ACCOUNT" data-button="save-bank">Save and continue
+								</button>
+							</div>
+
+						</form>
+					</div>
+				</main>
+			</div>
+		</div>
+
+
+	</div>
+
+</body>
+
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layout/dsaLayoutLoggedIn}" th:with="currentPosition='specificStudent', currentTab='dashboard'">
+
+<head>
+	<title>Select Year</title>
+	<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
+	<meta http-equiv="Pragma" content="no-cache"/>
+	<meta http-equiv="Expires" content="0"/>
+</head>
+
+<body>
+
+<div layout:fragment="content">
+	<div class="ds_page__middle">
+		<div class="ds_wrapper">
+			<main class="ds_layout  ds_layout--article">
+				<div class="ds_layout__content ds_input--fixed-40">
+					<p><br></p>
+
+					<form th:action="@{/updateApplicationDashboard}" th:object="${dashboardFormVO}"
+						  method="POST">
+
+						<h1>Are you sure you want to update?</h1>
+						<div class="ds_question ds_input--fixed-40">
+							<p>Changing this application will update any previous applications for the academic year,
+								and the student will need to review and resubmit their application.</p>
+							<br>
+							<p>If DSA has already been awarded, we will review the new application and, if required,
+								update the DSA award.</p>
+						</div>
+						<br>
+						<div class="ds_button-group">
+							<input type="submit" class="ds_button" name="action" value="Confirm and continue">
+							<a th:href="@{/advisorDashboard}"
+							   class="ds_button ds_button--cancel">No thanks
+							</a>
+						</div>
+
+						<input type="hidden" th:value="${dashboardFormVO.studentReferenceNumber}"
+							   name="studentReferenceNumber"/>
+						<input type="hidden" th:value="${dashboardFormVO.firstName}" name="firstName"/>
+						<input type="hidden" th:value=" ${dashboardFormVO.lastName}" name="lastName"/>
+						<input type="hidden" th:value=" ${dashboardFormVO.dob}" name="dob"/>
+						<input type="hidden" th:value=" ${dashboardFormVO.academicYear}" name="academicYear"/>
+						<input type="hidden" th:value=" ${dashboardFormVO.sessionCode}"
+							   name="sessionCode"/>
+						<input type="hidden" th:value=" ${dashboardFormVO.fundingEligibilityStatus}"
+							   name="fundingEligibilityStatus"/>
+					</form>
+
+				</div>
+			</main>
+		</div>
+	</div>
+</div>
+
+</body>
+
+</html>

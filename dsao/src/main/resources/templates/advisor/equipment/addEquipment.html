@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layout/dsaLayoutLoggedIn}" th:with="currentPosition='specificStudent', currentTab='dashboard'">
+
+<head>
+	<title>Add Equipment, software and accessories</title>
+	<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+	<meta http-equiv="Pragma" content="no-cache" />
+	<meta http-equiv="Expires" content="0" />
+</head>
+
+<body>
+
+<div layout:fragment="content">
+
+	<div class="ds_page__middle">
+		<div class="ds_wrapper">
+			<main class="ds_layout  ds_layout--article">
+				<div class="ds_layout__content">
+					<p><br></p>
+					<form id="add_equipment" action="#" th:action="@{/addEquipment}"
+						  th:object="${addEquipmentFormVO}" method="POST">
+
+						<div tabindex="-1" th:if="${#fields.hasAnyErrors()}" class="ds_error-summary"
+							 id="error-summary" aria-labelledby="error-summary-title" role="alert">
+							<h2 class="ds_error-summary__title" id="error-summary-title">There is a problem</h2>
+							<ul class="ds_error-summary__list">
+								<li th:each="fieldName: ${addEquipmentFormVO.orderedFields}">
+										<span th:if="${#fields.hasErrors(fieldName)}">
+											<span th:each="fieldError: ${#fields.errors(fieldName)}">
+												<span>
+
+													<a th:href="${'#' + fieldName}" th:text="${fieldError}"
+													   class="field-error">
+													</a>
+
+												</span>
+											</span>
+										</span>
+								</li>
+							</ul>
+						</div>
+
+						<p class="ds_hint-text">Part 1 of 2</p>
+						<h1><span th:text="${studentFirstName}"></span>’s equipment, software and accessories</h1>
+						<p class="ds_input--fixed-40">Equipment, software and accessories required by the
+							student to undertake the
+							course. This can include computing equipment, ergonomics, assistive software and
+							other technical aids.</p>
+						<p>Claimed for the duration of the course. Allowance limit per course:
+							<strong th:text="${equipmentCap}"></strong></p>
+						<br>
+						<div class="ds_warning-text ds_warning-text-new ds_important-text">
+							<strong class="ds_warning-text__icon" aria-hidden="true"></strong>
+							<strong>Important</strong>
+							<div class="ds_warning-text__text">
+								If you have received a detailed quote from a supplier, please enter the
+								product name and description as shown. We will need this information to
+								check the receipts against any purchases made.
+							</div>
+						</div>
+						<br>
+						<div class="ds_question ds_input--fixed-40"
+							 th:classappend="${#fields.hasErrors('productName')} ? 'ds_question--error'">
+							<div class="ds_field-group">
+								<label class="ds_label" for="productName">Product Name</label>
+								<span class="small_text_grey">Laptop make and model, accessories, software, delivery, warranty or insurance.
+									For example, HP Envy X360 laptop, ZoomText keyboard, TalkType Dictation, delivery fee or insurance fee.</span>
+								<p class="ds_question__error-message"
+								   th:if="${#fields.hasErrors('productName')}" th:errors="*{productName}">
+								</p>
+								<input class="ds_input ds_input--fixed-20" maxlength="50" type="text"
+									   id="productName"
+									   th:classappend="${#fields.hasErrors('productName')} ? 'ds_input--error'"
+									   th:field="*{productName}">
+							</div>
+						</div>
+						<div class="ds_question ds_input--fixed-40"
+							 th:classappend="${#fields.hasErrors('description')} ? 'ds_question--error'">
+							<div class="ds_field-group" data-module="ds-character-count">
+								<label class="ds_label" for="description">Description (optional)</label>
+								<span class="small_text_grey">If you have a quote showing a description, enter it here.</span>
+								<p class="ds_question__error-message"
+								   th:if="${#fields.hasErrors('description')}" th:errors="*{description}">
+								</p>
+								<textarea class="ds_input ds_input--fixed-20" rows="3" id="description" maxlength="300"
+										  th:field="*{description}"></textarea>
+							</div>
+						</div>
+						<div class="ds_question ds_input--fixed-40"
+							 th:classappend="${#fields.hasErrors('cost')} ? 'ds_question--error'">
+							<div class="ds_field-group">
+								<label class="ds_label" for="cost">Cost</label>
+								<span class="small_text_grey">Including VAT.</span>
+								<div class="ds_question__error-message"
+									 th:if="${#fields.hasErrors('cost')}" th:errors="*{cost}"></div>
+								<div class="ds_currency-wrapper" data-symbol="£">
+									<input class="ds_input ds_input--fixed-10" type="text" id="cost"
+										   th:field="*{cost}"
+										   th:classappend="${#fields.hasErrors('cost')} ? 'ds_input--error'">
+								</div>
+							</div>
+						</div>
+						<input type="hidden" th:value="${studentReferenceNumber}"
+							   name="studentReferenceNumber">
+						<input type="hidden" th:value="${dsaApplicationNumber}"
+							   name="dsaApplicationNumber">
+						<input type="hidden" th:value="${studentFirstName}" name="studentFirstName">
+						<br>
+						<div class="ds_button-group">
+							<input type="submit" class="ds_button ds_button--cancel" name="action" value="Add">&nbsp;&nbsp;&nbsp;&nbsp;
+							<button class="ds_link  ds_no-margin secondary_form" name="action" value="Cancel"
+									data-button="about-student">Cancel
+							</button>
+							<br>
+							<button class="ds_link  ds_no-margin secondary_form" name="action" value="SKIP_EQUIPMENT"
+									th:if="${showSkipEquipment}"
+									data-button="about-student">Skip equipment,software and accessories
+							</button>
+						</div>
+
+					</form>
+				</div>
+			</main>
+		</div>
+	</div>
+
+</div>
+</body>
+</html>

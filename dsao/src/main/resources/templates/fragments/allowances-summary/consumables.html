@@ -1,0 +1,95 @@
+<div class="bottom_pagination">
+	<h2>Consumable items</h2>
+	<div class="ds_pagination consumable" th:if="${consumableItems.size > 0}">
+		<h2>Total:&nbsp;&nbsp;&nbsp;<strong th:text="${consumablesTotal}"></strong></h2>
+	</div>
+	<form action="#" th:action="@{/initConsumables}" class="ds_pagination"
+		  th:object="${consumablesSummaryFormVO}" method="POST"
+		  th:if="${consumableItems.size <= 0}">
+		<button th:if="${ADVISOR_DECLARTION_NOT_COMPLETED && LOGGEDIN_USER_TYPE  eq 'ADVISOR'}"
+				class="ds_button ds_button--secondary dsa_section"
+				name="action" value="Add Consuambels">Add
+		</button>
+		<input type="hidden" th:value="${dsaApplicationNumber}" name="dsaApplicationNumber"/>
+		<input type="hidden" th:value="${studentReferenceNumber}" name="studentReferenceNumber"/>
+	</form>
+</div>
+
+<p>General costs related to a student’s course and incurred as a result of their disability.<br>For example, printing,
+	ink and Braille paper.</p>
+<p>Claimed yearly. Allowance limit per academic year: <strong
+		th:text="${consumablesCap}"></strong></p>
+
+<details class="ds_details" th:if="${consumableItems.size > 0}">
+	<summary class="ds_details__summary show_more" aria-label="consumables summary">
+		<span>Show more</span>
+	</summary>
+	<div>
+		<br>
+		<table class=" ds_table dsa_allowance_table" data-smallscreen="scrolling">
+			<caption class="visually-hidden">Consumable items list</caption>
+			<thead>
+			<tr>
+				<th scope="col">Consumable items</th>
+				<th scope="col">Allowance<br>
+					<p class="ds_hint-text dsa_vat">Per academic year.</p>
+				</th>
+			</tr>
+			</thead>
+			<tbody>
+			<tr th:each="item: ${consumableItems}">
+				<td><span th:text="${item.consumableItem.itemName}"></span>
+					<p class="ds_hint-text dsa_vat"
+					   th:if="${!#strings.isEmpty(item.otehrItemText)}"
+					   th:text="${item.otehrItemText}"></p>
+				</td>
+				<td>£<span th:text="${item.cost}"></span></td>
+				<td>
+					<form id="change_consumable" action="#" th:action="@{/changeConsumable}"
+						  th:if="${ADVISOR_DECLARTION_NOT_COMPLETED && LOGGEDIN_USER_TYPE  eq 'ADVISOR'}"
+						  th:object="${consumablesSummaryFormVO}" method="POST">
+						<button class="ds_link  ds_no-margin" name="action"
+								value="CHANGE_FROM_SUMMARY" data-button="about-student">Change
+						</button>
+						<input type="hidden" th:value="${item.id}"
+							   name="consumableItemId"/>
+						<input type="hidden" th:value="${dsaApplicationNumber}"
+							   name="dsaApplicationNumber"/>
+						<input type="hidden" th:value="${studentReferenceNumber}"
+							   name="studentReferenceNumber"/>
+					</form>
+				</td>
+				<td>
+					<form id="remove_consumable" action="#" th:action="@{/removeConsumable}"
+						  th:if="${ADVISOR_DECLARTION_NOT_COMPLETED && LOGGEDIN_USER_TYPE  eq 'ADVISOR'}"
+						  th:object="${consumableItemRemoveFormVO}" method="POST">
+						<button class="ds_link  ds_no-margin" name="action" value="REMOVE_FROM_SUMMARY"
+								data-button="about-student">Remove
+						</button>
+						<input type="hidden" th:value="${item.id}"
+							   name="consumableItemId"/>
+						<input type="hidden" th:value="${item.consumableItem}"
+							   name="consumableItem"/>
+						<input type="hidden" th:value="${dsaApplicationNumber}"
+							   name="dsaApplicationNumber"/>
+						<input type="hidden" th:value="${studentReferenceNumber}"
+							   name="studentReferenceNumber"/>
+					</form>
+				</td>
+			</tr>
+			</tbody>
+		</table>
+
+		<form th:if="${ADVISOR_DECLARTION_NOT_COMPLETED && LOGGEDIN_USER_TYPE  eq 'ADVISOR'}" action="#"
+			  th:action="@{/initConsumables}"
+			  th:object="${consumablesSummaryFormVO}" method="POST">
+			<input type="hidden" name="action" value="ADD_FROM_ALL_SUMMARY"/>
+			<button class="ds_link  ds_no-margin"
+					data-button="about-student">Add another
+			</button>
+			<input type="hidden" th:value="${dsaApplicationNumber}" name="dsaApplicationNumber"/>
+			<input type="hidden" th:value="${studentReferenceNumber}" name="studentReferenceNumber"/>
+		</form>
+	</div>
+	<br>
+</details>

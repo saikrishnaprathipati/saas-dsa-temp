@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+	<meta content="text/html; charset=UTF-8" http-equiv="Content-Type"></meta>
+	<meta content="width=device-width" name="viewport"></meta>
+	<meta charset="UTF-8"></meta>
+
+	<title>DSA Application PDF</title>
+	<style>
+        body {
+            font-family: sans-serif;
+        }
+
+        html {
+            font-family: sans-serif;
+            -ms-text-size-adjust: 100%;
+            -webkit-text-size-adjust: 100%;
+        }
+
+        @page {
+            size: A4;
+
+            @bottom-right {
+                content: "Disabled Students’ Allowance application: Page " counter(page) " of " counter(pages);
+                border-top: 1px solid #EBEBEB;
+                font-size: 26px;
+            }
+            @bottom-left {
+                content: element(footer);
+                border-top: 1px solid #EBEBEB;
+            }
+            @bottom-center {
+                border-top: 1px solid #EBEBEB;
+            }
+        }
+
+        div.footer {
+            position: running(footer);
+        }
+
+        @media print {
+            .pagebreak {
+                page-break-before: always;
+            }
+        }
+
+        .ds_table {
+            width: 100%;
+            margin-bottom: 1rem;
+        }
+
+        @media ( min-width: 768px) {
+            .ds_table {
+                margin-bottom: 1rem;
+            }
+        }
+
+        .ds_table caption {
+            margin-bottom: 1rem;
+            font-size: 1rem;
+            font-weight: 700;
+            line-height: 1.5;
+            text-align: left;
+        }
+
+        @media ( min-width: 768px) {
+            .ds_table caption {
+                margin-bottom: 1rem;
+            }
+        }
+
+        .ds_table tbody, .ds_table thead, .ds_table tfoot {
+            border: 1px solid #b3b3b3;
+        }
+
+        .ds_table tr {
+            border-bottom: 1px solid #ebebeb;
+        }
+
+        .ds_table tr > * {
+            padding: 0.5rem 1rem 0.4375rem 0.5rem;
+        }
+
+        .ds_table tr:last-child {
+            border-bottom: 0;
+        }
+
+        .ds_table th {
+            background-color: #ebebeb;
+            font-weight: 700;
+            position: relative;
+            text-align: left;
+        }
+
+        .ds_table th, .ds_table td {
+            vertical-align: top;
+        }
+
+        .ds_table th[colspan] {
+            border: 1px solid #b3b3b3;
+        }
+
+        .ds_table th:not(:first-child)::before {
+            border-left: 1px solid #b3b3b3;
+            bottom: 8px;
+            content: "";
+            left: -1px;
+            position: absolute;
+            top: 8px;
+        }
+
+        .ds_table thead > tr:last-child {
+            border-bottom: 0;
+        }
+
+        .ds_table tbody > tr > td {
+            background-color: #ffffff;
+        }
+
+        .ds_table tbody > tr:nth-child(even) > td {
+            background-color: #f8f8f8;
+        }
+
+        @media ( max-width: 767px) {
+            .ds_table.js-is-scrolling[data-smallscreen=scrolling] {
+                display: block;
+                max-width: 100%;
+                overflow-x: auto;
+            }
+
+            .ds_table.js-is-scrolling[data-smallscreen=scrolling] tr > :first-child {
+                left: 0;
+                position: sticky;
+                z-index: 1;
+            }
+
+            .ds_table.js-is-scrolling[data-smallscreen=scrolling] caption {
+                display: block;
+                left: 0;
+                position: sticky;
+            }
+
+            .ds_table.js-is-scrolling[data-smallscreen=scrolling] tr > :first-child::after {
+                background: linear-gradient(90deg, rgba(0, 0, 0, 0.07), rgba(0, 0, 0, 0));
+                content: "";
+                height: 100%;
+                position: absolute;
+                right: -10px;
+                top: 0;
+                width: 10px;
+            }
+
+            .ds_table.js-is-scrolling[data-smallscreen=scrolling] tr > :first-child::before {
+                background: #b3b3b3;
+                content: "";
+                height: 100%;
+                left: -1px;
+                position: absolute;
+                top: 0;
+                width: 1px;
+            }
+
+            .ds_table.js-is-scrolling[data-smallscreen=scrolling] tr > th:first-child {
+                background: #ebebeb;
+            }
+
+            .ds_table.js-is-scrolling[data-smallscreen=scrolling] tr > td:first-child {
+                border-right: 1px solid #ebebeb;
+            }
+
+            .js-enabled .ds_table[data-smallscreen=boxes] {
+                border: 0;
+                margin-bottom: 0;
+            }
+
+            .js-enabled .ds_table[data-smallscreen=boxes] thead {
+                clip: rect(1px, 1px, 1px, 1px);
+                height: 1px;
+                overflow: hidden;
+                position: absolute !important;
+                width: 1px;
+            }
+
+            .js-enabled .ds_table[data-smallscreen=boxes] tbody {
+                border: none;
+            }
+
+            .js-enabled .ds_table[data-smallscreen=boxes] tr {
+                border: 0;
+                display: block;
+                margin-bottom: 16px;
+            }
+
+            .js-enabled .ds_table[data-smallscreen=boxes] tr > * {
+                border: 1px solid #b3b3b3;
+                display: block;
+                overflow: auto;
+                padding-left: calc(50% - 8px);
+                position: relative;
+            }
+
+            .js-enabled .ds_table[data-smallscreen=boxes] tr > td:not(:last-child) {
+                border-bottom-color: #ebebeb;
+            }
+
+            .js-enabled .ds_table[data-smallscreen=boxes] tr > th:last-child {
+                border-width: 0;
+                margin-top: 32px;
+            }
+
+            .js-enabled .ds_table[data-smallscreen=boxes] tr > td:not(:first-child) {
+                border-top-width: 0;
+            }
+
+            .js-enabled .ds_table[data-smallscreen=boxes] tr > td::before {
+                content: attr(data-heading);
+                display: block;
+                position: absolute;
+                font-weight: 700;
+                left: 0;
+                margin-left: 16px;
+                margin-right: 16px;
+                text-align: left;
+                width: calc(50% - 16px);
+            }
+
+            .js-enabled .ds_table[data-smallscreen=boxes] tr > td:first-child {
+                box-shadow: inset 0 4px 0 #ebebeb;
+            }
+
+            .js-enabled .ds_table[data-smallscreen=boxes] tr > td:nth-child(odd) {
+                background-color: #ffffff;
+            }
+
+            .js-enabled .ds_table[data-smallscreen=boxes] tr > td:nth-child(even) {
+                background-color: #f8f8f8;
+            }
+        }
+
+        .ds_table tbody {
+            border: none;
+        }
+
+        .ds_table.dsa_table tbody > tr:last-child {
+            border: none;
+        }
+
+        .ds_table tbody > tr:last-child {
+            border-bottom: 1px solid #F2F2F2;
+        }
+
+        .ds_table tbody > tr:nth-child(even) > td {
+            background-color: white;
+            vertical-align: middle;
+        }
+
+        .ds_table.dsa_allowance_table th {
+            background-color: #ffffff;
+            border-bottom: 1px solid #F8F8F8;
+            width: 50%;
+        }
+
+        .ds_question .ds_table.dsa_allowance_table th {
+            width: auto;
+        }
+
+        .ds_question .ds_table.dsa_allowance_table th {
+            border-bottom: 0 none;
+        }
+
+        .ds_table.dsa_allowance_table tbody, .ds_table.dsa_allowance_table thead,
+        .ds_table.dsa_allowance_table tfoot {
+            border-top: 0 solid #b3b3b3;
+            border-right: 0 solid #b3b3b3;
+            border-bottom: 1px solid #b3b3b3;
+            border-left: 0 solid #b3b3b3;
+        }
+
+        .ds_table.dsa_allowance_table th:not(:first-child)::before {
+            border-left: 1px solid #ffffff;
+            bottom: 8px;
+            content: "";
+            left: -1px;
+            position: absolute;
+            top: 8px;
+        }
+
+        .ds_table.dsa_allowance_table tbody > tr:first-child {
+            border-top: 3px solid #333333;
+        }
+
+        .ds_table.dsa_allowance_table tbody > tr:last-child {
+            border-bottom: 3px solid #333333;
+        }
+
+        .ds_table.dsa_allowance_table.travel_exp_summary td {
+            vertical-align: top;
+        }
+
+        @media ( min-width: 768px) {
+            .ds_table--eligibility {
+                width: 75%;
+            }
+        }
+
+        .ds_layout--eligibility h2 {
+            margin-top: 16px;
+        }
+
+        .ds_table .ds_td--status {
+            padding-top: 0;
+        }
+
+        @media ( min-width: 768px) {
+            .ds_table--search {
+                width: 65%;
+            }
+        }
+
+        .ds_hint-text.dsa_vat {
+            font-weight: normal;
+            font-size: small;
+        }
+
+        .ds_table.dsa_allowance_table td {
+            vertical-align: middle;
+            border-bottom: 1px solid #F8F8F8;
+        }
+
+        .resume-application .dsa_allowance_table tbody, .resume-application .dsa_allowance_table tbody > tr:last-child {
+            border-bottom: 0 none;
+        }
+
+        .dsa_hint-text {
+            color: black;
+        }
+
+        .ds_hint-text {
+            color: #727272;
+            margin-bottom: 16px;
+        }
+
+        .ds_hint-text > * {
+            margin-bottom: 8px;
+        }
+
+        .font-weight-normal {
+            font-weight: normal;
+        }
+
+        ul {
+            max-width: 620px;
+        }
+
+        li {
+            padding-bottom: 20px;
+        }
+
+        .border-bottom-none {
+            border-bottom: 0 none !important;
+        }
+
+        .empty {
+            content: " ";
+        }
+	</style>
+</head>
+
+<body>
+<div class="ds_page">
+	<div class="ds_page__middle">
+		<div class="ds_wrapper">
+			<main class="ds_layout  ds_layout--article">
+				<div class="ds_layout__content">
+
+					<!--/* STUDENT DETAILS  */-->
+					<div>
+						<h3>Student details</h3>
+						<table class="ds_table dsa_allowance_table">
+							<tr>
+								<th scope="col">
+									<p>SAAS reference</p>
+								</th>
+								<td scope="col" th:text="${SAAS_REFERNECE_NUMBER}"></td>
+							</tr>
+							<tr>
+								<th scope="col">
+									<p>Name</p>
+								</th>
+								<td scope="col" th:text="${STUDENT_FULL_NAME}"></td>
+							</tr>
+							<tr>
+								<th scope="col">
+									<p>Date of birth</p>
+								</th>
+								<td scope="col"
+									th:text="${#dates.format(STUDENT_DOB, 'dd MMMM yyyy')}"></td>
+							</tr>
+							<tr>
+								<th scope="col">
+									<p>Funding eligibility status</p>
+								</th>
+								<td scope="col" th:text="${STUDENT_FUND_ELIGIBILITY}"></td>
+							</tr>
+						</table>
+					</div>
+
+					<p><br></br></p>
+
+					<!--/* COURSE DETAILS  */-->
+					<div>
+						<h3>Course details</h3>
+						<table class="ds_table dsa_allowance_table">
+							<tr>
+								<th scope="col"><p>Institution</p></th>
+								<td scope="col" th:text="${INSTITUTION}"></td>
+							</tr>
+							<tr>
+								<th scope="col"><p>Course</p></th>
+								<td scope="col" th:text="${COURSE}"></td>
+							</tr>
+							<tr>
+								<th scope="col"><p>Study mode</p></th>
+								<td scope="col" th:text="${STUDY_MODE}"></td>
+							</tr>
+							<tr>
+								<th scope="col"><p>Academic year</p></th>
+								<td scope="col" th:text="${ACADEMIC_YEAR}"></td>
+							</tr>
+						</table>
+					</div>
+
+					<p><br></br></p>
+
+					<!--/* BANK ACCOUNT  */-->
+					<div>
+						<h3>Bank account for DSA payments</h3>
+						<table class="ds_table dsa_allowance_table">
+							<tr>
+								<th scope="col"><p>Type</p></th>
+								<td scope="col"
+									th:text="${bankDetails.paymentFor.descriptionForPDF}"></td>
+							</tr>
+							<tr th:if="${bankDetails.paymentFor.descriptionForPDF  ne 'Main funding'}">
+								<th scope="col"><p>Account name</p></th>
+								<td scope="col" th:text="${bankDetails.accountName}"></td>
+							</tr>
+							<tr
+									th:if="${bankDetails.paymentFor.descriptionForPDF  ne 'Main funding'}">
+								<th scope="col"><p>Sort code</p></th>
+								<td scope="col" th:text="${bankDetails.sortCode}"></td>
+							</tr>
+							<tr th:if="${bankDetails.paymentFor.descriptionForPDF  ne 'Main funding'}">
+								<th scope="col"><p>Account number</p></th>
+								<td scope="col" th:text="${bankDetails.accountNumber}"></td>
+							</tr>
+						</table>
+					</div>
+
+					<div class="footer">
+						<img th:src="@{classpath:static/images/SAAS-Logo-PDF.png}" alt="SAAS Logo" height="23"
+							 width="70"></img>
+					</div>
+
+					<div class="pagebreak"></div>
+
+					<!--/* DISABILITIES  */-->
+					<div>
+						<h3>Disabilities</h3>
+
+						<table class="ds_table dsa_allowance_table">
+							<tr th:each="disability : ${DISABILITIES_MAP}">
+								<td scope="col">
+									<div>
+										<strong th:text="${disability.key}"></strong>
+										<p class="ds_hint-text" th:text="${disability.value}">.</p>
+									</div>
+								</td>
+							</tr>
+						</table>
+					</div>
+
+					<div class="footer">
+						<img th:src="@{classpath:static/images/SAAS-Logo-PDF.png}" alt="SAAS Logo" height="23"
+							 width="70"></img>
+					</div>
+
+					<div class="pagebreak"></div>
+
+					<!--/* CONSUMABLES  */-->
+					<div th:if="${consumables ne null && #lists.isEmpty(consumables) == false}">
+						<h3>Consumables</h3>
+						<h3 class="consumable">
+							<span class="font-weight-normal">Total:</span> <strong
+								th:text="${consumablesTotal}"></strong>
+						</h3>
+
+						<p><br></br></p>
+
+						<table class="ds_table dsa_allowance_table">
+							<thead>
+							<tr>
+								<th scope="col" class="border-bottom-none">
+									Consumable items
+									<p class="ds_hint-text dsa_vat" th:text="'&nbsp;'"></p>
+								</th>
+								<th scope="col" class="border-bottom-none">Allowance
+									<p class="ds_hint-text dsa_vat">Per academic year.</p>
+								</th>
+							</tr>
+							</thead>
+							<tbody>
+							<tr th:each="item: ${consumables}">
+								<td>
+									<p th:text="${item.consumableItem.itemName}"></p>
+									<p class="ds_hint-text dsa_vat"
+									   th:if="${!#strings.isEmpty(item.otehrItemText)}"
+									   th:text="${item.otehrItemText}"></p>
+								</td>
+								<td><p th:text="${item.costString}"></p></td>
+							</tr>
+							</tbody>
+						</table>
+					</div>
+
+					<div class="footer">
+						<img th:src="@{classpath:static/images/SAAS-Logo-PDF.png}" alt="SAAS Logo" height="23"
+							 width="70"></img>
+					</div>
+					<div class="pagebreak"></div>
+
+					<!--/* EQUIPMENT  */-->
+					<div th:if="${hasEquipments == true || hasQuotes == true}">
+						<h3>Equipment, software and accessories</h3>
+						<h3 class="consumable">
+							<span class="font-weight-normal">Total:</span> <strong
+								th:text="${equipmentsTotal}"></strong>
+						</h3>
+						<div  th:if="${hasQuotes == true}">
+							<p><br></br></p>
+							<table class="ds_table dsa_allowance_table travel_exp_summary">
+								<thead>
+									<tr>
+										<th scope="col" class="border-bottom-none">Supplier and
+											quote reference
+											<p class="ds_hint-text dsa_vat" th:text="'&nbsp;'"></p>
+										</th>
+										<th scope="col" class="border-bottom-none">Cost
+											<p class="ds_hint-text dsa_vat">Per academic year.</p>
+										</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr th:each="item: ${quotes}">
+										<td>
+											<p th:text="${item.supplier}"></p>
+											<p class="ds_hint-text dsa_vat"
+												th:text="${item.quoteReference}"></p>
+										</td>
+										<td>
+											<p th:text="${item.costStr}"></p>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+						<div th:if="${hasEquipments == true}">
+						<p><br></br></p>
+						<table class="ds_table dsa_allowance_table travel_exp_summary" >
+							<thead>
+							<tr>
+								<th scope="col" class="border-bottom-none">
+									Product name and description
+									<p class="ds_hint-text dsa_vat" th:text="'&nbsp;'"></p>
+								</th>
+								<th scope="col" class="border-bottom-none">Cost
+									<p class="ds_hint-text dsa_vat">Per academic year.</p>
+								</th>
+							</tr>
+							</thead>
+							<tbody>
+							<tr th:each="item: ${equipments}">
+								<td>
+									<p th:text="${item.productName}"></p>
+									<p class="ds_hint-text dsa_vat" th:text="${item.description}">
+									</p>
+								</td>
+								<td>
+									<p th:text="${item.costStr}"></p>
+								</td>
+							</tr>
+							</tbody>
+						</table>
+						</div>
+						<div th:if="${PAYMENT_FOR_TEXT ne null}">
+							<h4>Payment for this allowance</h4>
+							<p th:text="${PAYMENT_FOR_TEXT}"></p>
+							<span class="ds_hint-text dsa_vat" th:text="${PAYMENT_FOR_TEXT_HINT}"></span>
+						</div>
+						
+						
+					</div>
+
+					<div class="footer">
+						<img th:src="@{classpath:static/images/SAAS-Logo-PDF.png}" alt="SAAS Logo" height="23"
+							 width="70"></img>
+					</div>
+
+					<div class="pagebreak"></div>
+
+					<!--/* NON-MEDICAL  */-->
+					<div class="ds_question"
+						 th:if="${nmphItems ne null && #lists.isEmpty(nmphItems) == false}">
+						<h3>Non medical personal help (NMPH)</h3>
+						<h3 class="consumable">
+							<span class="font-weight-normal">Total:</span> <strong th:text="${nmphTotal}"></strong>
+						</h3>
+
+						<table class="ds_table dsa_allowance_table">
+							<thead>
+							<tr>
+								<th scope="col">
+									Type of support
+									<p class="ds_hint-text dsa_vat" th:text="'&nbsp;'"></p>
+								</th>
+								<th scope="col">
+									Recommended provider
+									<p class="ds_hint-text dsa_vat" th:text="'&nbsp;'"></p>
+								</th>
+								<th scope="col">
+									Hourly rate
+									<p class="ds_hint-text dsa_vat" th:text="'&nbsp;'"></p>
+								</th>
+								<th scope="col">Hours
+									<p class="ds_hint-text dsa_vat">Per week.</p>
+								</th>
+								<th scope="col">Weeks
+									<p class="ds_hint-text dsa_vat">Per year.</p>
+								</th>
+								<th scope="col">Cost
+									<p class="ds_hint-text dsa_vat">Including VAT.</p>
+								</th>
+
+							</tr>
+							</thead>
+							<tbody>
+							<tr th:each="item: ${nmphItems}">
+								<td><p th:text="${item.typeOfSupport}"></p></td>
+								<td><p th:text="${item.recommendedProvider}"></p></td>
+								<td><p th:text="${item.hourlyRateStr}"></p></td>
+								<td><p th:text="${item.hours}"></p></td>
+								<td><p th:text="${item.weeks}"></p></td>
+								<td><p th:text="${item.costStr}"></p></td>
+							</tr>
+							</tbody>
+						</table>
+					</div>
+
+					<div class="footer">
+						<img th:src="@{classpath:static/images/SAAS-Logo-PDF.png}" alt="SAAS Logo" height="23"
+							 width="70"></img>
+					</div>
+
+					<div class="pagebreak"></div>
+
+					<!--/* TRAVEL EXPENSES  */-->
+					<div class="ds_question"
+						 th:if="${travelExpeses ne null && #lists.isEmpty(travelExpeses) == false}">
+						<h3>Travel expenses</h3>
+
+						<table class="ds_table dsa_allowance_table travel_exp_summary">
+							<thead>
+							<tr>
+								<th scope="col">
+									Travel type
+									<p class="ds_hint-text dsa_vat" th:text="'&nbsp;'"></p>
+								</th>
+								<th scope="col">
+									<span>Start location</span>
+									<p>End location</p>
+								</th>
+								<th scope="col">Return journeys
+									<p class="ds_hint-text dsa_vat">Per week.</p>
+								</th>
+								<th scope="col">Weeks
+									<p class="ds_hint-text dsa_vat">Per academic year.</p>
+								</th>
+								<th scope="col">Cost per return journey
+								</th>
+							</tr>
+							</thead>
+							<tbody>
+							<tr th:each="item: ${travelExpeses}">
+								<td>
+									<p th:text="${item.travelExpType.description}"></p>
+								</td>
+								<td>
+									<p th:text="${item.startLocationPostcode}"></p>
+									<p th:text="${item.endLocationPostcode}"></p>
+								</td>
+								<td>
+									<p th:text="${item.returnJourneys}"></p>
+								</td>
+								<td>
+									<p th:text="${item.weeks}"></p>
+								</td>
+								<td th:if="${item.travelExpType.name() ne 'TAXI'}">
+
+									<div th:if="${item.vehicleType eq 'Electric'}">
+										<p>
+											<span>Electric vehicle</span>
+										</p>
+										<p>
+											<span th:text="${item.kwhCostStr}"></span> <span
+												class="ds_hint-text dsa_vat">kWh cost</span>
+										</p>
+										<p>
+											<span th:text="${item.kwhCapacity}"></span> <span
+												class="ds_hint-text dsa_vat">kWh battery</span>
+										</p>
+										<p>
+											<span th:text="${item.rangeOfCar}"></span> <span
+												class="ds_hint-text dsa_vat">range</span>
+										</p>
+									</div>
+
+									<div th:if="${item.vehicleType ne 'Electric'}">
+										<p>
+											<span>Petrol/Diesel/Hybrid vehicle</span>
+										</p>
+										<p>
+											<span th:text="${item.fuelCostStr}"></span> <span
+												class="ds_hint-text dsa_vat">per litre</span>
+										</p>
+										<p>
+											<span th:text="${item.milesPerGallon}"></span> <span
+												class="ds_hint-text dsa_vat">miles per gallon</span>
+										</p>
+									</div>
+								</td>
+								<td th:if="${item.travelExpType.name() eq 'TAXI'}">
+									<p>Taxi quotes</p>
+									<p th:each="item: ${taxiQuotes}">
+										<span th:text="${item.costStr}"></span> <span
+											class="ds_hint-text dsa_vat"
+											th:text="${' ' + item.recommendedProvider}"></span>
+									</p>
+								</td>
+							</tr>
+							</tbody>
+						</table>
+					</div>
+					<div class="footer">
+						<img th:src="@{classpath:static/images/SAAS-Logo-PDF.png}" alt="SAAS Logo" height="23"
+							 width="70"></img>
+					</div>
+
+					<div class="pagebreak"></div>
+					
+					<!--/* Accommodations  */-->
+					<div class="ds_question"
+						 th:if="${accommodations ne null && #lists.isEmpty(accommodations) == false}">
+						<h3>Accommodation allowance</h3>
+						<h3 class="consumable">
+							<span class="font-weight-normal">Total:</span> <strong th:text="${accommodationsTotal}"></strong>
+						</h3>
+						
+												<table class="ds_table dsa_allowance_table">
+							<thead>
+							<tr>
+								<th scope="col">
+									Accommodation type
+									<p class="ds_hint-text dsa_vat" th:text="'&nbsp;'"></p>
+								</th>
+								 
+								 
+								<th scope="col">Standard cost
+									<p class="ds_hint-text dsa_vat">Per week.</p>
+								</th>
+								<th scope="col">Enhanced cost
+									<p class="ds_hint-text dsa_vat">Per week.</p>
+								</th>
+								<th scope="col">Weeks
+									<p class="ds_hint-text dsa_vat">Per academic year.</p>
+								</th>
+
+							</tr>
+							</thead>
+							<tbody>
+							<tr th:each="item: ${accommodations}">
+								<td><p th:text="${item.accommodationType.description}"></p></td>
+								<td><p th:text="${item.standardCostStr}"></p></td>
+								<td><p th:text="${item.enhancedCostStr}"></p></td>
+								<td><p th:text="${item.weeks}"></p></td> 
+							</tr>
+							</tbody>
+						</table>
+						
+						 
+					</div>
+										<div class="footer">
+						<img th:src="@{classpath:static/images/SAAS-Logo-PDF.png}" alt="SAAS Logo" height="23"
+							 width="70"></img>
+					</div>
+
+					<div class="pagebreak"></div>
+					<p><br></br></p>
+					<!--/* NEEDS ASSESSMENT  */-->
+					<div class="ds_question"
+						 th:if="${feeItems ne null && #lists.isEmpty(feeItems) == false}">
+						<h3>Payment for Needs Assessment Report</h3>
+
+						<table class="ds_table dsa_allowance_table">
+							<thead>
+							<tr>
+								<th scope="col">Name of assessor</th>
+								<th scope="col">Assessment centre</th>
+								<th scope="col">Hours</th>
+								<th scope="col">Total Cost</th>
+							</tr>
+							</thead>
+							<tbody>
+							<tr th:each="item: ${feeItems}">
+								<td><p th:text="${item.assessorName}"></p></td>
+								<td><p th:text="${item.assessmentFeeCentreName}"></p></td>
+								<td><p th:text="${item.totalHours}"></p></td>
+								<td><p th:text="${item.costStr}">></p></td>
+							</tr>
+							</tbody>
+						</table>
+					</div>
+					 
+					<div class="ds_question"
+						 th:if="${additionalInfo}">
+						<h3>Additional information​</h3>
+						<p th:text="${additionalInfo}"></p>
+					</div>
+
+					<div class="footer">
+						<img th:src="@{classpath:static/images/SAAS-Logo-PDF.png}" alt="SAAS Logo" height="23"
+							 width="70"></img>
+					</div>
+
+					<div class="pagebreak"></div>
+
+					<!--/* ADVISOR DECLARATION  */-->
+					<h3>Advisor declaration</h3>
+
+					<p><br></br></p>
+					<ul>
+						<li>Any support that is set out in the DSA claim is essential for this student to complete their
+							course and to my knowledge, the details on this application are correct.
+						</li>
+						<li>I have seen and verified medical evidence of this student’s disability or learning
+							difficulty.
+						</li>
+						<li>I confirm this student has undertaken a DSA needs assessment and they agree with the
+							recommendations.
+						</li>
+					</ul>
+					<table class="ds_table dsa_allowance_table">
+						<tr>
+							<th scope="col">Accepted by</th>
+							<td scope="col">
+								<p th:text="${ADVISOR_NAME}"></p>
+								<p class="ds_hint-text" th:text="${ADVISOR_ROLE}"></p>
+							</td>
+						</tr>
+					</table>
+					<table class="ds_table dsa_allowance_table">
+						<tr>
+							<th scope="col" class="border-bottom-none">Date</th>
+							<td scope="col" class="border-bottom-none">
+								<p th:text="${#dates.format(ADVISOR_DECLARATION_SUBMITTED_DATE, 'dd MMMM yyyy')}"></p>
+							</td>
+						</tr>
+					</table>
+
+					<div class="pagebreak"></div>
+
+					<!--/* STUDENT DECLARATION  */-->
+					<h3>Student declaration</h3>
+
+					<p><br></br></p>
+					<ul>
+						<li>I have checked the information my Disability Advisor has given on this application and to
+							the best of my knowledge my disabilities and the allowances I need are correct.
+						</li>
+						<li>I will give SAAS any additional information or documents they need to process my DSA
+							application.
+						</li>
+						<li>I understand that if I am paid too much because of a change in my circumstances, money may
+							be taken back from me, stopped or reduced in the future. A change in circumstances could
+							include not starting my course, leaving my course or receiving money from another fund.
+						</li>
+						<li>I understand that if I give my Disability Advisor or SAAS false, incorrect, or incomplete
+							information my details will be passed onto SAAS Counter Fraud team and may have sanctions
+							applied, including having to pay money back.
+						</li>
+						<li>I understand that if I am paid too much money or a payment is made on my behalf; I may have
+							to pay it back.
+						</li>
+						<li>I will give SAAS receipts for all items purchased using my DSA.</li>
+						<li>I understand that the information I have provided will be used to prevent, detect,
+							investigate, and report crime. I understand that SAAS may share this information with other
+							organisations.
+						</li>
+						<li>My Disabled Students’ Allowance payment is made under the Students’ Allowances (Scotland)
+							Regulation 2022.
+						</li>
+					</ul>
+
+					<table class="ds_table dsa_allowance_table">
+						<tr>
+							<th scope="col">
+								<p>Accepted by</p>
+							</th>
+							<td scope="col">
+								<p th:text="${STUDENT_FULL_NAME}"></p>
+								<p class="ds_hint-text">Student</p>
+							</td>
+						</tr>
+					</table>
+					<table class="ds_table dsa_allowance_table">
+						<tr>
+							<th scope="col" class="border-bottom-none">
+								<p>Date</p>
+							</th>
+							<td scope="col" class="border-bottom-none">
+								<p th:text="${#dates.format(STUDENT_DECLARATION_SUBMITTED_DATE, 'dd MMMM yyyy')}"></p>
+							</td>
+						</tr>
+					</table>
+				</div>
+
+			</main>
+		</div>
+	</div>
+</div>
+
+<div class="footer">
+	<img th:src="@{classpath:static/images/SAAS-Logo-PDF.png}" alt="SAAS Logo" height="23" width="70"></img>
+</div>
+
+</body>
+
+</html>

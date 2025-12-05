@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/dsaLayoutLoggedIn}"
+	th:with="currentPosition='specificStudent'">
+
+<head>
+<title>Award access for advisor</title>
+<meta http-equiv="Cache-Control"
+	content="no-cache, no-store, must-revalidate" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="0" />
+</head>
+
+<body>
+
+	<div layout:fragment="content">
+
+		<div class="ds_page__middle">
+			<div class="ds_wrapper">
+				<main class="ds_layout  ds_layout--article">
+					<div class="ds_layout__content">
+						<p>
+							<br>
+						</p>
+						<form id="remove_consumable" th:action="@{/saveAwardAccess}"
+							th:object="${awardAccessFormVO}" method="POST">
+							<div tabindex="-1" th:if="${#fields.hasAnyErrors()}"
+								class="ds_error-summary" id="error-summary"
+								aria-labelledby="error-summary-title" role="alert">
+								<h2 class="ds_error-summary__title" id="error-summary-title">There
+									is a problem</h2>
+								<ul class="ds_error-summary__list">
+									<li th:each="fieldName: ${awardAccessFormVO.orderedFields}">
+
+										<span th:if="${#fields.hasErrors(fieldName)}"> <span
+											th:each="fieldError: ${#fields.errors(fieldName)}"> <a
+												th:href="${'#' + fieldName}" th:text="${fieldError}"
+												class="field-error"> </a>
+										</span>
+									</span>
+									</li>
+								</ul>
+							</div>
+
+								<h1>
+									Can we give your Disability Advisor access to your DSA award
+									notice? <br>
+								</h1>
+								<p>For your Disability Advisor to support you with your DSA
+									award, we would like to provide them with access to a copy of
+									your award notice so they can help you purchase items and
+									secure the services you need.</p>
+								<p></p>
+							<div class="ds_question"
+								th:classappend="${#fields.hasErrors('canAccess')} ? 'ds_question--error'">
+								<fieldset>
+									<legend>Confirm the following</legend>
+									<p></p>
+									<div class="ds_field-group">
+										<div class="ds_radio">
+											<input class="ds_radio__input" id="canAccess" type="radio"
+												name="radios" th:field="*{canAccess}" value="YES"
+												data-form="radio-radios-yes"> <label
+												class="ds_radio__label" for="canAccess">Yes, I want
+												my Disability Advisor to access a copy of my DSA award
+												notice</label>
+										</div>
+										<div class="ds_radio">
+											<input class="ds_radio__input" id="noAccess" type="radio"
+												name="radios" th:field="*{canAccess}" value="NO"
+												data-form="radio-radios-no"> <label
+												class="ds_radio__label" for="noAccess">No, I do not
+												want my Disability Advisor to access a copy of my DSA award
+												notice</label>
+										</div>
+									</div>
+								</fieldset>
+
+								<input type="hidden"
+									th:value="${awardAccessFormVO.dsaApplicationNumber}"
+									name="dsaApplicationNumber" /> <input type="hidden"
+									th:value="${awardAccessFormVO.studentReferenceNumber}"
+									name="studentReferenceNumber" />
+							</div>
+							<div class="ds_button-group">
+								<div class="ds_button-group">
+
+									<button class="ds_button ds_button--cancel" name="action"
+										value="STUDENT_DECLARATION" data-button="about-student">Back</button>
+									&nbsp;&nbsp;&nbsp;&nbsp;
+									<button class="ds_button" name="action"
+										value="CHOOSE_BANK_ACCOUNT" data-button="about-student">Save
+										and continue</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</main>
+			</div>
+		</div>
+
+
+	</div>
+
+</body>
+
+</html>

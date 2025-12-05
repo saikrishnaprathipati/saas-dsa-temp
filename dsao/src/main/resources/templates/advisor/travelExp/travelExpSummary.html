@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layout/dsaLayoutLoggedIn}"
+	  th:with="currentPosition='specificStudent', currentTab='dashboard'">
+
+<head>
+	<title>Travel expenses summary</title>
+	<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
+	<meta http-equiv="Pragma" content="no-cache"/>
+	<meta http-equiv="Expires" content="0"/>
+</head>
+
+<body>
+
+<div layout:fragment="content">
+	<p><br></p>
+	<div class="ds_wrapper">
+		<main class="ds_layout  ds_layout--article">
+			<div class="ds_layout__content">
+				<div class="ds_question">
+					<span class="ds_hint-text">Part 3 of 3</span>
+					<h1>
+						<span th:text="${studentFirstName}"></span>'s travel expense
+						allowance
+					</h1>
+
+					<span>You have added <strong
+							th:text="${#lists.size(travelExpItems)}"></strong> travel
+							expenses.
+						</span>
+
+					<table class="ds_table dsa_allowance_table travel_exp_summary"
+						   data-smallscreen="scrolling">
+						<thead>
+						<tr>
+							<th scope="col">Travel type</th>
+							<th scope="col">Start location
+								<p>End location</p>
+							</th>
+							<th scope="col">Return journeys<br>
+								<p class="ds_hint-text dsa_vat">Per week.</p>
+							</th>
+							<th scope="col">Weeks<br>
+								<p class="ds_hint-text dsa_vat">Per academic year.</p>
+							</th>
+							<th scope="col">Cost per return journey
+							</th>
+						</tr>
+						</thead>
+						<tbody>
+						<tr th:each="item: ${travelExpItems}">
+							<td th:text="${item.travelExpType.description}"></td>
+							<td><span th:text="${item.startLocationPostcode}"></span>
+								<p th:text="${item.endLocationPostcode}"></p></td>
+							<td th:text="${item.returnJourneys}"></td>
+							<td th:text="${item.weeks}"></td>
+
+							<!--/* Total Fuel Cost */-->
+							<td
+									th:if="${item.vehicleType == 'Electric' && item.travelExpType.description != 'Taxi'}">
+								<span>Electric vehicle</span>
+								<p></p> &pound;<span th:text="${item.kwhCost}"></span><span
+									class="ds_hint-text"> kWh cost</span><br> <span
+									th:text="${item.kwhCapacity}"></span><span
+									class="ds_hint-text"> kWh battery</span><br> <span
+									th:text="${item.rangeOfCar}"></span><span class="ds_hint-text">
+											range</span>
+							</td>
+							<td
+									th:if="${item.vehicleType != 'Electric' && item.travelExpType.description != 'Taxi'}">
+								<span>Petrol/Diesel/Hybrid vehicle</span>
+								<p></p> &pound;<span th:text="${item.fuelCost}"></span><span
+									class="ds_hint-text"> per litre</span><br> <span
+									th:text="${item.milesPerGallon}"></span><span
+									class="ds_hint-text"> miles per gallon</span>
+							</td>
+							<td th:if="${item.travelExpType.description == 'Taxi'}">
+								<p> Taxi quotes</p>
+								<span
+										th:each="taxi: ${item.taxiProvidersList}"> <span
+										th:text="${taxi.costStr} + ' '"></span><span
+										class="ds_hint-text" th:text="${taxi.recommendedProvider}"></span><br>
+									</span></td>
+
+							<td>
+								<form id="change_travel_exp" action="#"
+									  th:action="@{/changeTravelExp}"
+									  th:object="${addTravelExpFormVO}" method="POST">
+									<input type="hidden" th:value="${item.travelExpType}"
+										   name="travelExpType"/> <input type="hidden"
+																		 th:value="${dsaApplicationNumber}"
+																		 name="dsaApplicationNumber"/> <input
+										type="hidden"
+										th:value="${studentReferenceNumber}"
+										name="studentReferenceNumber"/>
+									<button class="ds_link  ds_no-margin" name="action"
+											value="CHANGE_TRAVEL_EXP_ITEM" data-button="about-student">Change
+									</button>
+								</form>
+
+							</td>
+							<td>
+								<form id="remove_travel_exp" action="#"
+									  th:action="@{/removeTravelExp}"
+									  th:object="${addTravelExpFormVO}" method="POST">
+									<input type="hidden" th:value="${item.travelExpType}"
+										   name="travelExpType"/> <input type="hidden"
+																		 th:value="${item.id}" name="id"/> <input
+										type="hidden"
+										th:value="${dsaApplicationNumber}"
+										name="dsaApplicationNumber"/> <input type="hidden"
+																			 th:value="${studentReferenceNumber}"
+																			 name="studentReferenceNumber"/>
+									<button class="ds_link  ds_no-margin" name="action"
+											value="REMOVE_TRAVEL_EXP_ITEM" data-button="about-student">Remove
+									</button>
+								</form>
+							</td>
+						</tr>
+
+						</tbody>
+					</table>
+
+					<form id="add_travel_exp" action="#"
+						  th:action="@{/selectTravelExpense}"
+						  th:object="${travelExpSelectionFormVO}" method="POST"
+						  th:if="${HIDE_ADD_TRAVEL_EXP_LINK eq false}">
+						<button class="ds_link  ds_no-margin" name="action"
+								value="SELECT_TRAVEL_EXP_FROM_TA_SUMMARY"
+								data-button="about-student">Add another
+						</button>
+						<input type="hidden" th:value="${dsaApplicationNumber}"
+							   name="dsaApplicationNumber"/> <input type="hidden"
+																	th:value="${studentReferenceNumber}"
+																	name="studentReferenceNumber"/>
+					</form>
+
+				</div>
+				<div class="ds_button-group">
+					<form id="travel_exp_summary" class="buttonInline" action="#"
+						  th:action="@{/nmphSummary}"
+						  th:object="${applicationKeyDataFormVO}" method="POST">
+						<input type="hidden" th:value="${dsaApplicationNumber}"
+							   name="dsaApplicationNumber"/> <input type="hidden"
+																	th:value="${studentReferenceNumber}"
+																	name="studentReferenceNumber"/> <input type="hidden"
+																										   name="action"
+																										   value="Summary"/>
+						<input type="submit"
+							   class="ds_button ds_button--cancel" value="Back">&nbsp;&nbsp;&nbsp;&nbsp;
+					</form>
+					<!-- 					<form id="travel_exp_button" class="buttonInline" action="#"
+											  th:action="@{/allowancesSummary}"
+											  th:object="${applicationKeyDataFormVO}" method="POST">
+											<input type="hidden" th:value="${dsaApplicationNumber}"
+												   name="dsaApplicationNumber"/> <input type="hidden"
+																						th:value="${studentReferenceNumber}"
+																						name="studentReferenceNumber"/> <input type="submit"
+																															   class="ds_button"
+																															   name="action"
+																															   value="Save and continue">
+										</form> -->
+					<form id="travel_exp_button" class="buttonInline" action="#"
+						  th:action="@{/selectAccommodation}"
+						  th:object="${applicationKeyDataFormVO}" method="POST">
+						<input type="hidden" th:value="${dsaApplicationNumber}"
+							   name="dsaApplicationNumber"/> <input type="hidden"
+																	th:value="${studentReferenceNumber}"
+																	name="studentReferenceNumber"/>
+						<button class="ds_button  ds_no-margin" name="action"
+								value="SELECT_ACCOMMO_FROM_TRAVEL_SUMMARY" data-button="about-student">Save and
+							continue
+						</button>
+					</form>
+
+
+				</div>
+			</div>
+		</main>
+	</div>
+
+
+</div>
+
+</body>
+
+</html>

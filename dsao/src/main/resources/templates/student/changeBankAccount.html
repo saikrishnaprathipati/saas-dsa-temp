@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/dsaLayoutLoggedIn}" th:with="currentPosition='specificStudent'">
+
+<head>
+	<title>Change bank account</title>
+	<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+	<meta http-equiv="Pragma" content="no-cache" />
+	<meta http-equiv="Expires" content="0" />
+</head>
+
+<body>
+
+	<div layout:fragment="content">
+
+		<div class="ds_page__middle">
+			<div class="ds_wrapper">
+				<main class="ds_layout  ds_layout--article">
+					<div class="ds_layout__content">
+						<form id="advisor_declaration" action="#" th:action="@{/changeBankAccount}"
+							th:object="${changeBankAccountFormVO}" method="POST">
+
+
+							<div tabindex="-1" th:if="${#fields.hasAnyErrors()}" class="ds_error-summary"
+								id="error-summary" aria-labelledby="error-summary-title" role="alert">
+								<h2 class="ds_error-summary__title" id="error-summary-title">There is a problem</h2>
+
+								<ul class="ds_error-summary__list">
+									<li th:each="fieldName: ${changeBankAccountFormVO.orderedFields}">
+
+										<span th:if="${#fields.hasErrors(fieldName)}">
+											<span th:each="fieldError: ${#fields.errors(fieldName)}">
+												<span>
+													<a th:href="${'#' + fieldName}" th:text="${fieldError}"
+														class="field-error">
+													</a>
+												</span>
+											</span>
+										</span>
+									</li>
+								</ul>
+							</div>
+
+							<div class="ds_question">
+								<h1>Add a new bank account</h1>
+								<span class="dsa_hint-text">Check your DSA award notice for payments to this
+									account</span>
+								<div class="ds_field-group"
+									th:classappend="${#fields.hasErrors('nameOnAccount') || #fields.hasErrors('duplicateBankDetails')} ? 'ds_question--error'">
+									<label class="ds_label" for="nameOnAccount">Name on Account</label>
+
+									<div class="ds_question__error-message"
+										th:if="${#fields.hasErrors('nameOnAccount')}" th:errors="*{nameOnAccount}">
+									</div>
+
+									<input class="ds_input ds_input--fixed-20" type="text" id="nameOnAccount"
+										maxlength="25"
+										th:classappend="${#fields.hasErrors('nameOnAccount')} ? 'ds_input--error'"
+										data-form="textinput-rate" th:field="*{nameOnAccount}">
+
+								</div>
+
+								<div class="ds_field-group"
+									th:classappend="${#fields.hasErrors('sortCode') || #fields.hasErrors('duplicateBankDetails')} ? 'ds_question--error'">
+									<label class="ds_label" for="sortCode">Sort code</label>
+									<span class="small_text_grey">Must be 6 digits long.</span>
+									<div class="ds_question__error-message" th:if="${#fields.hasErrors('sortCode')}"
+										th:errors="*{sortCode}"></div>
+
+									<input class="ds_input ds_input--fixed-10" type="text" id="sortCode" maxlength="8"
+										th:classappend="${#fields.hasErrors('sortCode')} ? 'ds_input--error'"
+										data-form="textinput-rate" th:field="*{sortCode}">
+
+								</div>
+
+								<div class="ds_field-group"
+									th:classappend="${#fields.hasErrors('accountNumber') || #fields.hasErrors('duplicateBankDetails')} ? 'ds_question--error'">
+									<label class="ds_label" for="accountNumber">Account number</label>
+									<span class="small_text_grey">Must be 6 or 8 digits long.</span>
+									<div class="ds_question__error-message"
+										th:if="${#fields.hasErrors('accountNumber')}" th:errors="*{accountNumber}">
+									</div>
+
+									<input class="ds_input ds_input--fixed-10" type="text" id="accountNumber"
+										maxlength="8"
+										th:classappend="${#fields.hasErrors('accountNumber')} ? 'ds_input--error'"
+										data-form="textinput-rate" th:field="*{accountNumber}">
+
+								</div>
+
+								<input type="hidden" th:value="${studentReferenceNumber}"
+									name="studentReferenceNumber" />
+								<input type="hidden" th:value="${dsaApplicationNumber}" name="dsaApplicationNumber" />
+							</div>
+							<div class="ds_button-group">
+								<button class="ds_button  ds_no-margin" name="action" value="CHANGE_BANK_ACCOUNT"
+									data-button="about-student">Add
+								</button>
+								&nbsp;&nbsp;&nbsp;&nbsp;
+								<button class="ds_link  ds_no-margin" name="action" th:value="CANCEL_BANK_CHANGE"
+										data-button="about-student">Cancel
+								</button>
+								<!--
+								<button class="ds_button ds_button--cancel" name="action" th:value="${BACK_ACTION}"
+									data-button="about-student">Cancel
+								</button>
+								<input type="hidden" th:value="${BACK_ACTION}" name="backAction" />-->
+
+							</div>
+						</form>
+					</div>
+				</main>
+			</div>
+		</div>
+
+
+	</div>
+
+</body>
+
+</html>

@@ -1,0 +1,60 @@
+<nav class="ds_pagination" aria-label="Search result pages" th:if="${equipmentCount > 1}">
+    <ul class="ds_pagination__list">
+
+        <li class="ds_pagination__item" th:if="${equipmentCurrentPageNumber != 1}">
+
+            <form th:action="@{/equipmentSummary}" method="POST">
+                <button type="submit" aria-label="Previous page" name="action"
+                        class="ds_pagination__link ds_pagination__link--text ds_pagination__link--icon crap_button">
+                    <svg class="ds_icon" aria-hidden="true" role="img">
+                        <use th:href="@{/scripts/design-system/dist/images/icons/icons.stack.svg#chevron_left}"></use>
+                    </svg>
+                    <span class="ds_pagination__link-label">Previous</span>
+                </button>
+                <input type="hidden" th:value="${equipmentCurrentPageNumber - 1}" name="page">
+                <input type="hidden" th:value="${equipmentPage.size}" name="size">
+                <input type="hidden" th:value="${dsaApplicationNumber}" name="dsaApplicationNumber"/>
+                <input type="hidden" th:value="${studentReferenceNumber}" name="studentReferenceNumber"/>
+            </form>
+
+        </li>
+
+        <li class="ds_pagination__item"
+            th:attr="aria-hidden=${ pageNumber == -1 } ? 'true'"
+            th:each="pageNumber : ${pageNumbers}"
+            th:if="${#lists.size(pageNumbers) > 1}">
+            <form th:action="@{/equipmentSummary}" method="POST"
+                  th:if="${pageNumber > -1}">
+                <button type="submit" class="ds_pagination__link crap_button" name="action"
+                        th:attr="aria-label=${'Page ' + pageNumber}"
+                        th:classappend="${equipmentCurrentPageNumber == pageNumber} ? 'ds_current'">
+                    <span class="ds_pagination__link-label" th:text="${pageNumber}"></span>
+                </button>
+                <input type="hidden" th:value="${pageNumber}" name="page">
+                <input type="hidden" th:value="${equipmentPage.size}" name="size">
+                <input type="hidden" th:value="${dsaApplicationNumber}" name="dsaApplicationNumber"/>
+                <input type="hidden" th:value="${studentReferenceNumber}" name="studentReferenceNumber"/>
+            </form>
+            <span class="ds_pagination__link  ds_pagination__link--ellipsis"
+                  th:if="${pageNumber <= -1}">&hellip;</span>
+        </li>
+
+        <li class="ds_pagination__item" th:if="${equipmentCurrentPageNumber != equipmentPage.totalPages}">
+
+            <form th:action="@{/equipmentSummary}" method="POST">
+                <button type="submit" aria-label="Next page" name="action"
+                        class="ds_pagination__link ds_pagination__link--text ds_pagination__link--icon crap_button">
+                    <span class="ds_pagination__link-label">Next</span>
+                    <svg class="ds_icon" aria-hidden="true" role="img">
+                        <use th:href="@{/scripts/design-system/dist/images/icons/icons.stack.svg#chevron_right}"></use>
+                    </svg>
+                </button>
+                <input type="hidden" th:value="${equipmentCurrentPageNumber + 1}" name="page">
+                <input type="hidden" th:value="${equipmentPage.size}" name="size">
+                <input type="hidden" th:value="${dsaApplicationNumber}" name="dsaApplicationNumber"/>
+                <input type="hidden" th:value="${studentReferenceNumber}" name="studentReferenceNumber"/>
+            </form>
+
+        </li>
+    </ul>
+</nav>

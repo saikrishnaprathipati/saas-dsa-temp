@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layout/dsaLayoutLoggedIn}" th:with="currentPosition='specificStudent', currentTab='dashboard'">
+
+<head>
+	<title>Student travel expenses - add own vehicle</title>
+	<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
+	<meta http-equiv="Pragma" content="no-cache"/>
+	<meta http-equiv="Expires" content="0"/>
+</head>
+
+<body>
+
+<div layout:fragment="content">
+
+	<div class="ds_page__middle">
+		<div class="ds_wrapper">
+			<main class="ds_layout  ds_layout--article">
+				<div class="ds_layout__content">
+					<p><br></p>
+					<form id="student_personal_details" action="#" th:action="@{${ACTION_NAME}}"
+						  th:object="${addTravelExpFormVO}" method="POST">
+
+						<div tabindex="-1" th:if="${#fields.hasAnyErrors()}" class="ds_error-summary"
+							 id="error-summary" aria-labelledby="error-summary-title" role="alert">
+							<h2 class="ds_error-summary__title" id="error-summary-title">There is a problem</h2>
+
+							<ul class="ds_error-summary__list">
+								<li th:each="fieldName: ${addTravelExpFormVO.orderedFields}">
+
+										<span th:if="${#fields.hasErrors(fieldName)}">
+											<span th:each="fieldError: ${#fields.errors(fieldName)}">
+												<span>
+													<a th:href="${'#' + fieldName}" th:text="${fieldError}"
+													   class="field-error">
+													</a>
+
+												</span>
+											</span>
+										</span>
+								</li>
+							</ul>
+						</div>
+
+						<p>Part 2 of 3</p>
+						<div class="ds_question">
+							<fieldset>
+								<legend>
+									<h1>Add own vehicle</h1>
+								</legend>
+								<p>Provide details of the start and end location and the number of journeys
+									you
+									are claiming for.</p>
+								<br>
+								<div class="ds_field-group" data-module="ds-character-count"
+									 th:classappend="${#fields.hasErrors('startLocationPostcode')} ? 'ds_question--error'">
+									<label class="ds_label" for="startLocationPostcode">Postcode of start
+										location</label>
+									<p class="ds_hint-text">A journey from the student’s term-time address.</p>
+									<div class="ds_question__error-message"
+										 th:if="${#fields.hasErrors('startLocationPostcode')}"
+										 th:errors="*{startLocationPostcode}"></div>
+									<input class="ds_input ds_input--fixed-10" type="text"
+										   id="startLocationPostcode"
+										   th:classappend="${#fields.hasErrors('startLocationPostcode')} ? 'ds_input--error'"
+										   th:field="*{startLocationPostcode}">
+								</div>
+								<br>
+								<div class="ds_field-group" data-module="ds-character-count"
+									 th:classappend="${#fields.hasErrors('endLocationPostcode')} ? 'ds_question--error'">
+									<label class="ds_label" for="endLocationPostcode">Postcode of end
+										location</label>
+									<p class="ds_hint-text">A journey from the student’s college, university or
+										placement.</p>
+									<div class="ds_question__error-message"
+										 th:if="${#fields.hasErrors('endLocationPostcode')}"
+										 th:errors="*{endLocationPostcode}"></div>
+									<input class="ds_input ds_input--fixed-10" type="text" id="endLocationPostcode"
+										   th:classappend="${#fields.hasErrors('endLocationPostcode')} ? 'ds_input--error'"
+										   th:field="*{endLocationPostcode}">
+								</div>
+								<br>
+								<div class="ds_field-group"
+									 th:classappend="${#fields.hasErrors('returnJourneys')} ? 'ds_question--error'">
+									<label class="ds_label" for="returnJourneys">Return journeys</label>
+									<p class="ds_hint-text">The number of return journeys the student will make per
+										week.</p>
+									<div class="ds_question__error-message"
+										 th:if="${#fields.hasErrors('returnJourneys')}"
+										 th:errors="*{returnJourneys}">
+									</div>
+									<p class="ds_hint-text">For example, from home to university and back is 1 return
+										journey.</p>
+									<input class="ds_input ds_input--fixed-10" type="text" id="returnJourneys"
+										   maxlength="2"
+										   th:classappend="${#fields.hasErrors('returnJourneys')} ? 'ds_input--error'"
+										   th:field="*{returnJourneys}">
+								</div>
+								<br>
+								<div class="ds_field-group"
+									 th:classappend="${#fields.hasErrors('weeks')} ? 'ds_question--error'">
+									<label class="ds_label" for="weeks">Weeks</label>
+									<p class="ds_hint-text">The number of weeks return journeys will be made per
+										academic year.</p>
+									<div class="ds_question__error-message" th:if="${#fields.hasErrors('weeks')}"
+										 th:errors="*{weeks}"></div>
+
+									<div class="ds_select-wrapper ds_input--fixed-10">
+										<select th:field="*{weeks}"
+												class="ds_select ds_input--fixed-10 js-has-tracking-event" id="weeks"
+												th:classappend="${#fields.hasErrors('weeks')} ? 'ds_input--error'">
+
+											<option th:each="i : ${#numbers.sequence(0, 52)}" th:value="${i}"
+													th:text="${i == 0 ? '' : i}">
+											</option>
+										</select>
+
+										<span class="ds_select-arrow" aria-hidden="true"></span>
+									</div>
+								</div>
+								<br>
+								<div class="ds_warning-text ds_warning-text-new ds_important-text ds_input--fixed-40">
+									<strong class="ds_warning-text__icon" aria-hidden="true"></strong>
+									<strong>Important</strong>
+									<div class="ds_warning-text__text">
+										Important Travel allowance calculations are based on the fuel efficiency of the
+										vehicle
+										used by the student and the local cost of fuel in that location. We need to ask
+										about the vehicle, so we can work out these costs.
+									</div>
+								</div>
+								<br>
+								<!--/* Vehicle Type */-->
+								<div id="vehicleType"
+									 th:classappend="${#fields.hasErrors('vehicleType')} ? 'ds_question--error'">
+									<legend class="ds_label">Is this vehicle?</legend>
+									<div class="ds_question__error-message"
+										 th:if="${#fields.hasErrors('vehicleType')}"
+										 th:errors="*{vehicleType}"></div>
+									<ul class="contract-ul">
+										<li class="ds_radio ds_site-items__item">
+											<input class="ds_radio__input" id="no-electric"
+												   type="radio" name="radios"
+												   th:field="*{vehicleType}" value="noElectric"
+												   th:checked="${#strings.equalsIgnoreCase(vehicleType,'electric') == false || vehicleType == ''}  ? 'checked'"
+												   data-form="radio-radios-electric">
+											<label class="ds_radio__label"
+												   for="no-electric">Petrol/diesel/hybrid</label>
+										</li>
+										<li class="ds_radio ds_site-items__item">
+											<input class="ds_radio__input" id="electric" type="radio"
+												   name="radios" th:field="*{vehicleType}"
+												   th:checked="${#strings.equalsIgnoreCase(vehicleType,'electric')}  ? 'checked'"
+												   value="Electric" data-form="radio-radios-electric">
+											<label class="ds_radio__label" for="electric">Electric</label>
+										</li>
+									</ul>
+								</div>
+								<br>
+								<!--/* Petrol/Diesel/Hybrid Field Group */-->
+								<div id="no-electric-group"
+									 th:classappend="${#strings.equalsIgnoreCase(vehicleType,'electric')} ? 'hidden'">
+									<div class="ds_field-group"
+										 th:classappend="${#fields.hasErrors('fuelCost')} ? 'ds_question--error'">
+										<label class="ds_label" for="fuelCost">Fuel cost</label>
+										<div class="ds_question__error-message"
+											 th:if="${#fields.hasErrors('fuelCost')}"
+											 th:errors="*{fuelCost}"></div>
+										<p class="ds_hint-text">The current local cost of fuel per litre.</p>
+										<div class="ds_currency-wrapper" data-symbol="£">
+											<input class="ds_input ds_input--fixed-10" maxlength="6" type="text"
+												   id="fuelCost"
+												   th:classappend="${#fields.hasErrors('fuelCost')} ? 'ds_input--error'"
+												   th:field="*{fuelCost}">
+										</div>
+									</div>
+									<div class="ds_field-group"
+										 th:classappend="${#fields.hasErrors('milesPerGallon')} ? 'ds_question--error'">
+										<label class="ds_label" for="milesPerGallon">Miles per gallon</label>
+										<div class="ds_question__error-message"
+											 th:if="${#fields.hasErrors('milesPerGallon')}"
+											 th:errors="*{milesPerGallon}"></div>
+										<p class="ds_hint-text">The number of miles the vehicle can travel per
+											gallon.</p>
+										<input class="ds_input ds_input--fixed-5" type="text" id="milesPerGallon"
+											   maxlength="2"
+											   th:classappend="${#fields.hasErrors('milesPerGallon')} ? 'ds_input--error'"
+											   th:field="*{milesPerGallon}">
+									</div>
+								</div>
+
+								<!--/* Electric Field Group */-->
+								<div id="electric-group"
+									 th:classappend="${#strings.equalsIgnoreCase(vehicleType,'electric') == false} ? 'hidden'"
+									 class="hidden">
+									<div class="ds_field-group"
+										 th:classappend="${#fields.hasErrors('kwhCost')} ? 'ds_question--error'">
+										<label class="ds_label" for="kwhCost">kWh cost</label>
+										<div class="ds_question__error-message"
+											 th:if="${#fields.hasErrors('kwhCost')}"
+											 th:errors="*{kwhCost}"></div>
+										<p class="ds_hint-text">The current rate of electricity used to charge the
+											vehicle. Enter pence per kilowatt-hour (kWh), for example £0.24.</p>
+										<div class="ds_currency-wrapper" data-symbol="£">
+											<input class="ds_input ds_input--fixed-5" type="text" id="kwhCost"
+												   maxlength="4"
+												   th:classappend="${#fields.hasErrors('kwhCost')} ? 'ds_input--error'"
+												   th:field="*{kwhCost}">
+										</div>
+									</div>
+									<div class="ds_field-group"
+										 th:classappend="${#fields.hasErrors('kwhCapacity')} ? 'ds_question--error'">
+										<label class="ds_label" for="kwhCapacity">kWh capacity</label>
+										<div class="ds_question__error-message"
+											 th:if="${#fields.hasErrors('kwhCapacity')}"
+											 th:errors="*{kwhCapacity}"></div>
+										<p class="ds_hint-text">This is the size of the car battery in kWh, for example,
+											62.</p>
+										<input class="ds_input ds_input--fixed-5" type="text" id="kwhCapacity"
+											   maxlength="2"
+											   th:classappend="${#fields.hasErrors('kwhCapacity')} ? 'ds_input--error'"
+											   th:field="*{kwhCapacity}">
+									</div>
+									<div class="ds_field-group"
+										 th:classappend="${#fields.hasErrors('rangeOfCar')} ? 'ds_question--error'">
+										<label class="ds_label" for="rangeOfCar">Range of car</label>
+										<div class="ds_question__error-message"
+											 th:if="${#fields.hasErrors('rangeOfCar')}"
+											 th:errors="*{rangeOfCar}"></div>
+										<p class="ds_hint-text">The number of miles the vehicle can travel on a full
+											charge, for example 260.</p>
+										<input class="ds_input ds_input--fixed-5" type="text" id="rangeOfCar"
+											   maxlength="3"
+											   th:classappend="${#fields.hasErrors('rangeOfCar')} ? 'ds_input--error'"
+											   th:field="*{rangeOfCar}">
+									</div>
+								</div>
+
+								<input type="hidden" th:value="${studentReferenceNumber}"
+									   name="studentReferenceNumber"/>
+								<input type="hidden" th:value="${dsaApplicationNumber}"
+									   name="dsaApplicationNumber"/>
+							</fieldset>
+
+						</div>
+						<div class="ds_button-group">
+							<div class="ds_button-group">
+								<button class="ds_button ds_button--cancel" name="action"
+										th:value="${BACK_ACTION}" data-button="about-student">Back
+								</button>
+								&nbsp;&nbsp;&nbsp;&nbsp;
+								<button class="ds_button  ds_no-margin" name="action"
+										value="SAVE_OWN_VEHICLE_ACTION" data-button="about-student">Save and
+									continue
+								</button>
+							</div>
+
+						</div>
+					</form>
+				</div>
+			</main>
+		</div>
+	</div>
+
+
+</div>
+
+</body>
+
+</html>

@@ -1,0 +1,73 @@
+<div class="bottom_pagination">
+	<p>
+		<br>
+	</p>
+
+	<h2>Non-Medical Personal Help (NMPH)</h2>
+
+	<div class="ds_pagination consumable"
+		 th:if="${awardDetails.nmphItems.size > 0}">
+		<p></p>
+		<h2>
+			<span class="total_award_text">Total awarded<br></span> <strong
+				th:text="${awardDetails.nmphTotal}"></strong>
+		</h2>
+	</div>
+
+</div>
+
+<p >
+	We will pay your service provider directly when we receive an invoice
+	from them, or we will pay this into your bank account when we receive a
+	 helper registration  and a claim form from you. If you are employing your own helper, read our <a href="https://www.saas.gov.uk/files/405/saas-non-medical-personal-help-guidance.pdf">NMPH
+	Guidance Notes.</a>
+</p>
+
+
+<p></p>
+<p></p>
+<div class="ds_accordion-item">
+	<input type="checkbox"
+		   class="visually-hidden  ds_accordion-item__control" id="panel-4"
+		   aria-labelledby="panel-1-heading">
+
+	<div class="ds_accordion-item__header">
+		<h3 id="panel-1-heading"
+			class="ds_accordion-item__title dsa_accordion-item__title">Show
+			breakdown</h3>
+		<span class="ds_accordion-item__indicator"></span> <label
+			class="ds_accordion-item__label" for="panel-4"><span
+			class="visually-hidden">Show this section</span></label>
+	</div>
+	<div class="ds_accordion-item__body">
+		<table class=" ds_table dsa_allowance_table"
+			   data-smallscreen="scrolling">
+			<caption class="visually-hidden">NMPH items list</caption>
+			<thead>
+			<tr>
+				<th scope="col">Type of support</th>
+				<th scope="col">Recommended provider<br>
+				</th>
+				<th scope="col">Hourly rate</th>
+				<th scope="col">Hours<br>
+					<p class="ds_hint-text dsa_vat">Per week.</p>
+				</th>
+				<th scope="col">Weeks<br>
+					<p class="ds_hint-text dsa_vat">Per academic year.</p>
+				</th>
+				<th scope="col">Amount awarded</th>
+			</tr>
+			</thead>
+			<tbody>
+			<tr th:each="item: ${awardDetails.nmphItems}">
+				<td th:text="${item.typeOfSupport}"></td>
+				<td th:text="${item.recommendedProvider}"></td>
+				<td th:text="${item.hourlyRateStr}"></td>
+				<td th:text="${item.hours}"></td>
+				<td th:text="${item.weeks}"></td>
+				<td th:text="${item.costStr}"></td>
+			</tr>
+			</tbody>
+		</table>
+	</div>
+</div>

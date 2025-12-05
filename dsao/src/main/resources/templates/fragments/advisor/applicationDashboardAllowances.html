@@ -1,0 +1,205 @@
+<ol class="ds_summary-list search-result">
+	<li class="ds_summary-list__item" id="disabilitiesAndAllowancesSection">
+		<div class="ds_summary-list__key">
+			<span
+				th:if="${dashboardData.sectionStatusData.disabilitySectionData.isEnabeldToView} == false">
+				<span> <span
+					th:text="${dashboardData.sectionStatusData.disabilitySectionData.section.description}"></span>
+			</span>
+			</span>
+
+			<!--/* Advisor Declaration NOT Completed */-->
+			<form id="no-disabilities-details"
+				th:if="${dashboardData.sectionStatusData.disabilitySectionData.isEnabeldToView  == true &&  LOGGEDIN_USER_TYPE  == 'ADVISOR'
+				   && dashboardData.advisorDeclarationCompleted == false}"
+				th:action="@{/disabilityDetails}" method="POST">
+				<input type="hidden"
+					th:value="${dashboardData.studentReferenceNumber}"
+					name="studentReferenceNumber" /> <input type="hidden"
+					th:value="${dashboardData.dsaApplicationNumber}"
+					name="dsaApplicationNumber" /> <span>
+					<button class="font-weight-normal secondary_form ds_!_padding--0" data-button="about-student"
+						th:attr="disabled=${dashboardData.sectionStatusData.aboutStudentSectionData.sectionStatus.description eq 'REJECTED'}">
+						<span
+							th:text="${dashboardData.sectionStatusData.disabilitySectionData.section.description}"></span>
+					</button>
+				</span>
+			</form>
+
+			<!--/* Advisor Declaration COMPLETED */-->
+			<form id="disabilities-details"
+				th:if="${dashboardData.sectionStatusData.disabilitySectionData.isEnabeldToView  == true &&  LOGGEDIN_USER_TYPE  == 'ADVISOR'
+				  && dashboardData.advisorDeclarationCompleted == true}"
+				th:action="@{/disabilitiesSummary}" method="POST">
+				<input type="hidden"
+					th:value="${dashboardData.studentReferenceNumber}"
+					name="studentReferenceNumber" /> <input type="hidden"
+					th:value="${dashboardData.dsaApplicationNumber}"
+					name="dsaApplicationNumber" /> <input type="hidden"
+					th:value="BACK_TO_DASHBOARD" name="backAction" /> <span>
+					<button class="font-weight-normal secondary_form ds_!_padding--0" data-button="about-student"
+						name="action" value="DISBILITIES_SUMMARY">
+						<span
+							th:text="${dashboardData.sectionStatusData.disabilitySectionData.section.description}"></span>
+					</button>
+				</span>
+			</form>
+
+			<!--/* STUDENT LINK */-->
+			<form id="disabilities-summary"
+				th:if="${dashboardData.sectionStatusData.disabilitySectionData.isEnabeldToView  == true &&  LOGGEDIN_USER_TYPE  == 'STUDENT'}"
+				th:action="@{/disabilitiesSummary}" method="POST">
+				<input type="hidden"
+					th:value="${dashboardData.studentReferenceNumber}"
+					name="studentReferenceNumber" /> <input type="hidden"
+					th:value="${dashboardData.dsaApplicationNumber}"
+					name="dsaApplicationNumber" /> <input type="hidden"
+					th:value="BACK_TO_DASHBOARD" name="backAction" /> <span>
+					<button class="font-weight-normal secondary_form ds_!_padding--0" data-button="about-student"
+						name="action" value="DISBILITIES_SUMMARY">
+						<span
+							th:text="${dashboardData.sectionStatusData.disabilitySectionData.section.description}"></span>
+					</button>
+				</span>
+			</form>
+
+		</div>
+
+		<div class="ds_summary-list__value">
+			<strong class="govuk-tag"
+				th:classappend="'govuk-tag--'+${dashboardData.sectionStatusData.disabilitySectionData.sectionStatus.color}"><span
+				th:text="${dashboardData.sectionStatusData.disabilitySectionData.sectionStatus.description}"></span></strong>
+		</div>
+	</li>
+	<li class="ds_summary-list__item" id="allowancesSection">
+		<div class="ds_summary-list__key">
+			<span
+				th:if="${dashboardData.sectionStatusData.allowanceSectionData.isEnabeldToView} == false">
+				<span> <span
+					th:text="${dashboardData.sectionStatusData.allowanceSectionData.section.description}"></span>
+			</span>
+			</span>
+
+			<!--/* If there are allowances show the summary page */-->
+			<form id="allowances-details"
+				th:if="${dashboardData.sectionStatusData.allowanceSectionData.isEnabeldToView eq true && dashboardData.isAllAllowancesCompleted eq true}"
+				th:action="@{/allowancesSummary}" method="POST">
+				<input type="hidden"
+					th:value="${dashboardData.studentReferenceNumber}"
+					name="studentReferenceNumber" /> <input type="hidden"
+					th:value="${dashboardData.dsaApplicationNumber}"
+					name="dsaApplicationNumber" /> <span>
+					<button class="font-weight-normal secondary_form ds_!_padding--0" data-button="about-student"
+						name="action" value="Summary">
+						<span
+							th:text="${dashboardData.sectionStatusData.allowanceSectionData.section.description}"></span>
+					</button>
+				</span>
+			</form>
+
+			<!--/* If there are NO allowances show the consumables init page */-->
+			<form id="no-allowances-details"
+				th:if="${dashboardData.sectionStatusData.allowanceSectionData.isEnabeldToView eq true && dashboardData.isAllAllowancesCompleted eq false}"
+				th:action="@{/initConsumables}" method="POST">
+				<input type="hidden"
+					th:value="${dashboardData.studentReferenceNumber}"
+					name="studentReferenceNumber" /> <input type="hidden"
+					th:value="${dashboardData.dsaApplicationNumber}"
+					name="dsaApplicationNumber" /> <span>
+					<button class="font-weight-normal secondary_form ds_!_padding--0" data-button="about-student"
+						name="action" value="Summary">
+						<span
+							th:text="${dashboardData.sectionStatusData.allowanceSectionData.section.description}"></span>
+					</button>
+				</span>
+			</form>
+		</div>
+
+		<div class="ds_summary-list__value">
+			<strong class="govuk-tag"
+				th:classappend="'govuk-tag--'+${dashboardData.sectionStatusData.allowanceSectionData.sectionStatus.color}"><span
+				th:text="${dashboardData.sectionStatusData.allowanceSectionData.sectionStatus.description}"></span></strong>
+		</div>
+	</li>
+	<li th:if="${LOGGEDIN_USER_TYPE  == 'ADVISOR'} "
+		class="ds_summary-list__item" id="assessmentFeeSection">
+		<div class="ds_summary-list__key">
+			<span> <span
+				th:if="${dashboardData.sectionStatusData.needsAssessmentFeeSectionData.isEnabeldToView} == false">
+					<span
+					th:text="${dashboardData.sectionStatusData.needsAssessmentFeeSectionData.section.description}"></span>
+			</span>
+			</span>
+
+			<!--/* If there are assessment fee show the summary page */-->
+			<form id="assessment-details"
+				th:if="${dashboardData.sectionStatusData.needsAssessmentFeeSectionData.isEnabeldToView eq true && dashboardData.isNeedsAssessmentCompleted eq true}"
+				th:action="@{/assessmentFeeSummary}" method="POST">
+				<input type="hidden"
+					th:value="${dashboardData.studentReferenceNumber}"
+					name="studentReferenceNumber" /> <input type="hidden"
+					th:value="${dashboardData.dsaApplicationNumber}"
+					name="dsaApplicationNumber" /> <span>
+					<button class="font-weight-normal secondary_form ds_!_padding--0" data-button="about-student"
+						name="action" value="DASHBOARD_SUMMARY_ACTION">
+						<span
+							th:text="${dashboardData.sectionStatusData.needsAssessmentFeeSectionData.section.description}"></span>
+					</button>
+				</span>
+			</form>
+
+			<!--/* If there are NO assessment fee show the add assessment fee page */-->
+			<form id="no-assessment-details"
+				th:if="${dashboardData.sectionStatusData.needsAssessmentFeeSectionData.isEnabeldToView eq true && dashboardData.isNeedsAssessmentCompleted eq false}"
+				th:action="@{/addAssessmentFee}" method="POST">
+				<input type="hidden"
+					th:value="${dashboardData.studentReferenceNumber}"
+					name="studentReferenceNumber" /> <input type="hidden"
+					th:value="${dashboardData.dsaApplicationNumber}"
+					name="dsaApplicationNumber" /> <span>
+					<button class="font-weight-normal secondary_form ds_!_padding--0" data-button="about-student"
+						name="action" value="DASHBOARD_ADD_ACTION">
+						<span
+							th:text="${dashboardData.sectionStatusData.needsAssessmentFeeSectionData.section.description}"></span>
+					</button>
+				</span>
+			</form>
+
+		</div>
+		<div class="ds_summary-list__value">
+			<strong class="govuk-tag"
+				th:classappend="'govuk-tag--'+${dashboardData.sectionStatusData.needsAssessmentFeeSectionData.sectionStatus.color}"><span
+				th:text="${dashboardData.sectionStatusData.needsAssessmentFeeSectionData.sectionStatus.description}"></span></strong>
+		</div>
+	</li>
+	
+	<li th:if="${dashboardData.sectionStatusData.additionalInfoData.isEnabeldToView eq true} "
+		class="ds_summary-list__item" id="additionalInfoSection">
+		<div class="ds_summary-list__key">
+ 			<!--/* If there are assessment fee show the summary page */-->
+			<form id="additional-details"
+				th:if="${dashboardData.sectionStatusData.additionalInfoData.isEnabeldToView eq true}"
+				th:action="@{/initAdditionalInfo}" method="POST">
+				<input type="hidden"
+					th:value="${dashboardData.studentReferenceNumber}"
+					name="studentReferenceNumber" /> <input type="hidden"
+					th:value="${dashboardData.dsaApplicationNumber}"
+					name="dsaApplicationNumber" /> <span>
+					<button class="font-weight-normal secondary_form ds_!_padding--0" data-button="about-student"
+						name="action" value="DASHBOARD_SUMMARY_ACTION">
+						<span
+							th:text="${dashboardData.sectionStatusData.additionalInfoData.section.description}"></span>
+					</button>
+				</span>
+			</form>
+ 
+
+		</div>
+		<div class="ds_summary-list__value">
+			<strong class="govuk-tag"
+				th:classappend="'govuk-tag--'+${dashboardData.sectionStatusData.additionalInfoData.sectionStatus.color}"><span
+				th:text="${dashboardData.sectionStatusData.additionalInfoData.sectionStatus.description}"></span></strong>
+		</div>
+	</li>
+	
+</ol>

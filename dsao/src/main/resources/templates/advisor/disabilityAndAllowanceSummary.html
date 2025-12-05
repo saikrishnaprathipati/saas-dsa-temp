@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layout/dsaLayoutLoggedIn}" th:with="currentPosition='specificStudent', currentTab='dashboard'">
+
+<head>
+	<title>Application summary</title>
+	<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+	<meta http-equiv="Pragma" content="no-cache" />
+	<meta http-equiv="Expires" content="0" />
+</head>
+
+<body>
+
+<div layout:fragment="content">
+	<div class="ds_page__middle">
+		<div class="ds_wrapper">
+			<main class="ds_layout  ds_layout--article">
+				<div class="ds_layout__content">
+					<form id="application-summary" th:action="@{/applicationSummary}" method="POST">
+						<input type="hidden" th:value="${studentReferenceNumber}" name="studentReferenceNumber"/>
+						<input type="hidden" th:value="${dsaApplicationNumber}" name="dsaApplicationNumber"/>
+						<h1>Disabilities and allowances summary</h1>
+						<table class="ds_table dsa_allowance_table" data-smallscreen="scrolling" style="width: 80%">
+							<thead>
+							<tr>
+								<th scope="col">
+									<h2 class="summaryHeading">Disabilities</h2>
+								</th>
+								<th scope="col">
+									<button class="ds_link  ds_no-margin" name="action"
+											value="DisabilityDetails" data-button="about-student">Change
+									</button>
+								</th>
+							</tr>
+							</thead>
+						</table>
+
+						<table class="ds_table dsa_allowance_table" data-smallscreen="scrolling" style="width: 80%">
+							<tr th:each="disability: ${summaryData.applicationDisabilities}">
+								<td>
+
+									<h4 th:text="${disability.disabilityTypeDesc}"></h4>
+
+									<span th:if="${disability.disabilityNotlistedText != null}">Description:
+											<span th:text="${disability.disabilityNotlistedText}"></span>
+										</span>
+								</td>
+								<td></td>
+							</tr>
+						</table>
+
+						<div class="ds_button-group">
+							<div class="ds_button-group">
+
+								<input type="submit" class="ds_button" name="action" value="Save and continue">
+							</div>
+						</div>
+					</form>
+				</div>
+			</main>
+		</div>
+	</div>
+</div>
+
+</body>
+
+</html>

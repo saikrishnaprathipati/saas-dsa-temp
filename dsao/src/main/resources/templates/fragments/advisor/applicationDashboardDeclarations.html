@@ -1,0 +1,115 @@
+<ol class="ds_summary-list search-result">
+	<li class="ds_summary-list__item" id="advisorDeclarationSection">
+		<div class="ds_summary-list__key">
+			<span th:if="${dashboardData.sectionStatusData.advisorDeclarationSectionData.isEnabeldToView} == false">
+				<span>
+					<span
+							th:text="${dashboardData.sectionStatusData.advisorDeclarationSectionData.section.description}"></span>
+				</span>
+			</span>
+
+			<!--/* ADVISOR DECLARATION BUTTON */-->
+			<form id="advisor-declaration-details"
+				  th:if="${dashboardData.sectionStatusData.advisorDeclarationSectionData.isEnabeldToView} == true"
+				  th:action="@{/declarationDetails}" method="POST">
+				<input type="hidden" th:value="${dashboardData.studentReferenceNumber}" name="studentReferenceNumber"/>
+				<input type="hidden" th:value="${dashboardData.dsaApplicationNumber}" name="dsaApplicationNumber"/>
+
+				<div>
+					<button th:if="${LOGGEDIN_USER_TYPE eq 'ADVISOR' &&
+							dashboardData.sectionStatusData.advisorDeclarationSectionData.sectionStatus.description ne 'COMPLETED'}"
+							th:value="${T(uk.gov.saas.dsa.web.helper.DSAConstants).ADVISOR_ACTION}"
+							class="font-weight-normal secondary_form ds_!_padding--0" data-button="about-student"
+							name="action">
+						<span
+								th:text="${dashboardData.sectionStatusData.advisorDeclarationSectionData.section.description}"></span>
+					</button>
+					<div th:if="${LOGGEDIN_USER_TYPE ne'ADVISOR' ||
+							dashboardData.sectionStatusData.advisorDeclarationSectionData.sectionStatus.description eq 'COMPLETED'}">
+						<span
+								th:text="${dashboardData.sectionStatusData.advisorDeclarationSectionData.section.description}"></span>
+					</div>
+				</div>
+			</form>
+		</div>
+
+		<div class="ds_summary-list__value">
+			<strong class="govuk-tag"
+					th:classappend="'govuk-tag--'+${dashboardData.sectionStatusData.advisorDeclarationSectionData.sectionStatus.color}"><span
+					th:text="${dashboardData.sectionStatusData.advisorDeclarationSectionData.sectionStatus.description}"></span></strong>
+		</div>
+	</li>
+	<li class="ds_summary-list__item" id="studentDeclarationSection">
+		<div class="ds_summary-list__key">
+			<span>
+				<span th:if="${dashboardData.sectionStatusData.studentDeclarationSectionData.isEnabeldToView} == false">
+					<span
+							th:text="${dashboardData.sectionStatusData.studentDeclarationSectionData.section.description}"></span>
+				</span>
+			</span>
+
+			<!--/* STUDENT DECLARATION BUTTON */-->
+			<form id="student-declaration-details"
+				  th:if="${dashboardData.sectionStatusData.studentDeclarationSectionData.isEnabeldToView} == true"
+				  th:action="@{/studentDeclarationDetails}" method="POST">
+				<input type="hidden" th:value="${dashboardData.studentReferenceNumber}" name="studentReferenceNumber"/>
+				<input type="hidden" th:value="${dashboardData.dsaApplicationNumber}" name="dsaApplicationNumber"/>
+				 
+					<div th:if="${LOGGEDIN_USER_TYPE eq 'STUDENT' &&
+							dashboardData.sectionStatusData.studentDeclarationSectionData.sectionStatus.description != 'COMPLETED' &&
+							dashboardData.sectionStatusData.advisorDeclarationSectionData.sectionStatus.description == 'COMPLETED'}">
+						<button class="secondary_form ds_!_padding--0" data-button="about-student" name="action"
+								th:value="${T(uk.gov.saas.dsa.web.helper.DSAConstants).STUDENT_ACTION}">
+							<span th:text="${dashboardData.sectionStatusData.studentDeclarationSectionData.section.description}"></span>
+						</button>
+			 
+					</div>
+					<div th:if="${LOGGEDIN_USER_TYPE ne 'STUDENT' ||
+							dashboardData.sectionStatusData.studentDeclarationSectionData.sectionStatus.description == 'COMPLETED' ||
+							dashboardData.sectionStatusData.advisorDeclarationSectionData.sectionStatus.description != 'COMPLETED'}">
+						<span
+								th:text="${dashboardData.sectionStatusData.studentDeclarationSectionData.section.description}"></span>
+					</div>
+			 
+			</form>
+		</div>
+
+		<div class="ds_summary-list__value">
+			<strong class="govuk-tag"
+					th:classappend="'govuk-tag--'+${dashboardData.sectionStatusData.studentDeclarationSectionData.sectionStatus.color}"><span
+					th:text="${dashboardData.sectionStatusData.studentDeclarationSectionData.sectionStatus.description}"></span></strong>
+		</div>
+		
+
+	</li>
+	<div class="ds_summary-list__item" id="studentDeclaration-donotAgree" th:if="${LOGGEDIN_USER_TYPE eq 'STUDENT' &&
+							dashboardData.sectionStatusData.studentDeclarationSectionData.sectionStatus.description != 'COMPLETED' &&
+							dashboardData.sectionStatusData.advisorDeclarationSectionData.sectionStatus.description == 'COMPLETED'}">
+		<div class="ds_summary-list__key">		
+			<form id="student-declaration-details"
+					  th:if="${dashboardData.sectionStatusData.studentDeclarationSectionData.isEnabeldToView} == true"
+					  th:action="@{/studentDeclarationDetails}" method="POST">
+					<input type="hidden" th:value="${dashboardData.studentReferenceNumber}" name="studentReferenceNumber"/>
+					<input type="hidden" th:value="${dashboardData.dsaApplicationNumber}" name="dsaApplicationNumber"/>
+					 
+						<div th:if="${LOGGEDIN_USER_TYPE eq 'STUDENT' &&
+								dashboardData.sectionStatusData.studentDeclarationSectionData.sectionStatus.description != 'COMPLETED' &&
+								dashboardData.sectionStatusData.advisorDeclarationSectionData.sectionStatus.description == 'COMPLETED'}">
+							 
+							<p></p>
+							<p class="font-weight-normal font-weight-normal font-size-16">If anything is incorrect, start
+								<button class="secondary_form ds_!_padding--0" data-button="about-student" name="action"
+										th:value="${T(uk.gov.saas.dsa.web.helper.DSAConstants).STUDENT_ACTION}">
+									<span>Student declaration</span>
+								</button>
+								click on ‘I do not agree’.
+							</p>
+							<p class="font-weight-normal font-size-16">Your Disability Advisor can then make changes and
+								re-submit it for your approval.</p>
+						</div>
+	 
+				 
+				</form>
+		</div>
+	</div>
+</ol>

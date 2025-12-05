@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layout/dsaLayoutLoggedIn}" th:with="currentPosition='specificStudent', currentTab='dashboard'">
+
+<head>
+	<title>Application Dashboard</title>
+	<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
+	<meta http-equiv="Pragma" content="no-cache"/>
+	<meta http-equiv="Expires" content="0"/>
+</head>
+
+<body>
+
+<div layout:fragment="content">
+
+	<div class="ds_page__middle">
+		<div class="ds_wrapper">
+			<main class="ds_layout  ds_layout--article">
+				<div class="ds_layout__content">
+					<p><br></p>
+					<span>
+						<strong>SAAS Reference Number</strong>&nbsp;&nbsp;&nbsp; <span
+							th:text="${dashboardData.studentReferenceNumber}"></span>
+					</span>
+					<h1 class="ds_no-margin"
+						th:text="${dashboardData.firstName} + ' ' + ${dashboardData.lastName}"></h1>
+					<p><strong>You are applying for the academic year</strong> <span
+							th:text="${dashboardData.academicYear}"></span></p>
+					<p><br></p>
+
+					<!--/* STUDENT NOTIFICATIONS */-->
+					<div th:if="${LOGGEDIN_USER_TYPE eq 'STUDENT'}">
+
+						<!--/* STUDENT notification to complete declaration */-->
+						<div class="ds_warning-text ds_warning-text-new ds_important-text"
+							 th:if="${dashboardData.sectionStatusData.studentDeclarationSectionData.sectionStatus.description eq 'NOT STARTED'}">
+							<strong class="ds_warning-text__icon" aria-hidden="true"></strong>
+							<strong>Review Parts 1 and 2 to check the information is correct.</strong>
+							<div class="ds_warning-text__text">
+								<p>To do this, use the link for each section.</p>
+								<p>You can then proceed to <strong>Part 3</strong> to continue your application.</p>
+							</div>
+						</div>
+
+						<!--/* STUDENT notification to submit application */-->
+						<div th:if="${(dashboardData.applicationStatus.code eq 'APPLICATION_COMPLETE' &&
+						dashboardData.applicationFullySubmitted == false)}">
+							<div class="ds_warning-text ds_warning-text-new ds_important-text">
+								<strong class="ds_warning-text__icon" aria-hidden="true"></strong>
+								<strong>Your application is complete and can now be submitted.</strong>
+								<div class="ds_warning-text__text">
+									<div th:if="${dashboardData.sectionStatusData.aboutStudentSectionData.sectionStatus.description eq 'PENDING'}">
+										<p></p>
+										<p>In the case of a Pending application we will process your main funding first.
+											You do not need to do anything.</p>
+									</div>
+
+									<form th:action="@{/submitApplication}" th:object="${applicationKeyDataFormVO}"
+										  method="POST">
+										<input type="hidden" th:value="${dashboardData.dsaApplicationNumber}"
+											   name="dsaApplicationNumber"/>
+										<input type="hidden" th:value="${dashboardData.studentReferenceNumber}"
+											   name="studentReferenceNumber"/>
+										<input type="submit" name="action"
+											   class="ds_button dsa_section_button__start ds_button--max"
+											   value="Submit application">
+									</form>
+								</div>
+							</div>
+						</div>
+
+						<!--/* STUDENT Message. Student has not accepted declaration. */-->
+						<div class="ds_warning-text ds_warning-text-new ds_important-text"
+							 th:if="${
+							 dashboardData.sectionStatusData.advisorDeclarationSectionData.sectionStatus.code eq 'PENDING' &&
+							 dashboardData.sectionStatusData.studentDeclarationSectionData.sectionStatus.code eq 'CANNOT_START_YET'}">
+							<strong class="ds_warning-text__icon" aria-hidden="true"></strong>
+							<strong>We have told your Disability Advisor you have not accepted the student
+								declaration.</strong>
+							<div class="ds_warning-text__text">
+								<p>Your Disability Advisor will contact you to discuss the reason you have not accepted
+									the student declaration. They will review the application with you and make any
+									relevant changes, or withdraw it if you no longer need funding.</p>
+								<p>If they make any changes to the application, you will get another notification to
+									sign in, accept your student declaration, and submit the application for
+									processing.</p>
+								<p>We will automatically withdraw this application if no action is taken within 90
+									days.</p>
+							</div>
+						</div>
+					</div>
+
+					<!--/* ADVISOR NOTIFICATIONS */-->
+					<div th:if="${LOGGEDIN_USER_TYPE eq 'ADVISOR'}">
+
+						<!--/* ADVISOR Message. Student is Rejected */-->
+						<div class="ds_warning-text ds_warning-text-new ds_important-text"
+							 th:if="${dashboardData.sectionStatusData.aboutStudentSectionData.sectionStatus.description eq 'REJECTED'}">
+							<strong class="ds_warning-text__icon" aria-hidden="true"></strong>
+							<strong>Important</strong>
+							<div class="ds_warning-text__text">
+								This student is not eligible to apply for DSA using this service because they do not
+								have SAAS funding in place for this academic year, or they do not meet our eligibility
+								criteria.
+							</div>
+						</div>
+
+						<!--/* ADVISOR Message. Student has not accepted declaration. */-->
+						<div class="ds_warning-text ds_warning-text-new ds_important-text"
+							 th:if="${
+							 dashboardData.sectionStatusData.advisorDeclarationSectionData.sectionStatus.code eq 'PENDING' &&
+							 dashboardData.sectionStatusData.studentDeclarationSectionData.sectionStatus.code eq 'CANNOT_START_YET'}">
+							<strong class="ds_warning-text__icon" aria-hidden="true"></strong>
+							<strong><span th:text="${dashboardData.firstName}"></span> has not accepted the student
+								declaration.</strong>
+							<div class="ds_warning-text__text">
+								Please review the application with <span
+									th:text="${dashboardData.firstName}"></span>, make any relevant changes and
+								re-submit the advisor declaration.
+							</div>
+						</div>
+					</div>
+
+					<span class="right">
+						<strong class="govuk-tag"
+								th:classappend="'govuk-tag--'+${dashboardData.applicationStatus.color}">
+							<span th:text="${dashboardData.applicationStatus.description}"></span></strong>
+					</span>
+
+					<h2>Part 1: Student information</h2>
+					<span class="ds_hint-text" th:text="${dashboardData.part1CompletionStatusText}"></span>
+					<ol th:replace="~{fragments/advisor/applicationDashboardStudent.html}"></ol>
+					<br>
+
+					<h2>Part 2: Disabilities and allowances</h2>
+					<span class="ds_hint-text" th:text="${dashboardData.part2CompletionStatusText}"></span>
+					<ol th:replace="~{fragments/advisor/applicationDashboardAllowances.html}"></ol>
+					<br>
+
+					<h2>Part 3: Declarations</h2>
+					<span class="ds_hint-text" th:text="${dashboardData.part3CompletionStatusText}"></span>
+					<ol th:replace="~{fragments/advisor/applicationDashboardDeclarations.html}"></ol>
+					<br>
+
+					<!--/* STUDENT REPORT ISSUE */-->
+					<form th:if="${LOGGEDIN_USER_TYPE eq 'STUDENT' &&
+							dashboardData.sectionStatusData.advisorDeclarationSectionData.sectionStatus.description == 'COMPLETED' &&
+							#lists.contains('NOT STARTED,PENDING',dashboardData.sectionStatusData.studentDeclarationSectionData.sectionStatus.description) &&
+							dashboardData.applicationFullySubmitted eq false}"
+						  class="buttonInline" th:action="@{/reportIssueDetails}"
+						  th:object="${applicationKeyDataFormVO}" method="POST">
+						<h2 class="ds_no-margin--top">Report a problem</h2>
+						<p class="ds_input--fixed-40">
+							If you are unable to complete your application for any reason, we can let your Disability
+							Advisor know so they can get in touch and help you to complete or withdraw your application.
+						</p>
+						<input type="hidden" th:value="${dashboardData.dsaApplicationNumber}"
+							   name="dsaApplicationNumber"/>
+						<input type="hidden" th:value="${dashboardData.studentReferenceNumber}"
+							   name="studentReferenceNumber"/>
+						<button class="ds_button" name="action" value="REPORT_ISSUE">
+							Report a problem
+						</button>
+					</form>
+
+					<!--/* ADVISOR WITHDRAW APPLICATION */-->
+					<form th:if="${LOGGEDIN_USER_TYPE eq 'ADVISOR' and
+					#lists.contains('NOT_COMPLETE,STARTED',dashboardData.overallApplicationStatus.code) and
+					dashboardData.applicationFullySubmitted eq false}"
+						  th:object="${withdrawPreSubmittedApplicationFormVO}" method="post"
+						  th:action="@{/withdrawPreSubmitApplication}">
+						<h2>Withdraw this application</h2>
+						<p class="ds_input--fixed-40">Withdrawing this application will remove the application data from
+							our service. You can start a new application for this student if required.</p>
+						<button class="ds_button" name="action" value="WITHDRAW_REDIRECT">
+							Withdraw application
+						</button>
+
+						<input type="hidden" th:value="${dashboardData.dsaApplicationNumber}"
+							   name="dsaApplicationNumber"/>
+						<input type="hidden" th:value="${dashboardData.studentReferenceNumber}"
+							   name="studentReferenceNumber"/>
+					</form>
+				</div>
+			</main>
+		</div>
+	</div>
+</div>
+</body>
+
+</html>

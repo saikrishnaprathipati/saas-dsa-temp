@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layout/dsaLayoutLoggedIn}" th:with="currentPosition='specificStudent', currentTab='dashboard'">
+
+<head>
+	<title>DSA Quote details</title>
+	<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
+	<meta http-equiv="Pragma" content="no-cache"/>
+	<meta http-equiv="Expires" content="0"/>
+</head>
+
+<body>
+
+<div layout:fragment="content">
+
+	<div class="ds_page__middle">
+		<div class="ds_wrapper">
+			<main class="ds_layout  ds_layout--article">
+				<div class="ds_layout__content">
+					<p><br></p>
+					<form id="quote_details" th:action="@{/addQuote}"
+						  th:object="${quoteDetailsFormVO}" method="POST">
+
+						<div tabindex="-1" th:if="${#fields.hasAnyErrors()}" class="ds_error-summary"
+							 id="error-summary" aria-labelledby="error-summary-title" role="alert">
+							<h2 class="ds_error-summary__title" id="error-summary-title">There is a problem</h2>
+							<ul class="ds_error-summary__list">
+								<li th:each="fieldName: ${quoteDetailsFormVO.orderedFields}">
+									<span th:if="${#fields.hasErrors(fieldName)}">
+										<span th:each="fieldError: ${#fields.errors(fieldName)}">
+											<span>
+												<a th:href="${'#' + fieldName}" th:text="${fieldError}"
+												   class="field-error">
+												</a>
+											</span>
+										</span>
+									</span>
+								</li>
+							</ul>
+						</div>
+
+						<input type="hidden" th:value="${quoteDetailsFormVO.studentReferenceNumber}"
+							   name="studentReferenceNumber"/>
+						<input type="hidden" th:value="${quoteDetailsFormVO.dsaApplicationNumber}"
+							   name="dsaApplicationNumber"/>
+						<input type="hidden" th:value="${quoteDetailsFormVO.firstName}" name="firstName"/>
+						<input type="hidden" th:value=" ${quoteDetailsFormVO.lastName}" name="lastName"/>
+						<input type="hidden" th:value="${quoteDetailsFormVO.academicYear}" name="academicYear"/>
+						<input type="hidden" th:value="${quoteDetailsFormVO.sessionCode}" name="sessionCode"/>
+
+						<div class="ds_question">
+							<div class="ds_question">
+								<fieldset aria-describedby="ds_hint">
+									<p class="ds_hint-text" id="ds_hint">Part 2 of 3</p>
+									<h1>Quote details</h1>
+									<div class="ds_question"
+										 th:classappend="${#fields.hasErrors('supplier')} ? 'ds_question--error'">
+										<label class="ds_label" for="supplier">Name of recommended supplier</label>
+										<div class="ds_question__error-message" th:if="${#fields.hasErrors('supplier')}"
+											 th:errors="*{supplier}">
+										</div>
+										<input th:classappend="${#fields.hasErrors('supplier')} ? 'ds_input--error'"
+											   class="ds_input ds_input--fixed-20" maxlength="64" type="text"
+											   id="supplier"
+											   name="password" th:field="*{supplier}"/>
+									</div>
+
+									<div class="ds_question"
+										 th:classappend="${#fields.hasErrors('quoteReference')} ? 'ds_question--error'">
+										<label class="ds_label" for="quoteReference">Quote Reference</label>
+										<span class="small_text_grey">You will get this from the quote document.</span>
+										<div class="ds_question__error-message"
+											 th:if="${#fields.hasErrors('quoteReference')}"
+											 th:errors="*{quoteReference}">
+										</div>
+										<input th:classappend="${#fields.hasErrors('quoteReference')} ? 'ds_input--error'"
+											   class="ds_input ds_input--fixed-20" maxlength="64" type="text"
+											   id="quoteReference"
+											   name="quoteReference" th:field="*{quoteReference}"/>
+									</div>
+
+									<div class="ds_question"
+										 th:classappend="${#fields.hasErrors('totalCost')} ? 'ds_question--error'">
+										<label class="ds_label" for="totalCost">Total cost quoted</label>
+										<span class="small_text_grey">Including VAT.</span>
+										<div class="ds_question__error-message"
+											 th:if="${#fields.hasErrors('totalCost')}"
+											 th:errors="*{totalCost}">
+										</div>
+										<div class="ds_currency-wrapper" data-symbol="£">
+											<input th:classappend="${#fields.hasErrors('totalCost')} ? 'ds_input--error'"
+												   class="ds_input ds_input--fixed-10" type="text" id="totalCost"
+												   name="totalCost" th:field="*{totalCost}"/>
+										</div>
+									</div>
+
+								</fieldset>
+							</div>
+						</div>
+
+						<div class="ds_button-group">
+							<div class="ds_button-group">
+								<input type="submit" class="ds_button ds_button--cancel" name="action"
+									   value="Back">&nbsp;&nbsp;&nbsp;&nbsp;
+								<input type="submit" class="ds_button" name="action" value="Confirm and continue">
+							</div>
+						</div>
+					</form>
+
+				</div>
+			</main>
+		</div>
+	</div>
+
+</div>
+</body>
+</html>

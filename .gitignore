@@ -1,0 +1,45 @@
+HELP.md
+target/
+M2/repository/uk/
+M2/repository/com/arcenciel/address/AddressUK/8.0.2/AddressUK-8.0.2.pom.lastUpdated
+
+.m2/
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+#build/
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+### VS Code ###
+.vscode/
+.vs/
+.DS_Store
+*.bak
+
+.project
+dsao/logs/archived/dsa-logger-2022-10-24.0.log
+dsao/logs/dsa-logger.log
+/bin/

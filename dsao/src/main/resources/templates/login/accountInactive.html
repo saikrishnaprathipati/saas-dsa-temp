@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layout/dsaLayout}" th:with="hideBeta=true">
+
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Inactive account</title>
+	<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+	<meta http-equiv="Pragma" content="no-cache" />
+	<meta http-equiv="Expires" content="0" />
+</head>
+
+<body>
+<div layout:fragment="content">
+	<div class="ds_wrapper">
+		<main id="main-content" class="ds_layout ds_layout--article">
+			<div class="ds_layout__content border border-secondary p-3 rounded">
+				<p><br></p>
+				<form id="inactiveForm" method="get">
+					<h1 class="ds_h1 dsa_h1">Inactive account</h1>
+					<p>Unfortunately, you cannot apply for DSA on behalf of this student.</p>
+					<p>Contact your HEI Learning Support Team Manager, who can advise you further on your Disabled
+						Students’ Allowance service permissions. </p>
+				</form>
+			</div>
+		</main>
+	</div>
+</div>
+</body>
+
+</html>

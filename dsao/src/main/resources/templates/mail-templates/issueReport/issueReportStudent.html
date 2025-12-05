@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+	<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+	<meta content="width=device-width" name="viewport">
+	<title>Disabled Students' Allowance (DSA) Application - Report a problem</title>
+	<style>
+        @media only screen and (min-device-width: 581px) {
+            .content {
+                width: 580px !important;
+            }
+        }
+
+        .container {
+            display: flex;
+        }
+
+        .fixed {
+            width: 200px;
+        }
+
+        .flex-item {
+            flex-grow: 1;
+        }
+	</style>
+</head>
+
+<body
+		style="font-family: Helvetica, Arial, sans-serif; font-size: 16px; margin: 0; color: #0b0c0c;">
+
+<!--[if (gte mso 9)|(IE)]>
+<table width="580" align="center" cellpadding="0" cellspacing="0" border="0">
+	<tr>
+		<td>
+<![endif]-->
+
+<table width="580" cellpadding="0" cellspacing="0" border="0"
+	   align="center">
+	<tr>
+		<td height="50">&nbsp;</td>
+	</tr>
+	<tr>
+		<td width="138" height="47" valign="middle"><a
+				href="https://www.saas.gov.uk"><img src="cid:SAAS_Logo.png"
+													alt="SAAS Logo" height="47" border="0"></a></td>
+	</tr>
+</table>
+<table class="content" align="center" cellpadding="0" cellspacing="0"
+	   border="0" style="width: 100%; max-width: 580px;">
+	<tr>
+		<td>
+			<h1 style="font-family: Helvetica, Arial, sans-serif; font-size: 36px; line-height: 1.315789474; font-weight: 700; margin: 19px 0 38px 0;">
+				You have reported a problem with your DSA application</h1>
+
+			<p style="font-family: Helvetica, Arial, sans-serif; font-size: 19px; line-height: 1.315789474; margin: 30px 0 30px 0;">
+				Dear <span th:text="${STUDENT_FULL_NAME}"></span>
+			</p>
+
+			<p style="font-family: Helvetica, Arial, sans-serif; font-size: 19px; line-height: 1.315789474; margin: 30px 0 30px 0;">
+				You have told us you cannot complete your DSA application for the academic year <span
+					th:text="${academicYear}"></span> for the following reason:
+			</p>
+
+			<h3 style="font-family: Helvetica, Arial, sans-serif; font-size: 19px; line-height: 1.315789474; font-weight: 700; margin: 38px 0 19px 0;"
+				th:text="${issueTypeName}"></h3>
+
+			<p style="font-family: Helvetica, Arial, sans-serif; font-size: 19px; line-height: 1.315789474; margin: 30px 0 30px 0;"
+			   th:text="${issueTypeDescription}"></p>
+
+			<h3 style="font-family: Helvetica, Arial, sans-serif; font-size: 19px; line-height: 1.315789474; font-weight: 700; margin: 38px 0 19px 0;">
+				What happens next</h3>
+
+			<p style="font-family: Helvetica, Arial, sans-serif; font-size: 19px; line-height: 1.315789474; margin: 30px 0 30px 0;">
+				We have told your Disability Advisor that you have reported a problem with your DSA application and to
+				contact you. In the meantime, we suggest you get in touch with them to avoid any delays.</p>
+
+			<p style="font-family: Helvetica, Arial, sans-serif; font-size: 19px; line-height: 1.315789474; margin: 30px 0 30px 0;">
+				If you have made a mistake and would like to sign the student declaration and submit your application,
+				your Disability Advisor can help you with this. To view the status of your application, sign in to your
+				SAAS Account using the link below.</p>
+
+			<h3 style="font-family: Helvetica, Arial, sans-serif; font-size: 19px; line-height: 1.315789474; font-weight: 700; margin: 38px 0 19px 0;">
+				Sign in</h3>
+
+			<p style="font-family: Helvetica, Arial, sans-serif; border-left: 5px #000000 solid; padding: 14px 0 14px 14px; font-size: 19px; line-height: 1.315789474; margin: 0 0 19px 0;">
+				<a th:href="${STUDENT_SIGN_IN_URL}">Link to sign in [authenticated student]</a>
+			</p>
+
+			<p style="font-family: Helvetica, Arial, sans-serif; font-size: 19px; line-height: 1.315789474; margin: 30px 0 30px 0;">
+				You can also visit <a href="https://www.saas.gov.uk">www.saas.gov.uk</a> and <a
+					th:href="${STUDENT_SIGN_IN_URL}">sign in</a> to your SAAS Account. You will see the status of your
+				application on your Dashboard.
+			</p>
+
+			<h3 style="font-family: Helvetica, Arial, sans-serif; font-size: 19px; line-height: 1.315789474; font-weight: 700; margin: 38px 0 19px 0;">
+				Keeping your account secure</h3>
+
+			<p style="font-family: Helvetica, Arial, sans-serif; font-size: 19px; line-height: 1.315789474; margin: 30px 0 30px 0;">
+				Never share your sign in details with anyone. Remember to keep your account information, including your
+				email address, up-to-date.
+			</p>
+
+			<p style="font-family: Helvetica, Arial, sans-serif; font-size: 19px; color: #6F777B; line-height: 1.315789474; margin: 0 0 30px 0;">
+				This is an automatically generated email. Please do not reply. If you need help, contact your Disability
+				Advisor at your college or university. You can disregard this email if you have received it in error.
+			</p>
+		</td>
+	</tr>
+</table>
+<!--[if (gte mso 9)|(IE)]>
+</td>
+</tr>
+</table>
+<![endif]-->
+</body>
+
+</html>

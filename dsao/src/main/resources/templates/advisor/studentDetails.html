@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layout/dsaLayoutLoggedIn}" th:with="currentPosition='specificStudent', currentTab='dashboard'">
+
+<head>
+	<title>About Student</title>
+	<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
+	<meta http-equiv="Pragma" content="no-cache"/>
+	<meta http-equiv="Expires" content="0"/>
+</head>
+
+<body>
+
+<div layout:fragment="content">
+	<div class="ds_page__middle">
+		<div class="ds_wrapper">
+			<main class="ds_layout  ds_layout--article">
+				<div class="ds_layout__content ds_input--fixed-40">
+					<p><br></p>
+					<form th:action="@{/applicationDashboard}" method="POST">
+						<input type="submit" class="secondary_form"
+							   value="&lt; Back to DSA application summary">
+						<input type="hidden" th:value="${studentDetails.studentReferenceNumber}"
+							   name="studentReferenceNumber"/>
+						<input type="hidden" th:value="${dsaApplicationNumber}" name="dsaApplicationNumber"/>
+					</form>
+					<br>
+					<h1>About <span th:text="${studentDetails.firstName}"></span></h1>
+
+					<ol class="ds_summary-list search-result">
+						<li class="ds_summary-list__item">
+							<div class="ds_summary-list__key">
+								<strong>SAAS Reference Number</strong>
+							</div>
+							<div class="ds_summary-list__value" th:text="${studentDetails.studentReferenceNumber}">
+							</div>
+						</li>
+						<li class="ds_summary-list__item">
+							<div class="ds_summary-list__key">
+								<strong>Name</strong>
+							</div>
+							<div class="ds_summary-list__value"
+								 th:text="${studentDetails.firstName} + ' ' + ${studentDetails.lastName}"></div>
+						</li>
+						<li class="ds_summary-list__item">
+							<div class="ds_summary-list__key">
+								<strong>Date of birth</strong>
+							</div>
+							<div class="ds_summary-list__value" th:text="${studentDetails.dob}"></div>
+						</li>
+
+						<li class="ds_summary-list__item">
+							<div class="ds_summary-list__key">
+								<strong>Funding eligibility status</strong>
+							</div>
+							<div class="ds_summary-list__value">
+								<strong class="govuk-tag"
+										th:classappend="'govuk-tag--'+${studentDetails.fundingEligibilityStatus.color}"><span
+										th:text="${studentDetails.fundingEligibilityStatus.description}"></span></strong>
+							</div>
+						</li>
+					</ol>
+					<form th:if="${LOGGEDIN_USER_TYPE eq 'STUDENT'}" th:action="@{/reportIssueDetails}"
+						  th:object="${applicationKeyDataFormVO}" method="POST">
+						<p>
+							If this information is incorrect
+							<button class="secondary_form ds_!_padding--0" name="action" value="REPORT_ISSUE">report a
+								problem
+							</button>
+							.
+						</p>
+						<input type="hidden" th:value="${studentDetails.studentReferenceNumber}"
+							   name="studentReferenceNumber"/>
+						<input type="hidden" th:value="${dsaApplicationNumber}"
+							   name="dsaApplicationNumber"/>
+					</form>
+				</div>
+			</main>
+		</div>
+	</div>
+</div>
+
+</body>
+
+</html>

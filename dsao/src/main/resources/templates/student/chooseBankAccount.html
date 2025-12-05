@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layout/dsaLayoutLoggedIn}" th:with="currentPosition='specificStudent'">
+
+<head>
+	<title>Choose bank account</title>
+	<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+	<meta http-equiv="Pragma" content="no-cache" />
+	<meta http-equiv="Expires" content="0" />
+</head>
+
+<body>
+
+<div layout:fragment="content">
+
+	<div class="ds_page__middle">
+		<div class="ds_wrapper">
+			<main class="ds_layout  ds_layout--article">
+				<div class="ds_layout__content">
+					<form id="advisor_declaration" action="#" th:action="@{/chooseBankAccount}"
+						  th:object="${chooseBankAccountFormVO}" method="POST">
+
+
+						<div tabindex="-1" th:if="${#fields.hasAnyErrors()}" class="ds_error-summary"
+							 id="error-summary" aria-labelledby="error-summary-title" role="alert">
+							<h2 class="ds_error-summary__title" id="error-summary-title">There is a problem</h2>
+
+							<ul class="ds_error-summary__list">
+								<li th:each="fieldName: ${chooseBankAccountFormVO.orderedFields}">
+
+										<span th:if="${#fields.hasErrors(fieldName)}">
+											<span th:each="fieldError: ${#fields.errors(fieldName)}">
+												<span>
+													<a th:href="${'#' + fieldName}" th:text="${fieldError}"
+													   class="field-error">
+													</a>
+												</span>
+											</span>
+										</span>
+								</li>
+							</ul>
+						</div>
+
+						<div class="ds_question">
+							<h1>Choose bank account for DSA payments</h1>
+							<p>Let us know if you would like us to pay your DSA into the bank account on record, or if
+								you would like to provide us with a different bank account.</p>
+							<h2>Bank account details we already have</h2>
+							<table class="ds_table dsa_allowance_table" data-smallscreen="scrolling">
+								<thead>
+								<tr>
+									<th scope="col">Name on account</th>
+									<th scope="col">Sort code</th>
+									<th scope="col">Account number</th>
+									<th scope="col">Payment for<p></p>
+									</th>
+								</tr>
+								</thead>
+								<tbody>
+								<tr>
+									<td th:text="${chooseBankAccountFormVO.nameOnAccount}"></td>
+									<td th:text="${chooseBankAccountFormVO.sortCodeForUI}"></td>
+									<td th:text="${chooseBankAccountFormVO.accountNumberForUI}"></td>
+									<td th:text="${chooseBankAccountFormVO.paymentFor}"></td>
+								</tr>
+								</tbody>
+							</table>
+							<br><br>
+
+							<div class="ds_question"
+								 th:classappend="${#fields.hasErrors('useExistingDetails')} ? 'ds_question--error'">
+								<fieldset>
+									<legend>
+										<h2>Do you want to use this bank account for your DSA payments</h2>
+									</legend>
+									<span class="small_text_grey">You should receive your payments 2 weeks before
+											the start of your course.</span>
+									<div class="ds_field-group">
+										<div class="ds_radio">
+											<input class="ds_radio__input" id="yes" type="radio" name="radios"
+												   th:field="*{useExistingDetails}" value="YES"
+												   data-form="radio-radios-yes">
+											<label class="ds_radio__label" for="yes">Yes, I want to use this
+												bank
+												account</label>
+										</div>
+										<div class="ds_radio">
+											<input class="ds_radio__input" id="useExistingDetails" type="radio"
+												   name="radios" th:field="*{useExistingDetails}" value="NO"
+												   data-form="radio-radios-no">
+											<label class="ds_radio__label" for="useExistingDetails">No, I want to add a
+												new bank account for DSA payments</label>
+										</div>
+									</div>
+
+								</fieldset>
+								<input type="hidden" th:value="${chooseBankAccountFormVO.dsaApplicationNumber}"
+									   name="dsaApplicationNumber"/>
+								<input type="hidden" th:value="${chooseBankAccountFormVO.studentReferenceNumber}"
+									   name="studentReferenceNumber"/>
+							</div>
+
+						</div>
+
+						<div class="ds_button-group">
+
+							<button class="ds_button ds_button--cancel" name="action" th:value="ADVISOR_AWARD_ACCESS"
+									data-button="about-student">Back
+							</button>
+
+							&nbsp;&nbsp;&nbsp;&nbsp;
+							<input type="submit" class="ds_button" name="action" value="Save and continue">
+
+						</div>
+					</form>
+				</div>
+			</main>
+		</div>
+	</div>
+
+
+</div>
+
+</body>
+
+</html>
