@@ -16,8 +16,8 @@
 	<description>Disabled Student Allowances Online</description>
 	<properties>
 		<java.version>21</java.version>
-		<tomcat.version>11.0.9</tomcat.version>
-		<spring-security.version>6.2.0</spring-security.version>
+		<tomcat.version>11.0.12</tomcat.version>
+		<spring-security.version>6.5.3</spring-security.version>
 	</properties>
 	<scm>
 		<developerConnection>
@@ -101,7 +101,7 @@
 		<dependency>
 			<groupId>org.bouncycastle</groupId>
 			<artifactId>bcprov-jdk15to18</artifactId>
-			<version>1.78</version>
+			<version>1.78.1</version>
 		</dependency>
 
 		<dependency>
@@ -118,6 +118,7 @@
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
+			<version>3.18.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.pdfbox</groupId>
@@ -171,17 +172,17 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-web</artifactId>
-			<version>6.2.7</version><!--$NO-MVN-MAN-VER$-->
+			<version>6.2.8</version><!--$NO-MVN-MAN-VER$-->
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
-			<version>6.2.7</version><!--$NO-MVN-MAN-VER$-->
+			<version>6.2.10</version><!--$NO-MVN-MAN-VER$-->
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-config</artifactId>
-			<version>6.2.0</version><!--$NO-MVN-MAN-VER$-->
+			<version>6.5.3</version><!--$NO-MVN-MAN-VER$-->
 		</dependency>
 
 		<dependency>
@@ -316,34 +317,6 @@
 				<artifactId>maven-resources-plugin</artifactId>
 				<version>3.3.1</version>
 			</plugin>
-			<!-- If changing environment variables not possible
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <fork>true</fork>
-                    <executable>${JAVA_11_HOME}\bin\javac.exe</executable>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <configuration>
-                    <jvm>${JAVA_11_HOME}\bin\java.exe</jvm>
-                </configuration>
-            </plugin>-->
-			<!-- this was a solution for loading the local fonts
-            <plugin>
-                 <groupId>org.apache.maven.plugins</groupId>
-                 <artifactId>maven-resources-plugin</artifactId>
-                 <configuration>
-                      <nonFilteredFileExtensions>
-                           <nonFilteredFileExtension>ttf</nonFilteredFileExtension>
-                           <nonFilteredFileExtension>woff</nonFilteredFileExtension>
-                           <nonFilteredFileExtension>woff2</nonFilteredFileExtension>
-                      </nonFilteredFileExtensions>
-                 </configuration>
-            </plugin>-->
 		</plugins>
 	</build>
 
